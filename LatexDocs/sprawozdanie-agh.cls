@@ -16,6 +16,8 @@
 \frenchspacing % włączenie odpowiednich spacji po kropkach
 \newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
 
+
+
 % Przepisanie parametrów
 \def\przedmiot#1	{\gdef\@przedmiot{#1}}
 \def\tytul#1		{\gdef\@tytul{#1}}
