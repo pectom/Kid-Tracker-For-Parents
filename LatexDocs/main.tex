@@ -123,10 +123,87 @@
 
 		Klasy zidentyfikowane w aplikacji:
 		\begin{itemize}
-			\item KontoRodzica - klasa odpowiadająca za przechowywanie informacji o rodzicu takich jak imię 
+			\item KontoRodzica - klasa odpowiadająca za przechowywanie informacji o rodzicu takie jak imie, nazwisko, email, suma kontrolna hasła,
+			\item KontoDziecka - klasa odpowiadająca za przechowywanie informacji o dziecku takie jak nazwa, email, suma kontrolna hasła,
+			\item Reguła - klasa odpowiadająca za przechowywanie informacji o regułach ustalonych dla danego dziecka, dotyczących danego obszaru. Data pierwszego wydarzenia, czas pierwszego wydarzenia, powtarzanie wydarzeń (do wyboru: codziennie, co tydzień, itd.), czas trwania wydarzenia,
+			\item Lokalizacja - klasa związana bezpośrednio z klasą KontoDziecka przechowująca lokalizację dziecka. Parametrami jest długość i szerokość geograficzna,
+			\item Interfejs Obszaru - klasa interfejsu dla klas Obszarów,
+			\item OkrągłyObszar - klasa przechowująca koordynaty X i Y środka okręgu, jego promień opisująca obszar na mapie w którym powinno znajdować się dziecko
 		\end{itemize}
 
+		\begin{figure}[H]
+			\centering
+			\begin{tabular}{c}
+				\includegraphics[width=.95\textwidth]{classes} 
+			\end{tabular}
+		\caption{Diagram klas}
+		\end{figure}
+
 	\section{Specyfikacja wymagań}
+
+		Wymagania stawiane systemowi przedstawione zostały w formie przypadków użycia wraz z scenariuszami.
+
+		\begin{figure}[H]
+			\centering
+			\begin{tabular}{c}
+				\includegraphics[width=.80\textwidth]{webUseCase} 
+			\end{tabular} 
+		\caption{Przypadki użycia dla aplikacji webowej}
+		\end{figure}
+
+		\begin{figure}[H]
+			\centering
+			\begin{tabular}{c}
+				\includegraphics[width=.80\textwidth]{parentUseCase} 
+			\end{tabular} 
+		\caption{Przypadki użycia dla aplikacji mobilnej rodzica}
+		\end{figure} 
+
+		\begin{figure}[H] 
+			\centering
+			\begin{tabular}{c}
+				\includegraphics[width=.80\textwidth]{childUseCase} 
+			\end{tabular} 
+		\caption{Przypadki użycia dla aplikacji mobilnej dziecka}
+		\end{figure}
+
+		\begin{figure}[H] 
+			\centering
+			\begin{tabular}{c}
+				\includegraphics[page=1, width=.95\textwidth]{scenarios} 
+			\end{tabular} 
+		\end{figure}
+		\begin{figure}[H] 
+			\centering
+			\begin{tabular}{c}
+				\includegraphics[page=2, width=.95\textwidth]{scenarios} 
+			\end{tabular} 
+		\end{figure}
+		\begin{figure}[H] 
+			\centering
+			\begin{tabular}{c}
+				\includegraphics[page=3, width=.95\textwidth]{scenarios} 
+			\end{tabular} 
+		\end{figure}
+		\begin{figure}[H] 
+			\centering
+			\begin{tabular}{c}
+				\includegraphics[page=4, width=.95\textwidth]{scenarios} 
+			\end{tabular} 
+		\end{figure}
+		\begin{figure}[H] 
+			\centering
+			\begin{tabular}{c}
+				\includegraphics[page=5, width=.95\textwidth]{scenarios} 
+			\end{tabular} 
+		\end{figure}
+		\begin{figure}[H] 
+			\centering
+			\begin{tabular}{c}
+				\includegraphics[page=6, width=.95\textwidth]{scenarios} 
+			\end{tabular} 
+		\end{figure}
+		
 
 	\section{Architektura systemu}
 
