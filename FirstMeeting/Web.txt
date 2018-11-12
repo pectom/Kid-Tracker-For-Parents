@@ -1,0 +1,20 @@
+1. Utworzenie konta na podstawie GoogleAuth
+2. Logowanie
+3. Wybór dnia
+4. Zapamiętywanie obszarów
+-ikona obszaru
+-kolor obszaru
+5. Powtarzanie wydarzeń:
+-codziennie
+-dni robocze
+-co tydzień 
+3. Zaznaczanie obszaru dla dziecka
+dla wybranego przedziału czasu
+na podstawie okręgów wokół wybranych
+miejsc z google maps
+4. Wysłanie maila w przypadku 
+opuszczenia obszaru
+
+5. Rozłączenie połączenia = powiadomienie
+gdzie? i kiedy?
+

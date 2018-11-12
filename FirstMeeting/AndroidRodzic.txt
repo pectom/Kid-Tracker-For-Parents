@@ -1,0 +1,19 @@
+1. Rodzic loguje się do aplikacji
+2. Autoryzacja przez GoogleAuth
+3. Mapa z lokalizacją dziecka
+4. W przypadku rozłączenia ostatnia
+lokalizacja i czas
+
+Wymagania:
+zaznaczanie obszaru dla dziecka
+dla wybranego przedziału czasu
+na podstawie okręgów wokół wybranych
+miejsc z google maps
+
+
+Wysłanie maila w przypadku 
+opuszczenia obszaru
+
+Rozłączenie połączenia = powiadomienie
+gdzie? i kiedy?
+
