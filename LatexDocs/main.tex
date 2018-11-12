@@ -20,11 +20,54 @@
 
 		\subsection{Cel systemu}
 
-		\subsection{Udziałowcy i użytkownicy}
+		Celem naszej aplikacji, jest udostępnienie rodzicom możliwości kontroli lokalizacji swoich dzieci. Mogą oni tworzyć reguły, składające się z informacji o obszarze, w którym dziecko powinno przebywać w danym czasie. Jeśli dziecko złamie regułę, rodzic zostaje powiadomiony poprzez wiadomość email. W przypadku wyłączenia aplikacji dziecka, rodzic zostaje powiadomiony oraz może wyświetlić ostatnią zarejestrowaną lokalizację dziecka.
 
-		\subsection{Podstawowe cele udziałowców i uczestników}
+		\subsection{Udziałowcy i ich cele}
+
+		Użytkownikami systemu są rodzice, którzy chcą zadbać o bezpieczeństwo swoich dzieci. Udziałowcami systemu są:
+
+		\begin{itemize}
+			\item System Google OAuth, który odpowiada za autentyfikację użytkownika w aplikacji,
+			\item System Google Maps, który odpowiada za zarządzanie i wyświetlanie lokalizacji dziecka.
+		\end{itemize}
+		Biernymi użytkownikami systemu są dzieci, których aplikacja mobilna dostarcza jedynie informację o ich bieżącym położeniu.
+
+		\begin{table}[h]
+			\begin{center}
+				\begin{tabular}{|c|p{7cm}|c|}
+					\cline{1-3}
+					\textbf{Udziałowiec} & \textbf{Cel} & \textbf{Priorytet} \\
+					\cline{1-3}
+					Rodzic & tworzenie reguł & wysoki \\
+					\cline{1-3}
+					Rodzic & sprawdzanie bieżącej lokalizacji dziecka & wysoki \\
+					\cline{1-3}
+					Dziecko & udostępnienie swojej lokalizacji & wysoki \\
+					\cline{1-3}
+					Google OAuth & udostępnienie API logowania & niski \\
+					\cline{1-3}
+					Google Maps & wyświetlanie lokalizacji dziecka na mapie & wysoki \\
+					\cline{1-3}
+					Google Maps & udostępnienie API zarządzania lokalizacją & wysoki \\
+					\cline{1-3}
+					SendGrid & wysłanie emaila do rodzica z powiadomieniem o złamaniu reguły przez dziecko  & wysoki \\
+					\cline{1-3}
+				\end{tabular}
+			\end{center}
+			\caption{Udziałowcy i ich cele}
+		\end{table}
 
 		\subsection{Granice systemu}
+
+		Wyrózniamy następujących aktorów:
+		\begin{itemize}
+			\item Rodzic,
+			\item Dziecko,
+			\item System autentyfikacji Google OAuth,
+			\item System Google Maps,
+			\item System do wysyłania emaili SendGrid,
+			\item Czas.
+		\end{itemize}
 
 		\subsection{Lista możliwości}
 
