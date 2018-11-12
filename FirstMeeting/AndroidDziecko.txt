@@ -1,0 +1,7 @@
+1. 2 etapowa weryfikacja:
+a) dziecko klika w link na telefonie
+b) rodzic skanuje kod QR/ przepisuje kod
+
+co później?
+2. Aplikacja wysyła lokalizację na serwer,
+rodzic prosi o lokalizację

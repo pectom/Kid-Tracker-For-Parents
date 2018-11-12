@@ -1,0 +1,17 @@
+Rozszerzenia:
+1. Mobilna rodzic
+wybór dziecka
+wybór obszarów
+droga między obszarami - rysowanie?
+przycisk nawiguj
+połączenie z liniami mpk
+skaner kodów QR
+możliwość odtworzenia trasy dziecka
+dokładność gps
+2. Mobilna dziecko
+3. Webówka
+kalendarz
+
+Pytania?
+Jak ogarnąć sparowanie dziecka z rodzicem?
+Czy musimy sprawdzać drogę między obszarami?
