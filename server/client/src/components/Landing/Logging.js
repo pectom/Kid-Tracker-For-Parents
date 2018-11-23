@@ -14,17 +14,17 @@ class Logging extends React.Component {
                             <label>Hasło</label>
                             <input name="password" type="password" />
                         </div>
-                        <button className="ui button primary" type="submit">Zaloguj</button>
+                        <a className="ui button primary" type="submit" href="/dashboard">Zaloguj</a>
                     </form>
                 </div>
                 <div className="ui horizontal divider">
                     Lub
                 </div>
                 <div className="ui segment" style={{textAlign: 'center'}}>
-                    <button class="ui google plus button">
+                    <a class="ui google plus button" href="/dashboard">
                         <i class="google icon" />
                         Zaloguj z Google
-                    </button>
+                    </a>
                 </div>
                 
             </div>

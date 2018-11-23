@@ -32,7 +32,7 @@ class Logging extends React.Component {
                                 </div>
                             </div>
                         </div>
-                        <button className="ui button primary" type="submit">Zarejestruj</button>
+                        <a className="ui button primary" type="submit" href="/dashboard">Zarejestruj</a>
                     </form>
                 </div>    
             </div>

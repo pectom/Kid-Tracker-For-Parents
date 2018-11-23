@@ -56,9 +56,6 @@ class AddChild extends React.Component {
                                     <input name="name" type="text" placeholder="Imię" />
                                 </div>
                                 <div className="field">
-                                    <input name="initial" type="text" placeholder="Inicjał" />
-                                </div>
-                                <div className="field">
                                     <Dropdown placeholder='Kolor' fluid selection options={this.colorOptions} />
                                 </div>
                             </div>
