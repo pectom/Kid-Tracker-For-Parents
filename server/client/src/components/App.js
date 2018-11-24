@@ -4,6 +4,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import Landing from './Landing/Landing';
 import Dashboard from './Dashboard/Dashboard';
 import Children from './Children/Children';
+import Areas from './Areas/Areas';
 
 class App extends React.Component {
     render() {
@@ -14,6 +15,7 @@ class App extends React.Component {
                         <Route exact path="/" component={Landing} />
                         <Route exact path="/dashboard" component={Dashboard} />
                         <Route exact path="/children" component={Children} />
+                        <Route exact path="/areas" component={Areas} />
                     </div>
                 </BrowserRouter>
             </div>

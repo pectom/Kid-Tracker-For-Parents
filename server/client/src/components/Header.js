@@ -13,7 +13,7 @@ class Header extends React.Component {
                         <a className="ui standard button" href="/children">Dzieci</a>
                     </div>
                     <div className="item">
-                        <div className="ui standard button">Obszary</div>
+                        <a className="ui standard button" href="/areas">Obszary</a>
                     </div>
                     <div className="item">
                         <a className="ui primary button" href="/">Wyloguj</a>

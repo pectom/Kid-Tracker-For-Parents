@@ -1,4 +1,6 @@
 import React from 'react';
+import EditChild from './EditChild';
+import DeleteChild from './DeleteChild';
 
 class Child extends React.Component {
     renderKidIcon(name, color) {
@@ -17,13 +19,8 @@ class Child extends React.Component {
                     <div className="ui eight wide column middle aligned content">
                         <div>
                             {this.renderKidIcon(this.props.name, this.props.iconColor)}
-
-                            <button className="ui icon button" data-tooltip="Edytuj dane dziecka">
-                                <i className="edit icon" />
-                            </button>
-                            <button className="ui icon button" data-tooltip="Usuń dziecko">
-                                <i className="trash alternate icon" />
-                            </button>
+                            <EditChild name={this.props.name} iconColor={this.props.iconColor}/>
+                            <DeleteChild name={this.props.name} iconColor={this.props.iconColor} renderKidIcon={() => this.renderKidIcon()}/>
                         </div>
                     </div>
                 </div>

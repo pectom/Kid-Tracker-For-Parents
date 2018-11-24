@@ -19,18 +19,20 @@ class AddChild extends React.Component {
     }
 
     handleClick = () => {
-        console.log("Adding child");
+        console.log("Add child");
         this.close();
     }
 
     colorOptions = [
         {
             text: 'czerwony',
-            value: 'red'
+            value: 'red',
+            icon: 'circular red inverted icon tiny'
         },
         {
             text: 'niebieski',
-            value: 'blue'
+            value: 'blue',
+            icon: 'circular blue inverted icon tiny'
         },
     ]
 
@@ -56,7 +58,7 @@ class AddChild extends React.Component {
                                     <input name="name" type="text" placeholder="Imię" />
                                 </div>
                                 <div className="field">
-                                    <Dropdown placeholder='Kolor' fluid selection options={this.colorOptions} />
+                                    <Dropdown placeholder='Kolor ikonki' fluid selection options={this.colorOptions} />
                                 </div>
                             </div>
                         </div>

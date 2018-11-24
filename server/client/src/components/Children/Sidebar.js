@@ -3,10 +3,6 @@ import Child from './Child';
 import AddChild from './AddChild';
 
 class Sidebar extends React.Component {
-    handleAdd = () => {
-        
-    }
-
     render() {
         return (
             <div>
