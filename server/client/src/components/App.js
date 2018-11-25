@@ -5,6 +5,7 @@ import Landing from './Landing/Landing';
 import Dashboard from './Dashboard/Dashboard';
 import Children from './Children/Children';
 import Areas from './Areas/Areas';
+import Rules from './Rules/Rules';
 
 class App extends React.Component {
     render() {
@@ -16,6 +17,7 @@ class App extends React.Component {
                         <Route exact path="/dashboard" component={Dashboard} />
                         <Route exact path="/children" component={Children} />
                         <Route exact path="/areas" component={Areas} />
+                        <Route exact path="/rules" component={Rules} />
                     </div>
                 </BrowserRouter>
             </div>
