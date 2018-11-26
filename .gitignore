@@ -22,3 +22,6 @@ main.pdf
 # BibTeX
 *.bbl
 *.blg
+
+# Node modules
+server/client/node_modules
