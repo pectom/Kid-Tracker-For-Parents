@@ -1,5 +1,6 @@
 import React from 'react';
 import EditRule from './EditRule';
+import DeleteRule from './DeleteRule';
 
 class Rule extends React.Component {
     state = {
@@ -41,6 +42,16 @@ class Rule extends React.Component {
                     <div className="ui ten wide column">
                         {this.renderKidsIcons()}
                         <EditRule 
+                            area={this.props.area} 
+                            icon={this.props.icon} 
+                            active={this.props.active} 
+                            startdate={this.props.startdate}
+                            enddate={this.props.enddate}
+                            starttime={this.props.starttime}
+                            endtime={this.props.endtime} 
+                            kids={this.props.kids}
+                        />
+                        <DeleteRule 
                             area={this.props.area} 
                             icon={this.props.icon} 
                             active={this.props.active} 

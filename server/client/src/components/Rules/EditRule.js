@@ -98,6 +98,10 @@ class EditRule extends React.Component {
         {
             text: 'Brajan',
             value: 'Brajan'
+        },
+        {
+            text: 'Sebastian',
+            value: 'Sebastian'
         }
     ];
 
