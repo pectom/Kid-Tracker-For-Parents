@@ -20,23 +20,6 @@
 
 	\stronatytulowa{}
 
-	\section{Projekt testów}
-	
-	\begin{table}[h]
-		\centering
-		\begin{tabular}{|c|c|c|}
-			\hline
-			\textbf{Rodzaj testów} & \textbf{Co testujemy?} & \textbf{Technologie} \\
-			\hline
-			Jednostkowe & metody backendu i frontendu & Spock \\ \hline
-			Integracyjne & komunikacja między modułami & Spock \\ \hline
-			Funkcjonalne & scenariusze użycia & Spock, Selenium \\ \hline
-			Manualne & Aplikacja mobina & manualnie \\ \hline
-			Manualne & API & postman \\ \hline
-		\end{tabular}
-		\caption{Projekt testów}
-	\end{table}
-
 	\section{Moduły i komunikacja miedzy nimi}
 	\begin{figure}[H] 
 		\centering
@@ -45,8 +28,47 @@
 		\end{tabular} 
 		\caption{Moduły i interfejsy}
 	\end{figure}
-
 	
+	\begin{itemize}
+		\item Node.js - środowisko uruchomieniowe do pisania aplikacji webowych przy użyciu języka JavaScript
+		\item Express - framework wykorzystany w celu implementacji API serwera.
+		\item Mongoose -  biblioteka ułatiwająca współpracę serwera i bazy danych MongoDB
+		\item MongoDB -  obiektowa baza danych
+		\item Web App - aplikacja webowa działająca na przeglądarce klienckiej
+		\item React - framework służący prostemu tworzeniu dynamicznego wyglądu aplikacji webowych 
+		\item Redux -  framework ułatwiający komunikację pomiędzy komponentami React
+		\item Android App - aplikacja mobilna działająca pod systemem android  
+		\item Google Maps API - interfejs udostępniony przez google używany przy korzystaniu z Google Maps  
+		\item Google OAuth Api - interfejs udostępniony przez google wykorzystany do logowania w aplikacji przy użyciu konta google użytkownika.
+	\end{itemize}
+
+
+	\section{Schemat bazy danych}
+	\begin{figure}[H] 
+		\centering
+		\begin{tabular}{c}
+			\includegraphics[width=.95\textwidth]{baza} 
+		\end{tabular} 
+		\caption{Schemat bazy}
+	\end{figure}
+	\section{Projekt testów}
+	
+	\begin{table}[h]
+		\centering
+		\begin{tabular}{|c|c|c|}
+			\hline
+			\textbf{Rodzaj testów} & \textbf{Co testujemy?} & \textbf{Technologie} \\
+			\hline
+			Jednostkowe & metody backendu i frontendu & Jasmine \\ \hline
+			Integracyjne & komunikacja między modułami & Jasmine \\ \hline
+			Funkcjonalne & scenariusze użycia & Jasmine, Selenium \\ \hline
+			Manualne & Aplikacja mobina & manualnie \\ \hline
+			Manualne & API & postman \\ \hline
+		\end{tabular}
+		\caption{Projekt testów}
+	\end{table}
+
+
 
 
 	\section{Ogólny opis systemu}
@@ -245,7 +267,6 @@
 		
 
 	\section{Architektura systemu}
-		Do zaimplementowania bazy danych skorzystaliśmy z MongoDB, dlatego schemat bazy będzie idealnym odwzorowaniem diagramu klas dla aplikacji.
 		
 		\begin{figure}[H] 
 			\centering
