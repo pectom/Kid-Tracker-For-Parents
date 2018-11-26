@@ -25,3 +25,5 @@ main.pdf
 
 # Node modules
 server/client/node_modules
+server/node_modules
+.idea/workspace.xml
