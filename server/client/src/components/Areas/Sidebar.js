@@ -13,7 +13,7 @@ class Sidebar extends React.Component {
             <div>
                 <div className="ui segment" >
                     <div className="ui segment" style={{textAlign: "center"}}>
-                        <i className="home icon big" /><b>Obszary</b> 
+                        <i className="street view icon big" /><b>Obszary</b> 
                     </div>
                     {this.renderAreas()}
                     <div style={{textAlign: "right"}}>
