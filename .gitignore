@@ -28,3 +28,4 @@ server/client/node_modules
 server/node_modules
 .idea/workspace.xml
 server/config/dev.js
+server/client/build
