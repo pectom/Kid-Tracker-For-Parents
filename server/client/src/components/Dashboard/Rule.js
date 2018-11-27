@@ -3,7 +3,7 @@ import React from 'react';
 class Rule extends React.Component {
     renderKidsIcons(kidsInitials) {
         const icons = kidsInitials.map((kidInital) => {
-            return <i className={`circular icon inverted ${kidInital[1]}`}>{kidInital[0]}</i>
+            return <i key={kidInital[1]} className={`circular icon inverted ${kidInital[1]}`}>{kidInital[0]}</i>
         });
         return icons;
     }

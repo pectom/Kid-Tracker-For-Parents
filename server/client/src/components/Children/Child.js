@@ -1,8 +1,10 @@
 import React from 'react';
+import EditChild from './EditChild';
+import DeleteChild from './DeleteChild';
 
 class Child extends React.Component {
-    renderKidIcon(kidInitial) {
-        return <i className={`circular icon inverted ${kidInitial[1]}`}>{kidInitial[0]}</i>
+    renderKidIcon(name, color) {
+        return <i className={`circular icon inverted ${color}`}>{name[0]}</i>
     }
 
     render() {
@@ -16,14 +18,9 @@ class Child extends React.Component {
                     </div>
                     <div className="ui eight wide column middle aligned content">
                         <div>
-                            {this.renderKidIcon(this.props.kidInitial)}
-
-                            <button className="ui icon button" data-tooltip="Edytuj dane dziecka">
-                                <i className="edit icon" />
-                            </button>
-                            <button className="ui icon button" data-tooltip="Usuń dziecko">
-                                <i className="trash alternate icon" />
-                            </button>
+                            {this.renderKidIcon(this.props.name, this.props.iconColor)} 
+                            <EditChild name={this.props.name} iconColor={this.props.iconColor}/> 
+                            <DeleteChild name={this.props.name} iconColor={this.props.iconColor} renderKidIcon={() => this.renderKidIcon()}/> 
                         </div>
                     </div>
                 </div>

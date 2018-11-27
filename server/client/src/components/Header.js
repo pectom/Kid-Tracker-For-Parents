@@ -1,22 +1,26 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 class Header extends React.Component {
     render() {
         return (
             <div className="ui menu">
-                <a className="item" href="/dashboard">
+                <Link className="item" to="/dashboard">
                     <i className="map marker alternate icon big" />
                     GdzieJestMojeDziecko?
-                </a>
+                </Link>
                 <div className="right menu">
                     <div className="item">
-                        <a className="ui standard button" href="/children">Dzieci</a>
+                        <Link className="ui standard button" to="/children">Dzieci</Link>
                     </div>
                     <div className="item">
-                        <div className="ui standard button">Obszary</div>
+                        <Link className="ui standard button" to="/areas">Obszary</Link>
                     </div>
                     <div className="item">
-                        <a className="ui primary button" href="/">Wyloguj</a>
+                        <Link className="ui standard button" to="/rules">Reguły</Link>
+                    </div>
+                    <div className="item">
+                        <Link className="ui primary button" to="/">Wyloguj</Link>
                     </div>
                 </div>
             </div>

@@ -5,9 +5,9 @@ class Map extends React.Component {
         return (
             <div className="ui segment">
                 <div className="ui embed">
-                <iframe 
-                    title="mapa"
-                    src={this.props.mapSrc}
+                <iframe
+                    title="Mapa"
+                    src={this.props.mapSrc} 
                 />
                 </div>
             </div>

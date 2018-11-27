@@ -3,10 +3,6 @@ import Child from './Child';
 import AddChild from './AddChild';
 
 class Sidebar extends React.Component {
-    handleAdd = () => {
-        
-    }
-
     render() {
         return (
             <div>
@@ -14,9 +10,9 @@ class Sidebar extends React.Component {
                     <div className="ui segment" style={{textAlign: "center"}}>
                         <i className="child icon big" /><b>Dzieci</b> 
                     </div>
-                    <Child name="Jessica" kidInitial={["J","red"]} />
-                    <Child name="Brajan" kidInitial={["B","purple"]} />
-                    <Child name="Sebastian" kidInitial={["J","green"]} />
+                    <Child name="Jessica" iconColor="red" />
+                    <Child name="Brajan" iconColor="purple" />
+                    <Child name="Sebastian" iconColor="green" />
                     <div style={{textAlign: 'right'}}>
                         <AddChild/>
                     </div>
