@@ -1,5 +1,43 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+const authRouter = require('./routes/authRoutes');
+const keys = require('./config/keys');
+const mongoose = require('mongoose');
+const passport = require("passport");
+const cookieSession = require("cookie-session");
+require('./models/User');
+require('./services/passport');
+const registrationRoutes = require('./routes/registrationRoutes');
+
+const morgan = require('morgan');
+
+
+mongoose.connect(keys.mongoURI,{ useNewUrlParser: true });
+
 const app = express();
+app.use(bodyParser.json());
+
+app.use(morgan('dev'));
+app.use(
+  cookieSession({
+      maxAge: 30*24*60*60*1000,
+      keys: [keys.cookieKey]
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use('/auth',authRouter);
+app.use('/api/registration',registrationRoutes);
+
+app.get('/api/current_user',(req,res) =>{
+   res.send(req.user);
+});
+
+app.get('/api/logout',(req,res) =>{
+    req.logout();
+    res.redirect('/');
+});
 
 
 if (process.env.NODE_ENV === 'production') {
