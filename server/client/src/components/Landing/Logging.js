@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 class Logging extends React.Component {
     render() {
@@ -14,17 +15,17 @@ class Logging extends React.Component {
                             <label>Hasło</label>
                             <input name="password" type="password" />
                         </div>
-                        <a className="ui button primary" type="submit" href="/dashboard">Zaloguj</a>
+                        <Link className="ui button primary" type="submit" to="/dashboard">Zaloguj</Link>
                     </form>
                 </div>
                 <div className="ui horizontal divider">
                     Lub
                 </div>
                 <div className="ui segment" style={{textAlign: 'center'}}>
-                    <a class="ui google plus button" href="/dashboard">
+                    <Link class="ui google plus button" to="/dashboard">
                         <i class="google icon" />
                         Zaloguj z Google
-                    </a>
+                    </Link>
                 </div>
                 
             </div>

@@ -5,7 +5,7 @@ import AddRule from './AddRule';
 class Sidebar extends React.Component {
     renderRules = () => this.props.rules.map( rule => 
         <Rule 
-            key={rule.areaName} 
+            key={rule.area + rule.startdate} 
             area={rule.area} 
             icon={rule.icon} 
             active={rule.active} 

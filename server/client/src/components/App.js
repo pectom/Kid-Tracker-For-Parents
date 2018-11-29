@@ -1,5 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
+import { connect } from 'react-redux';
+import * as actions from '../actions';
 
 import Landing from './Landing/Landing';
 import Dashboard from './Dashboard/Dashboard';
@@ -8,6 +10,10 @@ import Areas from './Areas/Areas';
 import Rules from './Rules/Rules';
 
 class App extends React.Component {
+    componentDidMount() {
+        this.props.fetchUser();
+    }
+
     render() {
         return (
             <div className="ui container"  style={{marginTop: '10px'}}>
@@ -25,4 +31,4 @@ class App extends React.Component {
     }
 }
 
-export default App;
+export default connect(null, actions)(App);

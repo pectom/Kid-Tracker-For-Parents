@@ -27,12 +27,12 @@ class AddArea extends React.Component {
         {
             text: 'dom',
             value: 'home',
-            icon: 'home icon small'
+            icon: 'home'
         },
         {
             text: 'budynek',
             value: 'building',
-            icon: 'building icon small'
+            icon: 'building'
         },
     ]
 

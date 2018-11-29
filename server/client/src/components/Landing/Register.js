@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 class Logging extends React.Component {
     render() {
@@ -32,7 +33,7 @@ class Logging extends React.Component {
                                 </div>
                             </div>
                         </div>
-                        <a className="ui button primary" type="submit" href="/dashboard">Zarejestruj</a>
+                        <Link className="ui button primary" type="submit" to="/dashboard">Zarejestruj</Link>
                     </form>
                 </div>    
             </div>

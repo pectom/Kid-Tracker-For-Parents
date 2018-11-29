@@ -19,7 +19,7 @@ class DeleteArea extends React.Component {
     }
 
     handleClick = () => {
-        console.log("Edit area");
+        console.log("Delete area");
         this.close();
     }
 
