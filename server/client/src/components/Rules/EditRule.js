@@ -184,7 +184,7 @@ class EditRule extends React.Component {
                     </form>
                 </Modal.Content>
                 <Modal.Actions>
-                    <button className="ui button green" onClick={() => this.handleClick()}>Dodaj</button>
+                    <button className="ui button green" onClick={() => this.handleClick()}>Zapisz</button>
                 </Modal.Actions>
             </Modal>
         );
