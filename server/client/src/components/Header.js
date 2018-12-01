@@ -1,8 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import * as actions from '../actions';
 
 class Header extends React.Component {
+    componentDidMount() {
+        this.props.fetchUser();
+    }
+
     render() {
+        console.log(this.props);
         return (
             <div className="ui menu">
                 <Link className="item" to="/dashboard">
@@ -20,7 +27,7 @@ class Header extends React.Component {
                         <Link className="ui standard button" to="/rules">Reguły</Link>
                     </div>
                     <div className="item">
-                        <Link className="ui primary button" to="/">Wyloguj</Link>
+                        <a className="ui primary button" href="/api/logout">Wyloguj</a>
                     </div>
                 </div>
             </div>
@@ -28,4 +35,8 @@ class Header extends React.Component {
     }
 }
 
-export default Header;
+const mapStateToProps = ({ auth }) => {
+    return { auth };
+};
+
+export default connect(mapStateToProps, actions)(Header);

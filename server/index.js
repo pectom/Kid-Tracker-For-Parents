@@ -14,8 +14,7 @@ const childrenRoutes  = require('./routes/childrenRoutes');
 
 const morgan = require('morgan');
 
-
-mongoose.connect(keys.mongoURI,{ useNewUrlParser: true });
+mongoose.connect(encodeURI(keys.mongoURI),{ useNewUrlParser: true });
 
 const app = express();
 app.use(bodyParser.json());

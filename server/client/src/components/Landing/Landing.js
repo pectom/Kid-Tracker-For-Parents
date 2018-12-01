@@ -27,7 +27,7 @@ class Landing extends React.Component {
                         Rejestracja
                     </button>
                 </div>
-                <div class="ui bottom attached segment">
+                <div className="ui bottom attached segment">
                     {logOrReg === 'log' ? <Logging /> : <Register />}
                 </div>
             </div>

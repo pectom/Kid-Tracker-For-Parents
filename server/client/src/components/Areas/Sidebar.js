@@ -4,7 +4,7 @@ import AddArea from './AddArea';
 
 class Sidebar extends React.Component {
     renderAreas = () => this.props.areas.map(area => 
-        <Area icon={area.icon} name={area.name} kidsInitials={area.kidsInitials} />
+        <Area key={area.name} icon={area.icon} name={area.name} kidsInitials={area.kidsInitials} />
     );
      
 

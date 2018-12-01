@@ -8,7 +8,7 @@ class Rule extends React.Component {
     };
 
     renderKidsIcons = () => this.props.kids.map( kidInital => 
-        <i key={kidInital[1]} className={`circular icon inverted ${kidInital[1]}`}>{kidInital[0][0]}</i>
+        <i key={kidInital[0]} className={`circular icon inverted ${kidInital[1]}`}>{kidInital[0][0]}</i>
     );
 
     handleToggle = () => {
