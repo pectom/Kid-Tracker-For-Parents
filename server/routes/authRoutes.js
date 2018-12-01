@@ -14,7 +14,7 @@ authRouter.get('/google/callback',
     });
 
 authRouter.post('/local',
-    passport.authenticate("local",{ failureRedirect: '/local' }),
+    passport.authenticate("local",{ failureRedirect: '/login' }),
     (req,res) => {
         res.redirect('/dashboard');
     });

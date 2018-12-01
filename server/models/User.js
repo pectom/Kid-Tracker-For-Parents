@@ -44,5 +44,5 @@ userSchema.methods.generateHash = (password) =>{
 userSchema.methods.validPassword = (userpassword,password) => {
     return bcrypt.compareSync(password, userpassword);
 };
-~
+
 mongoose.model('users',userSchema);
