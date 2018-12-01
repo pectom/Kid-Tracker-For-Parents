@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const User = mongoose.model('users');
 
 
-registartionRouter.post('/',(req,res,next) =>{
+registartionRouter.post('/api/registration',(req,res,next) =>{
     if(req.body.email && req.body.password &&
         req.body.firstName && req.body.lastName){
 

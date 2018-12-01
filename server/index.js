@@ -6,8 +6,11 @@ const mongoose = require('mongoose');
 const passport = require("passport");
 const cookieSession = require("cookie-session");
 require('./models/User');
+require('./models/Child');
+
 require('./services/passport');
 const registrationRoutes = require('./routes/registrationRoutes');
+const childrenRoutes  = require('./routes/childrenRoutes');
 
 const morgan = require('morgan');
 
@@ -28,7 +31,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/auth',authRouter);
-app.use('/api/registration',registrationRoutes);
+app.use(registrationRoutes);
+app.use(childrenRoutes);
 
 app.get('/api/current_user',(req,res) =>{
    res.send(req.user);

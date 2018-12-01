@@ -1,6 +1,8 @@
+// mongo ds119024.mlab.com:19024/kid-tracker-dev -u Admin -p Zachara123
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const bcrypt = require('bcryptjs');
+const ChildSchema = require("./Child");
 
 const userSchema = new Schema({
    googleId: {
@@ -27,7 +29,12 @@ const userSchema = new Schema({
     lastName: {
        type:String,
         trim: true
-    }
+    },
+    type: {
+       type: String,
+    },
+    children: [ChildSchema]
+
 });
 
 userSchema.methods.generateHash = (password) =>{
