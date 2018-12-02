@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+
 import * as actions from '../actions';
 
 class Header extends React.Component {
@@ -9,8 +10,14 @@ class Header extends React.Component {
     }
 
     render() {
-        if(this.props.auth === 'notAuthorized') {
+        if(this.props.auth === false) {
             return <Redirect to='/'/>;
+        } else if (this.props.auth === null) {
+            return (
+                <div className="ui active inverted dimmer">
+                    <div className="ui large text loader">Loading</div>
+                </div>
+            );
         }
         return (
             <div className="ui menu">

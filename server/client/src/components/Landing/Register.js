@@ -7,6 +7,22 @@ import validEmail from './validEmail';
 import * as actions from '../../actions';
 
 class Register extends React.Component {
+    async myRegisterUser(values) {
+        await this.props.registerUser(values);
+    }
+
+    renderMessage() {
+        if(this.props.submitSucceeded){
+            return (
+                <div className="ui success message visible">
+                    <div className="header">
+                        Zostałeś zarejestrowany
+                    </div>
+                </div>
+            );
+        }
+    }
+
     render() {
         return (
             <div>
@@ -25,10 +41,11 @@ class Register extends React.Component {
                                 <Field component={RegisterField} type="password" label="Powtórz hasło" name="passwordTwo" />
                             </div>
                         </div>
+                        {this.renderMessage()}
                         <button 
                             className="ui button primary" 
                             type="submit" 
-                            onClick={() => this.props.registerUser(this.props.formValues)} 
+                            onClick={() => this.myRegisterUser(this.props.formValues)} 
                         >
                             Zarejestruj
                         </button>
@@ -67,8 +84,10 @@ function validate(values) {
     return errors;
 }
 
-function mapStateToProps(state) {
-    return { formValues: state.form.registerForm.values };
+function mapStateToProps({ form }) {
+    return { 
+        formValues: form.registerForm.values,
+    };
 }
 
 export default reduxForm({

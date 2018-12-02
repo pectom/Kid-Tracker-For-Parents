@@ -6,7 +6,6 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
 
-
 class Landing extends React.Component {
     componentDidMount() {
         this.props.fetchUser();
@@ -43,7 +42,7 @@ class Landing extends React.Component {
     }
 
     render() {
-        if(this.props.auth === 'notAuthorized' || this.props.auth === null) {
+        if(this.props.auth === false) {
             return (
                 <div>
                     <div className="ui segment" style={{textAlign: 'center', fontSize: 30}}>
@@ -58,6 +57,12 @@ class Landing extends React.Component {
                             {this.renderLogOrReg(this.state.logOrReg)}
                         </div>
                     </div>
+                </div>
+            );
+        } else if (this.props.auth === null) {
+            return (
+                <div className="ui active inverted dimmer">
+                    <div className="ui large text loader">Loading</div>
                 </div>
             );
         } else {

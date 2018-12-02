@@ -38,9 +38,10 @@ app.use(areaRoutes);
 
 app.get('/api/current_user',(req,res) =>{
     if(!req.user) {
-        res.send('notAuthorized');
+        res.send(false);
+    } else {
+        res.send(req.user);
     }
-   res.send(req.user);
 });
 
 app.get('/api/logout',(req,res) =>{

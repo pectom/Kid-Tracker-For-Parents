@@ -7,6 +7,12 @@ import validEmail from './validEmail';
 import * as actions from '../../actions';
 
 class Logging extends React.Component {
+    async myLoginUser(values) {
+        await this.props.loginUser(values);
+        await this.props.fetchUser();
+    }
+    
+
     render() {
         return (
             <div>
@@ -17,7 +23,7 @@ class Logging extends React.Component {
                         <button 
                             className="ui button primary" 
                             type="submit"
-                            onClick={() => {this.props.loginUser(this.props.formValues)}}
+                            onClick={() => this.myLoginUser(this.props.formValues)}
                         >
                             Zaloguj
                         </button>
@@ -54,8 +60,11 @@ function validate(values) {
     return errors;
 }
 
-function mapStateToProps(state) {
-    return { formValues: state.form.loggingForm.values };
+function mapStateToProps({ form, auth }) {
+    return { 
+        formValues: form.loggingForm.values,
+        auth
+    };
 }
 
 export default reduxForm({
