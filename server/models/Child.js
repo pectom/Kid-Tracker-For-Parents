@@ -12,10 +12,6 @@ const childSchema =  new Schema({
         type: String,
     },
     dateSent: Date,
-    iconLetter: {
-        type: String,
-        trim: true,
-    },
     iconColor: {
         type: String,
         trim: true,
