@@ -21,10 +21,11 @@ class DeleteChild extends React.Component {
         })
     }
 
-    handleClick = () => {
-        this.props.deleteChild({
+    handleClick = async () => {
+        await this.props.deleteChild({
             id: this.props.id
         });
+        this.props.fetchChildren();
         this.close();
     }
 
@@ -33,7 +34,6 @@ class DeleteChild extends React.Component {
     }
 
     render() {
-        console.log(this.props)
         return (
             <Modal
                 size='mini'
@@ -70,8 +70,8 @@ class DeleteChild extends React.Component {
     }
 }
 
-const mapStateToProps = ({ children, auth }) => {
-    return { children, auth };
+const mapStateToProps = ({ children, auth, fetchChildren }) => {
+    return { children, auth, fetchChildren };
 }
 
 export default connect(mapStateToProps,actions)(DeleteChild);

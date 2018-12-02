@@ -24,12 +24,13 @@ class AddChild extends React.Component {
         })
     }
 
-    handleClick = () => {
-        this.props.createChild({
+    handleClick = async () => {
+        await this.props.createChild({
             user: this.props.auth._id,
             name: this.state.name,
             iconColor: this.state.iconColor,
-        })
+        });
+        this.props.fetchChildren();
         this.close();
     }
 
@@ -117,8 +118,8 @@ class AddChild extends React.Component {
         );
     }
 }
-const mapStateToProps = ({ children, auth }) => {
-    return { children, auth };
+const mapStateToProps = ({ children, auth, fetchChildren }) => {
+    return { children, auth, fetchChildren };
 }
 
 export default connect(mapStateToProps, actions)(AddChild);

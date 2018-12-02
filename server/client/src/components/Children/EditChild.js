@@ -23,8 +23,9 @@ class EditChild extends React.Component {
         })
     }
 
-    handleSaveClick = () => {
-        this.props.updateChild({ id: this.props.id, name: this.state.name, iconColor: this.state.iconColor});
+    handleSaveClick = async () => {
+        await this.props.updateChild({ id: this.props.id, name: this.state.name, iconColor: this.state.iconColor});
+        this.props.fetchChildren();
         this.close();
     }
 
@@ -112,9 +113,10 @@ class EditChild extends React.Component {
     }
 }
 
-const mapStateToProps = ({ updateChild }) => {
+const mapStateToProps = ({ updateChild, fetchChildren }) => {
     return {
-        updateChild
+        updateChild,
+        fetchChildren
     };
 }
 
