@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import { FETCH_USER, REGISTER_USER, LOGIN_USER, 
-        FETCH_CHILDREN, CREATE_CHILD, DELETE_CHILD } from './types';
+        FETCH_CHILDREN, CREATE_CHILD, DELETE_CHILD, UPDATE_CHILD } from './types';
 
 export const fetchUser = () => async dispatch => {
     const res = await axios.get('/api/current_user');
@@ -31,4 +31,9 @@ export const createChild = values => async dispatch => {
 export const deleteChild = values => async dispatch => {
     const res = await axios.delete(`/api/children/${values.id}`);
     dispatch({ type: DELETE_CHILD, payload: res.data });
+}
+
+export const updateChild = values => async dispatch => {
+    const res = await axios.put(`/api/children/${values.id}`,{ name: values.name, iconColor: values.iconColor });
+    dispatch({ type: UPDATE_CHILD, payload: res.data });
 }

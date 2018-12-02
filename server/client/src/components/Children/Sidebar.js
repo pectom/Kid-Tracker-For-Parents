@@ -14,11 +14,7 @@ class Sidebar extends React.Component {
         const children = this.props.children.map(child => {
             return <Child key={child.name + child.iconColor} name={child.name} iconColor={child.iconColor} id={child._id} />;
         }) 
-        return (
-            <div>
-                {children}
-            </div>
-        );
+        return children;
     }
 
     render() {

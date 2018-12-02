@@ -19,7 +19,7 @@ class Child extends React.Component {
                     <div className="ui eight wide column middle aligned content">
                         <div>
                             {this.renderKidIcon(this.props.name, this.props.iconColor)} 
-                            <EditChild name={this.props.name} iconColor={this.props.iconColor}/> 
+                            <EditChild name={this.props.name} iconColor={this.props.iconColor} id={this.props.id} /> 
                             <DeleteChild name={this.props.name} iconColor={this.props.iconColor} renderKidIcon={() => this.renderKidIcon()} id={this.props.id} /> 
                         </div>
                     </div>

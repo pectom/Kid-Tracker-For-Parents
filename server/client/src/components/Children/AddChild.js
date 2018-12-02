@@ -8,7 +8,6 @@ class AddChild extends React.Component {
     state = {
         open: false,
         name: '',
-        email: '',
         iconColor: 'red',
         token: ''
     }
@@ -29,9 +28,7 @@ class AddChild extends React.Component {
         this.props.createChild({
             user: this.props.auth._id,
             name: this.state.name,
-            email: 'this.state.email',
             iconColor: this.state.iconColor,
-            iconLetter: this.state.name[0]
         })
         this.close();
     }

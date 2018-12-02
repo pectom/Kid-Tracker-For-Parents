@@ -33,7 +33,7 @@ class DeleteChild extends React.Component {
     }
 
     render() {
-        
+        console.log(this.props)
         return (
             <Modal
                 size='mini'
@@ -70,8 +70,8 @@ class DeleteChild extends React.Component {
     }
 }
 
-const mapStateToProps = ({ children }) => {
-    return { children };
+const mapStateToProps = ({ children, auth }) => {
+    return { children, auth };
 }
 
 export default connect(mapStateToProps,actions)(DeleteChild);

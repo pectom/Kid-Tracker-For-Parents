@@ -1,5 +1,8 @@
 import React from 'react';
 import { Modal, Dropdown } from 'semantic-ui-react';
+import { connect } from 'react-redux';
+
+import * as actions from '../../actions';
 
 class EditChild extends React.Component {
     state = {
@@ -21,7 +24,7 @@ class EditChild extends React.Component {
     }
 
     handleSaveClick = () => {
-        console.log("Edit child");
+        this.props.updateChild({ id: this.props.id, name: this.state.name, iconColor: this.state.iconColor});
         this.close();
     }
 
@@ -41,22 +44,24 @@ class EditChild extends React.Component {
         {
             text: 'czerwony',
             value: 'red',
-            icon: 'circular red inverted icon tiny'
+            icon: {
+                name:'',
+                circular: true,
+                color: 'red',
+                inverted: true,
+                size: 'tiny'
+            }
         },
         {
             text: 'niebieski',
             value: 'blue',
-            icon: 'circular blue inverted icon tiny'
-        },
-        {
-            text: 'fioletowy',
-            value: 'purple',
-            icon: 'circular purple inverted icon tiny'
-        },
-        {
-            text: 'zielony',
-            value: 'green',
-            icon: 'circular green inverted icon tiny'
+            icon: {
+                name:'',
+                circular: true,
+                color: 'blue',
+                inverted: true,
+                size: 'tiny'
+            }
         },
     ]
 
@@ -107,4 +112,10 @@ class EditChild extends React.Component {
     }
 }
 
-export default EditChild;
+const mapStateToProps = ({ updateChild }) => {
+    return {
+        updateChild
+    };
+}
+
+export default connect(mapStateToProps, actions)(EditChild);
