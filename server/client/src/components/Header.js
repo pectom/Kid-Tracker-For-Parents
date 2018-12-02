@@ -9,7 +9,6 @@ class Header extends React.Component {
     }
 
     render() {
-        console.log(this.props);
         return (
             <div className="ui menu">
                 <Link className="item" to="/dashboard">

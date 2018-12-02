@@ -4,7 +4,7 @@ import DeleteChild from './DeleteChild';
 
 class Child extends React.Component {
     renderKidIcon(name, color) {
-        return <i className={`circular icon inverted ${color}`}>{name[0]}</i>
+        return <i className={`circular icon inverted ${color}`}>{name ? name[0] : ''}</i>
     }
 
     render() {
@@ -20,7 +20,7 @@ class Child extends React.Component {
                         <div>
                             {this.renderKidIcon(this.props.name, this.props.iconColor)} 
                             <EditChild name={this.props.name} iconColor={this.props.iconColor}/> 
-                            <DeleteChild name={this.props.name} iconColor={this.props.iconColor} renderKidIcon={() => this.renderKidIcon()}/> 
+                            <DeleteChild name={this.props.name} iconColor={this.props.iconColor} renderKidIcon={() => this.renderKidIcon()} id={this.props.id} /> 
                         </div>
                     </div>
                 </div>
