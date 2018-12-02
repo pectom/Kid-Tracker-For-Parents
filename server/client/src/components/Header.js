@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 
@@ -9,6 +9,9 @@ class Header extends React.Component {
     }
 
     render() {
+        if(this.props.auth === 'notAuthorized') {
+            return <Redirect to='/'/>;
+        }
         return (
             <div className="ui menu">
                 <Link className="item" to="/dashboard">

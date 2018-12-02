@@ -2,8 +2,16 @@ import React from 'react';
 import Logging from './Logging';
 import Register from './Register';
 import SneakPeak from './SneakPeak';
+import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import * as actions from '../../actions';
+
 
 class Landing extends React.Component {
+    componentDidMount() {
+        this.props.fetchUser();
+    }
+
     state = {
         logOrReg: 'log'
     };
@@ -35,23 +43,33 @@ class Landing extends React.Component {
     }
 
     render() {
-        return (
-            <div>
-                <div className="ui segment" style={{textAlign: 'center', fontSize: 30}}>
-                    <i className="map marker alternate icon big" />
-                    GdzieJestMojeDziecko?
-                </div>
-                <div className="ui grid">
-                    <div className="eight wide column">
-                        <SneakPeak />
+        if(this.props.auth === 'notAuthorized' || this.props.auth === null) {
+            return (
+                <div>
+                    <div className="ui segment" style={{textAlign: 'center', fontSize: 30}}>
+                        <i className="map marker alternate icon big" />
+                        GdzieJestMojeDziecko?
                     </div>
-                    <div className="eight wide column">
-                        {this.renderLogOrReg(this.state.logOrReg)}
+                    <div className="ui grid">
+                        <div className="eight wide column">
+                            <SneakPeak />
+                        </div>
+                        <div className="eight wide column">
+                            {this.renderLogOrReg(this.state.logOrReg)}
+                        </div>
                     </div>
                 </div>
-            </div>
-        );
+            );
+        } else {
+            return <Redirect to='/dashboard' />;
+        }
+
+        
     }
 }
 
-export default Landing;
+const mapStateToProps = ({ auth }) => {
+    return { auth };
+};
+
+export default connect(mapStateToProps, actions)(Landing);

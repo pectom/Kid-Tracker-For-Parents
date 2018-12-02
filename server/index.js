@@ -34,6 +34,9 @@ app.use(registrationRoutes);
 app.use(childrenRoutes);
 
 app.get('/api/current_user',(req,res) =>{
+    if(!req.user) {
+        res.send('notAuthorized');
+    }
    res.send(req.user);
 });
 

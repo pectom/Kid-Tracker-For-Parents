@@ -16,7 +16,7 @@ authRouter.get('/google/callback',
 authRouter.post('/local',
     passport.authenticate("local",{ failureRedirect: '/login' }),
     (req,res) => {
-        res.redirect('/dashboard');
+        res.send('notAuthorized');
     });
 
 module.exports = authRouter;
