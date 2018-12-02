@@ -7,10 +7,12 @@ const passport = require("passport");
 const cookieSession = require("cookie-session");
 require('./models/User');
 require('./models/Child');
+require('./models/Area');
 
 require('./services/passport');
 const registrationRoutes = require('./routes/registrationRoutes');
 const childrenRoutes  = require('./routes/childrenRoutes');
+const areaRoutes = require('./routes/areaRoutes');
 
 const morgan = require('morgan');
 
@@ -32,6 +34,7 @@ app.use(passport.session());
 app.use('/auth',authRouter);
 app.use(registrationRoutes);
 app.use(childrenRoutes);
+app.use(areaRoutes);
 
 app.get('/api/current_user',(req,res) =>{
     if(!req.user) {
