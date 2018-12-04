@@ -10,9 +10,10 @@ class Sidebar extends React.Component {
         await this.props.fetchAreas();
     }
 
-    renderAreas = () => this.props.areas.map(area => 
-        <Area key={area._id} icon={area.iconId} name={area.name} children={area.children} lat={area.latitude} lon={area.longitude} rad={area.radius} id={area._id} />
-    );
+    renderAreas = () => {
+        const areas = this.props.areas ? this.props.areas : [];
+        return areas.map(area => <Area key={area._id} icon={area.iconId} name={area.name} children={area.children} lat={area.latitude} lon={area.longitude} rad={area.radius} id={area._id} />);
+    }
      
     render() {
         return (

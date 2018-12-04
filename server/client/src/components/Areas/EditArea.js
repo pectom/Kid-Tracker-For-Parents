@@ -91,6 +91,7 @@ class EditArea extends React.Component {
         const children = this.props.children ? this.props.children : [];
         return children.map( child => {
             return {
+                key: child.id,
                 text: child.name,
                 value: child._id,
                 icon: {

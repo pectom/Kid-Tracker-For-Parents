@@ -1,6 +1,6 @@
 import React from 'react';
 import EditArea from './EditArea';
-import DeleteChild from './DeleteArea';
+import DeleteArea from './DeleteArea';
 import { connect } from 'react-redux';
 
 import * as actions from '../../actions';
@@ -19,7 +19,8 @@ class Area extends React.Component {
         const allChildren = this.props.allChildren ? this.props.allChildren : [];
         return allChildren.filter( child => {
             var boo = false;
-            this.props.children.forEach(childId => {
+            const children = this.props.children ? this.props.children : [];
+            children.forEach(childId => {
                 if(child._id === childId){
                     boo = true;
                 }
@@ -63,7 +64,7 @@ class Area extends React.Component {
                             lon={this.props.lon} 
                             rad={this.props.rad} 
                         />
-                        <DeleteChild 
+                        <DeleteArea 
                             name={this.props.name} 
                             icon={this.props.icon} 
                             myChildren={this.state.myChildren}

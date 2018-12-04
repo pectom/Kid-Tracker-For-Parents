@@ -6,7 +6,6 @@ import * as actions from '../../actions';
 
 class AddArea extends React.Component {
     componentDidMount() {
-        this.props.fetchAreas();
         this.props.fetchChildren();
     }
 
