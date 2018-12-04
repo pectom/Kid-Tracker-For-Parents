@@ -8,13 +8,12 @@ const childrenRouter = express.Router();
 
 
 childrenRouter.post('/api/children',requireLogin,async (req,res,next)=>{
-    const {name, email, iconColor} = req.body;
-    if(name && email && iconColor)
+    const {name, iconColor} = req.body;
+    if(name && iconColor)
     { //sprawdzanie unikalnosci ikony i koloru
         const parent = req.user;
         const newChildren = new Child({
             name,
-            email,
             iconColor,
         });
 

@@ -1,5 +1,8 @@
 import React from 'react';
 import { Modal } from 'semantic-ui-react';
+import { connect } from 'react-redux';
+
+import * as actions from '../../actions';
 
 class DeleteChild extends React.Component {
     state = {
@@ -18,13 +21,16 @@ class DeleteChild extends React.Component {
         })
     }
 
-    handleClick = () => {
-        console.log("Delete child");
+    handleClick = async () => {
+        await this.props.deleteChild({
+            id: this.props.id
+        });
+        this.props.fetchChildren();
         this.close();
     }
 
     renderKidIcon(name, color) {
-        return <i className={`circular icon inverted ${color}`}>{name[0]}</i>
+        return <i className={`circular icon inverted ${color}`}>{name ? name[0] : ''}</i>
     }
 
     render() {
@@ -64,4 +70,8 @@ class DeleteChild extends React.Component {
     }
 }
 
-export default DeleteChild;
+const mapStateToProps = ({ children, auth, fetchChildren }) => {
+    return { children, auth, fetchChildren };
+}
+
+export default connect(mapStateToProps,actions)(DeleteChild);

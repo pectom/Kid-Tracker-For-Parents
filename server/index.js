@@ -37,7 +37,11 @@ app.use(childrenRoutes);
 app.use(areaRoutes);
 
 app.get('/api/current_user',(req,res) =>{
-   res.send(req.user);
+    if(!req.user) {
+        res.send(false);
+    } else {
+        res.send(req.user);
+    }
 });
 
 app.get('/api/logout',(req,res) =>{

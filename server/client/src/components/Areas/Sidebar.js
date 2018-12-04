@@ -1,13 +1,19 @@
 import React from 'react';
 import Area from './Area';
 import AddArea from './AddArea';
+import { connect } from 'react-redux';
+
+import * as actions from '../../actions';
 
 class Sidebar extends React.Component {
+    async componentDidMount() {
+        await this.props.fetchAreas();
+    }
+
     renderAreas = () => this.props.areas.map(area => 
-        <Area key={area.name} icon={area.icon} name={area.name} kidsInitials={area.kidsInitials} />
+        <Area key={area._id} icon={area.iconId} name={area.name} children={area.children} lat={area.latitude} lon={area.longitude} rad={area.radius} id={area._id} />
     );
      
-
     render() {
         return (
             <div>
@@ -26,4 +32,10 @@ class Sidebar extends React.Component {
     }
 }
 
-export default Sidebar;
+const mapStateToProps = ({ areas }) => {
+    return {
+        areas
+    };
+};
+
+export default connect(mapStateToProps, actions)(Sidebar);

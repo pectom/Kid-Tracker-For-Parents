@@ -1,9 +1,15 @@
 import React from 'react';
 import { Modal, Dropdown } from 'semantic-ui-react';
+import { connect } from 'react-redux';
+
+import * as actions from '../../actions';
 
 class AddChild extends React.Component {
     state = {
-        open: false
+        open: false,
+        name: '',
+        iconColor: 'red',
+        token: ''
     }
 
     close = () => {
@@ -18,21 +24,56 @@ class AddChild extends React.Component {
         })
     }
 
-    handleClick = () => {
-        console.log("Add child");
+    handleClick = async () => {
+        await this.props.createChild({
+            user: this.props.auth._id,
+            name: this.state.name,
+            iconColor: this.state.iconColor,
+        });
+        this.props.fetchChildren();
         this.close();
+    }
+
+    handleNameChange = (e) => {
+        this.setState({
+            name: e.target.value
+        })
+    }
+
+    handleTokenChange = (e) => {
+        this.setState({
+            token: e.target.value
+        })
+    }
+
+    handleIconColorChange = (data) => {
+        this.setState({
+            iconColor: data.value
+        })
     }
 
     colorOptions = [
         {
             text: 'czerwony',
             value: 'red',
-            icon: 'circular red inverted icon tiny'
+            icon: {
+                name:'',
+                circular: true,
+                color: 'red',
+                inverted: true,
+                size: 'tiny'
+            }
         },
         {
             text: 'niebieski',
             value: 'blue',
-            icon: 'circular blue inverted icon tiny'
+            icon: {
+                name:'',
+                circular: true,
+                color: 'blue',
+                inverted: true,
+                size: 'tiny'
+            }
         },
     ]
 
@@ -52,20 +93,22 @@ class AddChild extends React.Component {
                 <Modal.Content>
                     <form className="ui form">
                         <div className="field">
-                            <label>Nazwa</label>
                             <div className="two fields">
                                 <div className="field">
-                                    <input name="name" type="text" placeholder="Imię" />
+                                    <label>Nazwa</label>
+                                    <input name="name" type="text" value={this.state.name} onChange={(e) => this.handleNameChange(e)} />
                                 </div>
                                 <div className="field">
-                                    <Dropdown placeholder='Kolor ikonki' fluid selection options={this.colorOptions} />
+                                    <label>Kolor ikonki</label>
+                                    <Dropdown value={this.state.iconColor} fluid selection options={this.colorOptions} onChange={(e,data) => this.handleIconColorChange(data)} />
                                 </div>
                             </div>
                         </div>
                         <div className="field">
                             <label>Token z aplikacji dziecka</label>
-                            <input name="token" type="text" />
+                            <input name="token" type="text" value={this.state.token} onChange={(e) => this.handleTokenChange(e)} />
                         </div>
+                        
                     </form>
                 </Modal.Content>
                 <Modal.Actions>
@@ -75,5 +118,8 @@ class AddChild extends React.Component {
         );
     }
 }
+const mapStateToProps = ({ children, auth }) => {
+    return { children, auth };
+}
 
-export default AddChild;
+export default connect(mapStateToProps, actions)(AddChild);
