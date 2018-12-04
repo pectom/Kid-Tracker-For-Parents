@@ -53,20 +53,23 @@ childrenRouter.put('/api/children/:childId',requireLogin, async (req,res,next) =
    }
 });
 childrenRouter.delete('/api/children/:childId',requireLogin, async(req, res, next) =>{
-    const childId = req.params.childId;
-    console.log(childId);
-    const children = req.user.children;
-    const index = children.findIndex(child => String(child._id) === childId);
-    if(index !== -1){
-        children.splice(index,1);
-        const user = await User.updateOne({
-            _id: req.user._id
-        },{
-            children
-        });
-        res.status(204).send(user);
-    }else{
-        res.status(400).send();
+    try{
+        const childId = req.params.childId;
+        const children = req.user.children;
+        const index = await children.findIndex(child => String(child._id) === childId);
+        if(index !== -1){
+            children.splice(index,1);
+            await User.updateOne({
+                _id: req.user._id
+            },{
+                children
+            });
+            return res.send(children).status(204);
+        }else{
+            res.status(400).send("Children not found");
+        }
+    } catch (e) {
+        console.log(e);
     }
 });
 module.exports = childrenRouter;
