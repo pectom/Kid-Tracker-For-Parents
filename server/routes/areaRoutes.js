@@ -9,18 +9,16 @@ const areaRouter = express.Router();
 
 
 areaRouter.post('/api/areas',requireLogin,async (req,res,next)=>{
-    console.log(`${new Date().getTime()} post`);
     const {name, iconId, longitude, latitude, radius, children} = req.body;
     if(name && iconId && longitude && latitude && radius && children)
     {
         const parent = req.user;
-
         const newArea = new Area({
             name,
             coordinates: [latitude,longitude],
             iconId,
             radius,
-            children,
+            children
         });
 
         const user = await User.updateOne({
