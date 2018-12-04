@@ -19,6 +19,7 @@ areaRouter.post('/api/areas',requireLogin,async (req,res,next)=>{
             name,
             coordinates: [latitude,longitude],
             iconId,
+            radius,
             children,
         });
 
