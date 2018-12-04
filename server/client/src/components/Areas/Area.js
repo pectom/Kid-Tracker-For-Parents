@@ -1,13 +1,50 @@
 import React from 'react';
 import EditArea from './EditArea';
 import DeleteChild from './DeleteArea';
+import { connect } from 'react-redux';
+
+import * as actions from '../../actions';
 
 class Area extends React.Component {
-    renderKidsIcons = () => this.props.kidsInitials.map( kidInital => 
-        <i key={kidInital[1]} className={`circular icon inverted ${kidInital[1]}`}>{kidInital[0]}</i>
-    );
+    state = {
+        myChildren: []
+    }
+
+    async componentDidMount() {
+        await this.props.fetchChildren();
+        this.renderChildrenIcons();
+    }
+
+    renderChildrenIcons() {
+        const allChildren = this.props.allChildren ? this.props.allChildren : [];
+        return allChildren.filter( child => {
+            var boo = false;
+            this.props.children.forEach(childId => {
+                if(child._id === childId){
+                    boo = true;
+                }
+            });
+            return boo;
+        }).forEach( child => {
+            this.setState({
+                myChildren: [...this.state.myChildren, {
+                    name: child.name,
+                    id: child._id,
+                    iconColor: child.iconColor
+                }]
+            });
+        });
+    }
+
+    renderKidIcons() {
+        const icons = this.state.myChildren ? this.state.myChildren : [];
+        return icons.map(childIcon => {
+            return <i key={childIcon.id} className={`circular icon inverted ${childIcon.iconColor}`}>{childIcon.name ? childIcon.name[0] : ''}</i>;
+        });
+    }
 
     render() {
+
         return (
             <div className="ui segment">
                 <div className="ui segment" style={{textAlign: "center", fontSize: "20px"}}>
@@ -15,13 +52,13 @@ class Area extends React.Component {
                 </div>
                 <div className="ui grid">
                     <div className="ui ten wide column">
-                        {this.renderKidsIcons()}
+                        {this.renderKidIcons()}
                     </div>
                     <div className="ui six wide column">
                         <EditArea 
                             name={this.props.name} 
                             icon={this.props.icon} 
-                            kidsNames={this.props.kidsInitials.map(el => el[2])} 
+                            myChildren={this.state.myChildren} 
                             lat={this.props.lat} 
                             lon={this.props.lon} 
                             rad={this.props.rad} 
@@ -29,7 +66,8 @@ class Area extends React.Component {
                         <DeleteChild 
                             name={this.props.name} 
                             icon={this.props.icon} 
-                            kidsInitials={this.props.kidsInitials} 
+                            myChildren={this.state.myChildren}
+                            id={this.props.id}
                         />
                     </div>
                 </div>
@@ -38,4 +76,10 @@ class Area extends React.Component {
     }
 }
 
-export default Area;
+const mapStateToProps = ({ children }) => {
+    return {
+        allChildren: children
+    }
+}
+
+export default connect(mapStateToProps, actions)(Area);

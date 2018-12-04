@@ -1,15 +1,21 @@
 import React from 'react';
 import { Modal, Dropdown } from 'semantic-ui-react';
+import { connect } from 'react-redux';
+
+import * as actions from '../../actions';
 
 class EditArea extends React.Component {
     state = {
         open: false,
         name: this.props.name,
         icon: this.props.icon,
-        kidsNames: this.props.kidsNames,
         lat: this.props.lat,
         lon: this.props.lon,
         rad: this.props.rad 
+    }
+
+    componentDidMount() {
+        this.props.fetchChildren();
     }
 
     close = () => {
@@ -19,6 +25,9 @@ class EditArea extends React.Component {
     }
 
     open = () => {
+        this.setState({
+            myChildren: this.props.myChildren.map(child => child.id)
+        })
         this.setState({
             open: true
         })
@@ -78,20 +87,22 @@ class EditArea extends React.Component {
         },
     ]
 
-    childOptions = [
-        {
-            text: 'Jessica',
-            value: 'Jessica',
-        },
-        {
-            text: 'Brajan',
-            value: 'Brajan',
-        },
-        {
-            text: 'Sebastian',
-            value: 'Sebastian',
-        }
-    ]
+    prepareChildrenOptions = () => {
+        const children = this.props.children ? this.props.children : [];
+        return children.map( child => {
+            return {
+                text: child.name,
+                value: child._id,
+                icon: {
+                    name:'',
+                    circular: true,
+                    color: child.iconColor,
+                    inverted: true,
+                    size: 'tiny'
+                }
+            }
+        })
+    }
 
     render() {
         return (
@@ -146,9 +157,9 @@ class EditArea extends React.Component {
                         <div className="field">
                             <label>Dzieci</label>
                             <Dropdown 
-                                value={this.state.kidsNames} 
+                                value={this.state.myChildren} 
                                 fluid multiple selection 
-                                options={this.childOptions} 
+                                options={this.prepareChildrenOptions()} 
                                 onChange={(e, data) => { this.handleKidChange(data)} }
                             />
                         </div>
@@ -163,4 +174,10 @@ class EditArea extends React.Component {
     }
 }
 
-export default EditArea;
+const mapStateToProps = ({ children }) => {
+    return {
+        children
+    }
+}
+
+export default connect(mapStateToProps, actions)(EditArea);

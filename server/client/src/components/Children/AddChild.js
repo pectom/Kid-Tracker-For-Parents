@@ -118,8 +118,8 @@ class AddChild extends React.Component {
         );
     }
 }
-const mapStateToProps = ({ children, auth, fetchChildren }) => {
-    return { children, auth, fetchChildren };
+const mapStateToProps = ({ children, auth }) => {
+    return { children, auth };
 }
 
 export default connect(mapStateToProps, actions)(AddChild);
