@@ -16,6 +16,7 @@ class Sidebar extends React.Component {
     }
      
     render() {
+        console.log(this.props.areas)
         return (
             <div>
                 <div className="ui segment" >

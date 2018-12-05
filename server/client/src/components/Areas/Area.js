@@ -45,7 +45,7 @@ class Area extends React.Component {
     }
 
     render() {
-
+        
         return (
             <div className="ui segment">
                 <div className="ui segment" style={{textAlign: "center", fontSize: "20px"}}>
