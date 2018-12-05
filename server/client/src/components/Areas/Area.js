@@ -10,37 +10,16 @@ class Area extends React.Component {
         myChildren: []
     }
 
-    async componentDidMount() {
-        await this.props.fetchChildren();
-        this.renderChildrenIcons();
-    }
-
-    renderChildrenIcons() {
-        const allChildren = this.props.allChildren ? this.props.allChildren : [];
-        return allChildren.filter( child => {
-            var boo = false;
-            const children = this.props.children ? this.props.children : [];
-            children.forEach(childId => {
-                if(child._id === childId){
-                    boo = true;
-                }
-            });
-            return boo;
-        }).forEach( child => {
-            this.setState({
-                myChildren: [...this.state.myChildren, {
-                    name: child.name,
-                    id: child._id,
-                    iconColor: child.iconColor
-                }]
-            });
+    componentDidMount() {
+        const children = this.props.children ? this.props.children : [];
+        this.setState({
+            myChildren: children.map(childTab => { return childTab[0] })
         });
     }
 
-    renderKidIcons() {
-        const icons = this.state.myChildren ? this.state.myChildren : [];
-        return icons.map(childIcon => {
-            return <i key={childIcon.id} className={`circular icon inverted ${childIcon.iconColor}`}>{childIcon.name ? childIcon.name[0] : ''}</i>;
+    renderChildrenIcons() {
+        return this.state.myChildren.map(child => {
+            return <i key={child._id} className={`circular icon inverted ${child.iconColor}`}>{child.name ? child.name[0] : ''}</i>
         });
     }
 
@@ -53,7 +32,7 @@ class Area extends React.Component {
                 </div>
                 <div className="ui grid">
                     <div className="ui ten wide column">
-                        {this.renderKidIcons()}
+                        {this.renderChildrenIcons()}
                     </div>
                     <div className="ui six wide column">
                         <EditArea 

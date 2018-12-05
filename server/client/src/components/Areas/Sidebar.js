@@ -12,11 +12,23 @@ class Sidebar extends React.Component {
 
     renderAreas = () => {
         const areas = this.props.areas ? this.props.areas : [];
-        return areas.map(area => <Area key={area._id} icon={area.iconId} name={area.name} children={area.children} lat={area.latitude} lon={area.longitude} rad={area.radius} id={area._id} />);
+        return areas.map(area => {
+            return (
+                <Area 
+                    key={area._id} 
+                    icon={area.iconId} 
+                    name={area.name} 
+                    children={area.children} 
+                    lat={area.coordinates ? area.coordinates[0] : 0} 
+                    lon={area.coordinates ? area.coordinates[1] : 0} 
+                    rad={area.radius} 
+                    id={area._id} 
+                />
+            );
+        });
     }
      
     render() {
-        console.log(this.props.areas)
         return (
             <div>
                 <div className="ui segment" >

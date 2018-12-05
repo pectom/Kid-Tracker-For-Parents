@@ -40,7 +40,7 @@ class AddArea extends React.Component {
             radius: this.state.radius,
             children: this.state.children
         });
-        this.fetchAreas();
+        await this.props.fetchAreas();
         this.close();
     }
 
