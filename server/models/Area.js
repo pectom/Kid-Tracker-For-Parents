@@ -17,9 +17,7 @@ const areaSchema = new Schema({
     radius: {
       type: Number
     },
-    children:{
-      type: [{type: Schema.Types.ObjectId, ref:"Children"}]
-    }
+    children: [String]
 });
 
 mongoose.model('areas',areaSchema);
