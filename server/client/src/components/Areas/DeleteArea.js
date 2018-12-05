@@ -37,7 +37,6 @@ class DeleteArea extends React.Component {
     }
 
     render() {
-        console.log(this.props.myChildren)
         return (
             <Modal
                 size="mini"

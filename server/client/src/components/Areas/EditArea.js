@@ -11,11 +11,15 @@ class EditArea extends React.Component {
         icon: this.props.icon,
         lat: this.props.lat,
         lon: this.props.lon,
-        rad: this.props.rad 
+        rad: this.props.rad,
+        childrenIds: []
     }
 
-    componentDidMount() {
-        this.props.fetchChildren();
+    async componentDidMount() {
+        await this.props.fetchChildren();
+        this.setState({
+            childrenIds: this.props.myChildren.map(child => { return child._id })
+        });
     }
 
     close = () => {
@@ -26,15 +30,21 @@ class EditArea extends React.Component {
 
     open = () => {
         this.setState({
-            myChildren: this.props.myChildren.map(child => child.id)
-        })
-        this.setState({
             open: true
-        })
+        });
     }
 
-    handleSaveClick = () => {
-        console.log("Edit area");
+    handleSaveClick = async () => {
+        await this.props.updateArea({
+            name: this.state.name,
+            iconId: this.state.icon,
+            longitude: this.state.lon,
+            latitude: this.state.lat,
+            radius: this.state.rad,
+            children: this.state.childrenIds,
+            id: this.props.id
+        })
+        await this.props.fetchAreas();
         this.close();
     }
 
@@ -70,7 +80,7 @@ class EditArea extends React.Component {
 
     handleKidChange = data => {
         this.setState({
-            kidsNames: data.value
+            childrenIds: data.value
         });
     }
 
@@ -91,7 +101,6 @@ class EditArea extends React.Component {
         const children = this.props.children ? this.props.children : [];
         return children.map( child => {
             return {
-                key: child.id,
                 text: child.name,
                 value: child._id,
                 icon: {
@@ -158,7 +167,7 @@ class EditArea extends React.Component {
                         <div className="field">
                             <label>Dzieci</label>
                             <Dropdown 
-                                value={this.state.myChildren} 
+                                value={this.state.childrenIds} 
                                 fluid multiple selection 
                                 options={this.prepareChildrenOptions()} 
                                 onChange={(e, data) => { this.handleKidChange(data)} }

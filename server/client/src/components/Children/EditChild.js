@@ -98,7 +98,6 @@ class EditChild extends React.Component {
                                         fluid selection 
                                         options={this.colorOptions} 
                                         onChange={(e,data) => this.handleIconColorChange(data)}
-                                        
                                     />
                                 </div>
                             </div>

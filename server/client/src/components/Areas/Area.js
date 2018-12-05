@@ -24,7 +24,6 @@ class Area extends React.Component {
     }
 
     render() {
-        
         return (
             <div className="ui segment">
                 <div className="ui segment" style={{textAlign: "center", fontSize: "20px"}}>
@@ -36,6 +35,7 @@ class Area extends React.Component {
                     </div>
                     <div className="ui six wide column">
                         <EditArea 
+                            id={this.props.id}
                             name={this.props.name} 
                             icon={this.props.icon} 
                             myChildren={this.state.myChildren} 
