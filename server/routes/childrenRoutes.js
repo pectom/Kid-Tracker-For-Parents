@@ -5,19 +5,16 @@ const User = mongoose.model('users');
 const Child = mongoose.model('children');
 
 const childrenRouter = express.Router();
-childrenRouter.use(requireLogin);
 
 
-childrenRouter.post('/api/children',async (req,res,next)=>{
-    const {name, email, iconLetter, iconColor} = req.body;
-    if(name && email && iconColor && iconLetter)
+childrenRouter.post('/api/children',requireLogin,async (req,res,next)=>{
+    const {name, iconColor} = req.body;
+    if(name && iconColor)
     { //sprawdzanie unikalnosci ikony i koloru
         const parent = req.user;
         const newChildren = new Child({
             name,
-            email,
             iconColor,
-            iconLetter
         });
 
         const user = await User.updateOne({
@@ -30,10 +27,10 @@ childrenRouter.post('/api/children',async (req,res,next)=>{
         res.status(400).send();
     }
 });
-childrenRouter.get('/api/children',async (req,res,next)=> {
+childrenRouter.get('/api/children',requireLogin,(req,res,next)=> {
     res.send(req.user.children);
 });
-childrenRouter.put('/api/children/:childId', async (req,res,next) => {
+childrenRouter.put('/api/children/:childId',requireLogin, async (req,res,next) => {
    const {name, iconColor} = req.body;
    const childId = req.params.childId;
    if(name && iconColor){
@@ -55,20 +52,24 @@ childrenRouter.put('/api/children/:childId', async (req,res,next) => {
        res.status(400).send();
    }
 });
-childrenRouter.delete('/api/children/:childId', async(req, res, next) =>{
-    const childId = req.params.childId;
-    const children = req.user.children;
-    const index = children.findIndex(child => String(child._id) === childId);
-    if(index !== -1){
-        children.splice(index,1);
-        const user = await User.updateOne({
-            _id: req.user._id
-        },{
-            children
-        });
-        res.status(204).send(user);
-    }else{
-        res.status(400).send();
+childrenRouter.delete('/api/children/:childId',requireLogin, async(req, res, next) =>{
+    try{
+        const childId = req.params.childId;
+        const children = req.user.children;
+        const index = await children.findIndex(child => String(child._id) === childId);
+        if(index !== -1){
+            children.splice(index,1);
+            await User.updateOne({
+                _id: req.user._id
+            },{
+                children
+            });
+            return res.send(children).status(204);
+        }else{
+            res.status(400).send("Children not found");
+        }
+    } catch (e) {
+        console.log(e);
     }
 });
 module.exports = childrenRouter;

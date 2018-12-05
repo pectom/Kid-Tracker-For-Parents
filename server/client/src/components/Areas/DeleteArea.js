@@ -1,5 +1,8 @@
 import React from 'react';
 import { Modal } from 'semantic-ui-react';
+import { connect } from 'react-redux';
+
+import * as actions from '../../actions';
 
 class DeleteArea extends React.Component {
     state = {
@@ -18,14 +21,20 @@ class DeleteArea extends React.Component {
         })
     }
 
-    handleClick = () => {
-        console.log("Delete area");
+    handleClick = async () => {
+        await this.props.deleteArea({
+            id: this.props.id
+        });
+        this.props.fetchAreas();
         this.close();
     }
 
-    renderKidsIcons = () => this.props.kidsInitials.map( kidInital => 
-        <i key={kidInital[1]} className={`circular icon inverted ${kidInital[1]}`}>{kidInital[0]}</i>
-    );
+    renderKidIcons() {
+        const children = this.props.myChildren ? this.props.myChildren : [];
+        return children.map(child => {
+            return <i key={child._id} className={`circular icon inverted ${child.iconColor}`}>{child.name ? child.name[0] : ''}</i>;
+        });
+    }
 
     render() {
         return (
@@ -50,7 +59,7 @@ class DeleteArea extends React.Component {
                             </div>
                             <div className="ui six wide column middle aligned content">
                                 <div>
-                                    {this.renderKidsIcons()}
+                                    {this.renderKidIcons()}
                                 </div>
                             </div>
                         </div>
@@ -63,5 +72,8 @@ class DeleteArea extends React.Component {
         );
     }
 }
+const mapStateToProps = ({ areas }) => {
+    return { areas };
+}
 
-export default DeleteArea;
+export default connect(mapStateToProps,actions)(DeleteArea);

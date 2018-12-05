@@ -1,11 +1,27 @@
 import React from 'react';
 import EditArea from './EditArea';
-import DeleteChild from './DeleteArea';
+import DeleteArea from './DeleteArea';
+import { connect } from 'react-redux';
+
+import * as actions from '../../actions';
 
 class Area extends React.Component {
-    renderKidsIcons = () => this.props.kidsInitials.map( kidInital => 
-        <i key={kidInital[1]} className={`circular icon inverted ${kidInital[1]}`}>{kidInital[0]}</i>
-    );
+    state = {
+        myChildren: []
+    }
+
+    componentDidMount() {
+        const children = this.props.children ? this.props.children : [];
+        this.setState({
+            myChildren: children.map(childTab => { return childTab[0] })
+        });
+    }
+
+    renderChildrenIcons() {
+        return this.state.myChildren.map(child => {
+            return <i key={child._id} className={`circular icon inverted ${child.iconColor}`}>{child.name ? child.name[0] : ''}</i>
+        });
+    }
 
     render() {
         return (
@@ -15,21 +31,23 @@ class Area extends React.Component {
                 </div>
                 <div className="ui grid">
                     <div className="ui ten wide column">
-                        {this.renderKidsIcons()}
+                        {this.renderChildrenIcons()}
                     </div>
                     <div className="ui six wide column">
                         <EditArea 
+                            id={this.props.id}
                             name={this.props.name} 
                             icon={this.props.icon} 
-                            kidsNames={this.props.kidsInitials.map(el => el[2])} 
+                            myChildren={this.state.myChildren} 
                             lat={this.props.lat} 
                             lon={this.props.lon} 
                             rad={this.props.rad} 
                         />
-                        <DeleteChild 
+                        <DeleteArea 
                             name={this.props.name} 
                             icon={this.props.icon} 
-                            kidsInitials={this.props.kidsInitials} 
+                            myChildren={this.state.myChildren}
+                            id={this.props.id}
                         />
                     </div>
                 </div>
@@ -38,4 +56,10 @@ class Area extends React.Component {
     }
 }
 
-export default Area;
+const mapStateToProps = ({ children }) => {
+    return {
+        allChildren: children
+    }
+}
+
+export default connect(mapStateToProps, actions)(Area);

@@ -23,7 +23,7 @@ registartionRouter.post('/api/registration',(req,res,next) =>{
                console.log(err.message);
                return next(err);
            } else {
-               res.redirect('/');
+               res.send();
            }
         });
     } else {
