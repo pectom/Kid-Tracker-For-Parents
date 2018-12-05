@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from '../Header';
 import Sidebar from './Sidebar';
-import Map from '../../Map';
+import Map from '../Map';
 
 class Rules extends React.Component {
     areaOptions = [
