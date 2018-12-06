@@ -42,6 +42,7 @@ class Landing extends React.Component {
     }
 
     render() {
+        console.log(this.props.auth)
         if(this.props.auth === false) {
             return (
                 <div>
