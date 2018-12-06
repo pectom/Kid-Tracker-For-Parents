@@ -7,8 +7,8 @@ class Rule extends React.Component {
         active: this.props.active
     };
 
-    renderKidsIcons = () => this.props.kids.map( kidInital => 
-        <i key={kidInital[0]} className={`circular icon inverted ${kidInital[1]}`}>{kidInital[0][0]}</i>
+    renderChildrenIcons = () => this.props.children.map( child => 
+        <i key={child} className={`circular icon inverted ${child.iconColor}`}>{child.name}</i>
     );
 
     handleToggle = () => {
@@ -29,7 +29,7 @@ class Rule extends React.Component {
                             </div> 
                         </div>
                         <div className="ui eleven wide column">
-                            {this.props.area.text} <i className={`${this.props.icon} icon`} />
+                            {this.props.area.substr(0,4)} <i className={`${this.props.area.icon} icon`} />
                         </div>
                     </div>
                 </div>
@@ -40,8 +40,8 @@ class Rule extends React.Component {
                         </div>
                     </div>
                     <div className="ui ten wide column">
-                        {this.renderKidsIcons()}
-                        <EditRule 
+                        {this.renderChildrenIcons()}
+                        {/* <EditRule 
                             area={this.props.area} 
                             icon={this.props.icon} 
                             active={this.props.active} 
@@ -60,7 +60,7 @@ class Rule extends React.Component {
                             starttime={this.props.starttime}
                             endtime={this.props.endtime} 
                             kids={this.props.kids}
-                        />
+                        /> */}
                     </div>
                 </div>
             </div>

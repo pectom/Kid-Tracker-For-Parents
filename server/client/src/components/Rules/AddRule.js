@@ -1,9 +1,18 @@
 import React from 'react';
 import { Modal, Dropdown } from 'semantic-ui-react';
+import { connect } from 'react-redux';
+
+import * as actions from '../../actions';
 
 class AddRule extends React.Component {
     state = {
         open: false
+    }
+
+    componentDidMount() {
+        this.props.fetchChildren();
+        this.props.fetchAreas();
+        this.props.fetchRules();
     }
 
     close = () => {
@@ -112,4 +121,8 @@ class AddRule extends React.Component {
     }
 }
 
-export default AddRule;
+const mapStateToProps = ({ rules, children, areas }) => {
+    return { rules, children, areas };
+}
+
+export default connect(mapStateToProps, actions)(AddRule);
