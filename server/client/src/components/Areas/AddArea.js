@@ -6,7 +6,6 @@ import * as actions from '../../actions';
 
 class AddArea extends React.Component {
     componentDidMount() {
-        this.props.fetchAreas();
         this.props.fetchChildren();
     }
 
@@ -41,7 +40,7 @@ class AddArea extends React.Component {
             radius: this.state.radius,
             children: this.state.children
         });
-        this.fetchAreas();
+        await this.props.fetchAreas();
         this.close();
     }
 

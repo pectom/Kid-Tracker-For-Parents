@@ -30,9 +30,9 @@ class DeleteArea extends React.Component {
     }
 
     renderKidIcons() {
-        const icons = this.props.myChildren ? this.props.myChildren : [];
-        return icons.map(childIcon => {
-            return <i key={childIcon.id} className={`circular icon inverted ${childIcon.iconColor}`}>{childIcon.name ? childIcon.name[0] : ''}</i>;
+        const children = this.props.myChildren ? this.props.myChildren : [];
+        return children.map(child => {
+            return <i key={child._id} className={`circular icon inverted ${child.iconColor}`}>{child.name ? child.name[0] : ''}</i>;
         });
     }
 
