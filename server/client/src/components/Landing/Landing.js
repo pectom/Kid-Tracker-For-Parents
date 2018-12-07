@@ -27,10 +27,10 @@ class Landing extends React.Component {
         return (
             <div className="ui segment">
                 <div className="ui top attached tabular menu">
-                    <button className={`item ${logText}`} onClick={() => this.changeLogOrRegister('log')} >
+                    <button id="login-tab" className={`item ${logText}`} onClick={() => this.changeLogOrRegister('log')} >
                         Logowanie
                     </button>
-                    <button className={`item ${regText}`} onClick={() => this.changeLogOrRegister('reg')} >
+                    <button id="register-tab" className={`item ${regText}`} onClick={() => this.changeLogOrRegister('reg')} >
                         Rejestracja
                     </button>
                 </div>

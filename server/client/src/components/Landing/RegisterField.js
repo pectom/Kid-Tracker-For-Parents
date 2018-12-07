@@ -15,7 +15,7 @@ class RegisterField extends React.Component {
         return (
             <div className="field">
                 <label>{this.props.label}</label>
-                <input {...this.props.input} type={this.props.type} />
+                <input id={this.props.id} {...this.props.input} type={this.props.type} />
                 <div>{this.renderError(this.props.meta)}</div>
             </div>
         );
