@@ -18,9 +18,10 @@ class Logging extends React.Component {
             <div>
                 <div className="ui segment">
                     <form className="ui form" onSubmit={this.props.handleSubmit(values => console.log('Logujemy'))}>
-                        <Field component={LoginField} type="text" label="Email" name="email" />
-                        <Field component={LoginField} type="password" label="Hasło" name="password" />
+                        <Field id="login-email" component={LoginField} type="text" label="Email" name="email" />
+                        <Field id="login-password" component={LoginField} type="password" label="Hasło" name="password" />
                         <button 
+                            id="login-button"
                             className="ui button primary" 
                             type="submit"
                             onClick={() => this.myLoginUser(this.props.formValues)}
@@ -33,7 +34,7 @@ class Logging extends React.Component {
                     Lub
                 </div>
                 <div className="ui segment" style={{textAlign: 'center'}}>
-                    <a className="ui google plus button" href="/auth/google">
+                    <a id="google-button" className="ui google plus button" href="/auth/google">
                         <i className="google icon" />
                         Zaloguj z Google
                     </a>

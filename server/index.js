@@ -8,11 +8,14 @@ const cookieSession = require("cookie-session");
 require('./models/User');
 require('./models/Child');
 require('./models/Area');
+require('./models/Rule');
 
 require('./services/passport');
+
 const registrationRoutes = require('./routes/registrationRoutes');
 const childrenRoutes  = require('./routes/childrenRoutes');
 const areaRoutes = require('./routes/areaRoutes');
+const ruleRouter = require('./routes/ruleRoutes');
 
 const morgan = require('morgan');
 
@@ -36,6 +39,7 @@ app.use('/auth',authRouter);
 app.use(registrationRoutes);
 app.use(childrenRoutes);
 app.use(areaRoutes);
+app.use(ruleRouter);
 
 app.get('/api/current_user',(req,res) =>{
     if(!req.user) {

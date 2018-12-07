@@ -1,5 +1,8 @@
 import React from 'react';
 import { Modal, Dropdown } from 'semantic-ui-react';
+import { connect } from 'react-redux';
+
+import * as actions from '../../actions';
 
 class EditRule extends React.Component {
     state = {
@@ -10,6 +13,12 @@ class EditRule extends React.Component {
         endtime: this.props.endtime,
         area: this.props.area.value,
         kids: this.props.kids.map(kid => kid[0])
+    }
+
+    async componentDidMount() {
+        await this.props.fetchChildren();
+        await this.props.fetchAreas();
+        await this.props.fetchRules();
     }
 
     close = () => {
@@ -24,9 +33,8 @@ class EditRule extends React.Component {
         })
     }
 
-
     handleClick = () => {
-        console.log("Add area");
+        console.log("Edit rule");
         this.close();
     }
 
@@ -79,31 +87,35 @@ class EditRule extends React.Component {
         }
     ];
 
-    areaOptions = [
-        {
-            text: 'Dom',
-            value: 1
-        },
-        {
-            text: 'Basen',
-            value: 2
-        }
-    ];
+    prepareChildrenOptions = () => {
+        const children = this.props.children ? this.props.children : [];
+        return children.map( child => {
+            return {
+                text: child.name,
+                value: child._id,
+                icon: {
+                    name:'',
+                    circular: true,
+                    color: child.iconColor,
+                    inverted: true,
+                    size: 'tiny'
+                }
+            }
+        })
+    }
 
-    childOptions = [
-        {
-            text: 'Jessica',
-            value: 'Jessica'
-        },
-        {
-            text: 'Brajan',
-            value: 'Brajan'
-        },
-        {
-            text: 'Sebastian',
-            value: 'Sebastian'
-        }
-    ];
+    prepareAreasOptions = () => {
+        const areas = this.props.areas ? this.props.areas : [];
+        return areas.map( area => {
+            return {
+                text: area.name,
+                value: area._id,
+                icon: {
+                    name:area.iconId
+                }
+            }
+        })
+    }
 
     render() {
         return (
@@ -165,7 +177,7 @@ class EditRule extends React.Component {
                             <Dropdown 
                                 placeholder='Obszar' 
                                 fluid selection 
-                                options={this.areaOptions} 
+                                options={this.prepareAreasOptions()} 
                                 value={this.state.area} 
                                 onChange={(e, data) => this.handleAreaChange(data)}
                             />
@@ -175,7 +187,7 @@ class EditRule extends React.Component {
                             <Dropdown 
                                 placeholder='Dzieci' 
                                 fluid multiple selection 
-                                options={this.childOptions} 
+                                options={this.prepareChildrenOptions()} 
                                 value={this.state.kids}
                                 onChange={(e,data) => this.handleKidChange(data)}
                             />
@@ -191,4 +203,8 @@ class EditRule extends React.Component {
     }
 }
 
-export default EditRule;
+const mapStateToProps = ({ rules, children, areas }) => {
+    return { rules, children, areas };
+}
+
+export default connect(mapStateToProps, actions)(EditRule);

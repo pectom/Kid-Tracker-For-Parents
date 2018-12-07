@@ -6,21 +6,11 @@ import { connect } from 'react-redux';
 import * as actions from '../../actions';
 
 class Area extends React.Component {
-    state = {
-        myChildren: []
-    }
-
-    componentDidMount() {
-        const children = this.props.children ? this.props.children : [];
-        this.setState({
-            myChildren: children.map(childTab => { return childTab[0] })
-        });
-    }
 
     renderChildrenIcons() {
-        return this.state.myChildren.map(child => {
+        return this.props.children ? this.props.children.map(childTab => { return childTab[0] ? childTab[0] : [] }).map(child => {
             return <i key={child._id} className={`circular icon inverted ${child.iconColor}`}>{child.name ? child.name[0] : ''}</i>
-        });
+        }) : [];
     }
 
     render() {
@@ -38,7 +28,7 @@ class Area extends React.Component {
                             id={this.props.id}
                             name={this.props.name} 
                             icon={this.props.icon} 
-                            myChildren={this.state.myChildren} 
+                            myChildren={this.props.children ? this.props.children.map(childTab => { return childTab[0] ? childTab[0] : [] }) : []} 
                             lat={this.props.lat} 
                             lon={this.props.lon} 
                             rad={this.props.rad} 
@@ -46,7 +36,7 @@ class Area extends React.Component {
                         <DeleteArea 
                             name={this.props.name} 
                             icon={this.props.icon} 
-                            myChildren={this.state.myChildren}
+                            myChildren={this.props.children ? this.props.children.map(childTab => { return childTab[0] ? childTab[0] : [] }) : []}
                             id={this.props.id}
                         />
                     </div>
@@ -56,9 +46,10 @@ class Area extends React.Component {
     }
 }
 
-const mapStateToProps = ({ children }) => {
+const mapStateToProps = ({ children, areas }) => {
     return {
-        allChildren: children
+        allChildren: children,
+        areas
     }
 }
 
