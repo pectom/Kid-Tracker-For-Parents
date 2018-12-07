@@ -5,6 +5,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "http-proxy-middleware": "^0.19.1",
+    "jasmine-node": "^1.16.2",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
     "react-redux": "^5.1.1",
@@ -19,16 +20,35 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "jasmine BABEL_ENV=development JASMINE_CONFIG_PATH=client_spec/support/jasmine.json",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": "react-app"
+  },
+  "babel": {
+    "presets": [
+      "react-app"
+    ]
   },
   "browserslist": [
     ">0.2%",
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "babel": "^6.23.0",
+    "babel-core": "^6.26.3",
+    "babel-preset-react-app": "^6.1.0",
+    "enzyme": "^3.7.0",
+    "enzyme-adapter-react-16": "^1.7.0",
+    "jasmine": "3.3.0",
+    "jasmine-enzyme": "^7.0.1",
+    "jasmine-node": "^1.16.2",
+    "jsdom": "^13.0.0",
+    "react-addons-test-utils": "^15.6.2",
+    "react-dom": "^16.6.3",
+    "request": "^2.88.0"
+  }
 }
