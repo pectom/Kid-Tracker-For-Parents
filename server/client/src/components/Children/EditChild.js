@@ -73,7 +73,7 @@ class EditChild extends React.Component {
                 open={this.state.open}
                 onClose={() => this.close()}
                 trigger={
-                    <button className="ui icon button" data-tooltip="Edytuj dane dziecka" onClick={() => this.open()}>
+                    <button id={`edit-child-${this.props.id}`} className="ui icon button" data-tooltip="Edytuj dane dziecka" onClick={() => this.open()}>
                                 <i className="edit icon" />
                     </button>
                 }

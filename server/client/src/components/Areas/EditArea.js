@@ -43,8 +43,8 @@ class EditArea extends React.Component {
             radius: this.state.rad,
             children: this.state.childrenIds,
             id: this.props.id
-        })
-        await this.props.fetchAreas();
+        });
+        this.props.fetchAreas();
         this.close();
     }
 
@@ -184,9 +184,10 @@ class EditArea extends React.Component {
     }
 }
 
-const mapStateToProps = ({ children }) => {
+const mapStateToProps = ({ children, areas }) => {
     return {
-        children
+        children,
+        areas
     }
 }
 
