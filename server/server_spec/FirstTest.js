@@ -27,7 +27,6 @@ describe("Index", function() {
             .expect('status', 200)
             .then(function(response) {
                 expect(response.status).toBe(200);
-                // console.log(response)
             })
             .done(done);
     });
@@ -52,7 +51,6 @@ describe("Index", function() {
             .expect('status', 200)
             .then(function(response) {
                 expect(response.status).toBe(200);
-                console.log(response)
             })
             .done(done);
     });
