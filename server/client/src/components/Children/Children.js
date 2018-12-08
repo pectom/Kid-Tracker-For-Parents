@@ -1,6 +1,5 @@
 import React from 'react';
 import Header from '../Header';
-import Map from '../Map';
 import Sidebar from './Sidebar';
 
 class Children extends React.Component {
@@ -13,7 +12,7 @@ class Children extends React.Component {
                         <Sidebar />
                     </div>
                     <div className="ui eleven wide column">
-                        <Map />
+                        
                     </div>
                 </div>
             </div>

@@ -1,12 +1,13 @@
 import React from 'react';
 import Header from '../Header';
 import Sidebar from './Sidebar';
-import Map from '../Map';
+import Map from './Map';
+import { Marker, Circle } from 'react-google-maps';
 
 import { connect } from 'react-redux';
 
 import * as actions from '../../actions';
-import { Marker, Circle } from 'google-maps-react';
+
 
 class Areas extends React.Component {
     componentDidMount() {
@@ -18,31 +19,32 @@ class Areas extends React.Component {
             return (
                 <Marker
                     key={area._id}
-                    title={area.name} 
                     position={{
                         lat: area.coordinates ? area.coordinates[0] : 0,
                         lng: area.coordinates ? area.coordinates[1] : 0
                     }}
+                    text={area.name}
                     label={area.name}
+                    icon={"Nothing here"}
                 />
-            );
+            )
         }) : [];
     }
 
-    // renderCircles() {
-    //     return this.props.areas ? this.props.areas.map( area => {
-    //         return (
-    //             <Circle 
-    //                 key={area._id} 
-    //                 center={{
-    //                     lat: area.coordinates ? area.coordinates[0] : 0,
-    //                     lng: area.coordinates ? area.coordinates[1] : 0
-    //                 }}
-    //                 radius={area.radius}
-    //             />
-    //         );
-    //     }) : [];
-    // }
+    renderCircles() {
+        return this.props.areas ? this.props.areas.map( area => {
+            return (
+                <Circle
+                    key={area._id}
+                    center={{
+                        lat: area.coordinates ? area.coordinates[0] : 0,
+                        lng: area.coordinates ? area.coordinates[1] : 0
+                    }}
+                    radius={area.radius ? area.radius : 0}
+                />
+            )
+        }) : [];
+    }
 
     render() {
         return (
@@ -52,8 +54,8 @@ class Areas extends React.Component {
                     <div className="ui five wide column">
                         <Sidebar />
                     </div>
-                    <div className="ui eleven wide column">
-                        <Map pins={this.renderMarkers()} />
+                    <div className="ui eleven wide column" style={{height: '100vh', width: '100%'}}>
+                        <Map markers={this.renderMarkers()} circles={this.renderCircles()} />
                     </div>
                 </div>
             </div>

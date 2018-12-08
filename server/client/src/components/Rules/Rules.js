@@ -1,7 +1,6 @@
 import React from 'react';
 import Header from '../Header';
 import Sidebar from './Sidebar';
-import Map from '../Map';
 
 class Rules extends React.Component {
     areaOptions = [
@@ -47,7 +46,6 @@ class Rules extends React.Component {
                         <Sidebar />
                     </div>
                     <div className="ui eleven wide column">
-                        <Map />
                     </div>
                 </div>
             </div>
