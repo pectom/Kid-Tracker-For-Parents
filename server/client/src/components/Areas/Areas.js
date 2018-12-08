@@ -29,20 +29,20 @@ class Areas extends React.Component {
         }) : [];
     }
 
-    renderCircles() {
-        return this.props.areas ? this.props.areas.map( area => {
-            return (
-                <Circle 
-                    key={area._id} 
-                    center={{
-                        lat: area.coordinates ? area.coordinates[0] : 0,
-                        lng: area.coordinates ? area.coordinates[1] : 0
-                    }}
-                    radius={area.radius}
-                />
-            );
-        }) : [];
-    }
+    // renderCircles() {
+    //     return this.props.areas ? this.props.areas.map( area => {
+    //         return (
+    //             <Circle 
+    //                 key={area._id} 
+    //                 center={{
+    //                     lat: area.coordinates ? area.coordinates[0] : 0,
+    //                     lng: area.coordinates ? area.coordinates[1] : 0
+    //                 }}
+    //                 radius={area.radius}
+    //             />
+    //         );
+    //     }) : [];
+    // }
 
     render() {
         return (
@@ -53,7 +53,7 @@ class Areas extends React.Component {
                         <Sidebar />
                     </div>
                     <div className="ui eleven wide column">
-                        <Map pins={this.renderMarkers()} circles={this.renderCircles()} />
+                        <Map pins={this.renderMarkers()} />
                     </div>
                 </div>
             </div>

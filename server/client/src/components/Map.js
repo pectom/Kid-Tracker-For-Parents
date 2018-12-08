@@ -7,13 +7,13 @@ const mapStyles = {
     height: '95%'
 };
 
-const Circle = new google.maps.Circle({
-    center: {
-        lat: 50.06707103,
-        lng: 19.91332054
-    },
-    radius: 150
-});
+// const Circle = new google.maps.Circle({
+//     center: {
+//         lat: 50.06707103,
+//         lng: 19.91332054
+//     },
+//     radius: 150
+// });
 
 export class MapContainer extends React.Component {
     render() {
@@ -29,7 +29,7 @@ export class MapContainer extends React.Component {
                     }}
                 >
                     {this.props.pins}
-                    {Circle}
+                    {/* {Circle} */}
                 </Map>
             </div>
         ); 

@@ -40,7 +40,7 @@ class DeleteChild extends React.Component {
                 open={this.state.open}
                 onClose={() => this.close()}
                 trigger={
-                    <button className="ui icon button" data-tooltip="Usuń dziecko" onClick={() => this.open()}>
+                    <button id={`delete-child-${this.props.id}`} className="ui icon button" data-tooltip="Usuń dziecko" onClick={() => this.open()}>
                         <i className="trash alternate icon" />
                     </button>
                 }
@@ -63,7 +63,7 @@ class DeleteChild extends React.Component {
                     </div>
                 </Modal.Content>
                 <Modal.Actions>
-                    <button className="ui button green" onClick={() => this.handleClick()}>Usuń</button>
+                    <button id={`delete-child-deleteButton-${this.props.id}`}className="ui button green" onClick={() => this.handleClick()}>Usuń</button>
                 </Modal.Actions>
             </Modal>
         );

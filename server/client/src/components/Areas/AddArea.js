@@ -117,7 +117,7 @@ class AddArea extends React.Component {
                 open={this.state.open}
                 onClose={() => this.close()}
                 trigger={
-                    <button className="circular ui icon button blue" data-tooltip="Dodaj obszar" onClick={() => this.open()}>
+                    <button id="area-addArea" className="circular ui icon button blue" data-tooltip="Dodaj obszar" onClick={() => this.open()}>
                         <i className="icon plus large"></i>
                     </button>
                 }
@@ -130,11 +130,23 @@ class AddArea extends React.Component {
                             <div className="two fields">
                                 <div className="field">
                                     <label>Nazwa</label>
-                                    <input name="name" type="text" value={this.state.name} onChange={(e) => this.handleNameChange(e)} />
+                                    <input 
+                                        id="area-addArea-name" 
+                                        name="name" 
+                                        type="text" 
+                                        value={this.state.name} 
+                                        onChange={(e) => this.handleNameChange(e)} 
+                                    />
                                 </div>
                                 <div className="field">
                                     <label>Ikona</label>
-                                    <Dropdown value={this.state.iconId} onChange={(e, data) => this.handleIconIdChange(data)} fluid selection options={this.iconOptions} />
+                                    <Dropdown 
+                                        id="area-addArea-icon" 
+                                        value={this.state.iconId} 
+                                        onChange={(e, data) => this.handleIconIdChange(data)} 
+                                        fluid selection 
+                                        options={this.iconOptions} 
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -143,21 +155,22 @@ class AddArea extends React.Component {
                             <div className="two fields">
                                 <div className="field">
                                     <label>Szerokość geograficzna</label>
-                                    <input name="lat" type="text" value={this.state.latitude} onChange={(e) => this.handleLatitudeChange(e)} />
+                                    <input id="area-addArea-latitude" name="lat" type="text" value={this.state.latitude} onChange={(e) => this.handleLatitudeChange(e)} />
                                 </div>
                                 <div className="field">
                                     <label>Długość geograficzna</label>
-                                    <input name="lon" type="text" value={this.state.longitude} onChange={(e) => this.handleLongitudeChange(e)} />
+                                    <input id="area-addArea-longitude" name="lon" type="text" value={this.state.longitude} onChange={(e) => this.handleLongitudeChange(e)} />
                                 </div>
                                 <div className="field">
                                     <label>Promień</label>
-                                    <input name="rad" type="text" value={this.state.radius} onChange={(e) => this.handleRadiusChange(e)} />
+                                    <input id="area-addArea-radius" name="rad" type="text" value={this.state.radius} onChange={(e) => this.handleRadiusChange(e)} />
                                 </div>
                             </div>
                         </div>
                         <div className="field">
                             <label>Dzieci</label>
-                            <Dropdown 
+                            <Dropdown
+                                id="area-addArea-children" 
                                 value={this.state.children} 
                                 onChange={(e, data) => this.handleChildrenChange(data)} 
                                 fluid multiple selection 
