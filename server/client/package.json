@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
+    "babel": "^6.23.0",
+    "google-maps-react": "^2.0.2",
     "http-proxy-middleware": "^0.19.1",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
@@ -30,5 +32,13 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "babel-preset-react-app": "^6.1.0",
+    "enzyme": "^3.7.0",
+    "enzyme-adapter-react-16": "^1.7.0",
+    "jasmine": "^3.3.1",
+    "jasmine-enzyme": "^7.0.1",
+    "jsdom": "^13.0.0"
+  }
 }

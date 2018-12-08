@@ -29,3 +29,5 @@ server/node_modules
 .idea/workspace.xml
 server/config/dev.js
 server/client/build
+
+server/client/.env*

@@ -3,7 +3,47 @@ import Header from '../Header';
 import Sidebar from './Sidebar';
 import Map from '../Map';
 
+import { connect } from 'react-redux';
+
+import * as actions from '../../actions';
+import { Marker, Circle } from 'google-maps-react';
+
 class Areas extends React.Component {
+    componentDidMount() {
+        this.props.fetchAreas();
+    }
+
+    renderMarkers() {
+        return this.props.areas ? this.props.areas.map( area => {
+            return (
+                <Marker
+                    key={area._id}
+                    title={area.name} 
+                    position={{
+                        lat: area.coordinates ? area.coordinates[0] : 0,
+                        lng: area.coordinates ? area.coordinates[1] : 0
+                    }}
+                    label={area.name}
+                />
+            );
+        }) : [];
+    }
+
+    renderCircles() {
+        return this.props.areas ? this.props.areas.map( area => {
+            return (
+                <Circle 
+                    key={area._id} 
+                    center={{
+                        lat: area.coordinates ? area.coordinates[0] : 0,
+                        lng: area.coordinates ? area.coordinates[1] : 0
+                    }}
+                    radius={area.radius}
+                />
+            );
+        }) : [];
+    }
+
     render() {
         return (
             <div>
@@ -13,12 +53,17 @@ class Areas extends React.Component {
                         <Sidebar />
                     </div>
                     <div className="ui eleven wide column">
-                        <Map mapSrc="https://www.openstreetmap.org/export/embed.html?bbox=19.77857360839844%2C50.01939873027272%2C20.059912109375003%2C50.07425960242971" />
+                        <Map pins={this.renderMarkers()} circles={this.renderCircles()} />
                     </div>
                 </div>
             </div>
         );
     }
 }
+const mapStateToProps = ({ areas }) => {
+    return {
+        areas
+    };
+};
 
-export default Areas;
+export default connect(mapStateToProps, actions)(Areas);
