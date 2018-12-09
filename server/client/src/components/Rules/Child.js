@@ -7,7 +7,7 @@ class Child extends React.Component {
 
     render() {
         return (
-            <div className="ui segment">
+            <div className="ui segment" style={{cursor:'pointer'}} data-tooltip="Wybierz to dziecko">
                 <div className="ui grid">
                     <div className="ui twelve wide column">
                         <div className="ui segment" style={{textAlign: 'center', fontSize: '20px'}}>

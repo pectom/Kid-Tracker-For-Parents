@@ -1,6 +1,8 @@
 import React from 'react';
 import Header from '../Header';
 import Sidebar from './Sidebar';
+import Map from '../Map';
+import { GoogleApiWrapper } from 'google-maps-react';
 
 class Children extends React.Component {
     render() {
@@ -12,12 +14,14 @@ class Children extends React.Component {
                         <Sidebar />
                     </div>
                     <div className="ui eleven wide column">
-                        
+                        <Map />
                     </div>
                 </div>
             </div>
         );
     }
 }
-
-export default Children;
+export default GoogleApiWrapper({
+    apiKey: process.env.REACT_APP_GOOGLE_KEY,
+    language: "pl"
+  })(Children);

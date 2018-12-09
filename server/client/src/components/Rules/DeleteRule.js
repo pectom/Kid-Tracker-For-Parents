@@ -75,17 +75,7 @@ class DeleteRule extends React.Component {
                 <Modal.Content>
                 <div className="ui segment">
                     <div className="ui segment" style={{textAlign: "center", fontSize: "20px"}}>
-                        <div className="ui grid">
-                            <div className="ui five wide column">
-                                <div className="ui toggle checkbox">
-                                    <input name="active" checked={this.props.active} type="checkbox"/>
-                                    <label></label>
-                                </div> 
-                            </div>
-                            <div className="ui eleven wide column">
-                                {this.props.area ? this.props.area.name : ''} <i className={`${this.props.area ? this.props.area.iconId : ''} icon`} />
-                            </div>
-                        </div>
+                        {this.props.area ? this.props.area.name : ''} <i className={`${this.props.area ? this.props.area.iconId : ''} icon`} />
                     </div>
                     <div className="ui grid">
                         <div className="ui six wide column">

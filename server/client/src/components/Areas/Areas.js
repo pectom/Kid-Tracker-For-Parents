@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from '../Header';
 import Sidebar from './Sidebar';
-import Map from './Map';
+import Map from '../Map';
 import { Marker, Circle } from 'react-google-maps';
 import { GoogleApiWrapper } from 'google-maps-react';
 
@@ -67,6 +67,7 @@ class Areas extends React.Component {
         );
     }
 }
+
 const mapStateToProps = ({ areas }) => {
     return {
         areas
@@ -75,4 +76,5 @@ const mapStateToProps = ({ areas }) => {
 
 export default GoogleApiWrapper({
     apiKey: process.env.REACT_APP_GOOGLE_KEY,
+    language: "pl"
   })(connect(mapStateToProps, actions)(Areas));

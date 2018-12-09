@@ -40,7 +40,7 @@ class AddRule extends React.Component {
             endTime: this.state.endTime, 
             repetition: this.state.repetition, 
             areaId: this.state.areaId, 
-            children: [this.props.child._id]
+            child: this.props.child._id
         });
         this.close();
     }

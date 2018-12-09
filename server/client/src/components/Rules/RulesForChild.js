@@ -22,13 +22,14 @@ class RulesForChild extends React.Component {
                 enddate={rule.endDate ? rule.endDate.substr(0,10) : ''}
                 starttime={rule.startDate ? rule.startDate.substr(11,5) : ''}
                 endtime={rule.endDate ? rule.endDate.substr(11,5) : ''} 
-                child={rule.children}
+                child={this.props.child}
                 repetition={rule.repetition}
             />);
         }) : [];
     };
 
     render() {
+        console.log(this.props.rules)
         return (
             <div>
                 {this.renderRules()}

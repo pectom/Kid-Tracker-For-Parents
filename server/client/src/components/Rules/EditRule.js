@@ -39,7 +39,7 @@ class EditRule extends React.Component {
             startTime: this.state.starttime,
             endTime: this.state.endtime,
             areaId: this.state.area,
-            children: [this.props.child],
+            child: this.props.child,
             repetition: this.state.repetition
         });
         await this.props.fetchRules(this.props.child);
@@ -220,8 +220,8 @@ class EditRule extends React.Component {
     }
 }
 
-const mapStateToProps = ({ rules, children, areas }) => {
-    return { rules, children, areas };
+const mapStateToProps = ({ rules, areas }) => {
+    return { rules, areas };
 }
 
 export default connect(mapStateToProps, actions)(EditRule);

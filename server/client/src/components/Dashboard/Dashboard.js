@@ -1,6 +1,8 @@
 import React from 'react';
 import Header from '../Header';
 import Sidebar from './Sidebar';
+import Map from '../Map';
+import { GoogleApiWrapper } from 'google-maps-react';
 
 class Dashboard extends React.Component {
     render() {
@@ -12,11 +14,14 @@ class Dashboard extends React.Component {
                         <Sidebar />
                     </div>
                     <div className="ui eleven wide column">
+                        <Map />
                     </div>
                 </div>
             </div>
         );
     }
 }
-
-export default Dashboard;
+export default GoogleApiWrapper({
+    apiKey: process.env.REACT_APP_GOOGLE_KEY,
+    language: "pl"
+  })(Dashboard);
