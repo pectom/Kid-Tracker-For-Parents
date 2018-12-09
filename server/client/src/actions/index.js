@@ -68,8 +68,8 @@ export const updateArea = values => async dispatch => {
 
 // RULES ACTIONS
 
-export const fetchRules = () => async dispatch => {
-    const res = await axios.get('/api/rules');
+export const fetchRules = (childId) => async dispatch => {
+    const res = await axios.get(`/api/rules/${childId}`);
     dispatch({ type: FETCH_RULES, payload: res.data });
 }
 
