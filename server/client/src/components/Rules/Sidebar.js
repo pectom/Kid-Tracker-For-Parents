@@ -1,5 +1,4 @@
 import React from 'react';
-import Rule from './Rule';
 import AddRule from './AddRule';
 import Child from './Child';
 import RulesForChild from './RulesForChild';
@@ -49,9 +48,18 @@ class Sidebar extends React.Component {
                             <i className="address card icon big" /> <b>Reguły dla:</b>
                             <Child key={this.state.choosenChild._id} name={this.state.choosenChild.name} iconColor={this.state.choosenChild.iconColor} id={this.state.choosenChild._id} />
                         </div>
-                        <RulesForChild child={this.state.choosenChild} />
-                        <div style={{textAlign: "right"}}>
-                            <AddRule />
+                        <div>
+                            <RulesForChild child={this.state.choosenChild} />
+                        </div>
+                        <div className="ui grid" style={{marginTop:0}}>
+                            <div className="ui twelve wide column">
+                                <button className="circular ui icon button yellow" data-tooltip="Wróć do wyboru dziecka" onClick={() => this.setState({choosenChild: false})}>
+                                    <i className="icon angle left large"></i>
+                                </button>
+                            </div>
+                            <div className="ui four wide column" style={{textAlign: "right"}}>
+                                <AddRule child={this.state.choosenChild} />
+                            </div>
                         </div>
                     </div>
                 </div>

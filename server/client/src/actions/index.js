@@ -73,13 +73,13 @@ export const fetchRules = (childId) => async dispatch => {
     dispatch({ type: FETCH_RULES, payload: res.data });
 }
 
-export const createRule = values => async dispatch => {
-    const res = await axios.post('/api/rules', values);
+export const createRule = (values) => async dispatch => {
+    const res = await axios.post(`/api/rules/`, values);
     dispatch({ type: CREATE_RULE, payload: res.data });
 }
 
-export const deleteRule = values => async dispatch => {
-    const res = await axios.delete(`/api/rules/${values.id}`);
+export const deleteRule = id => async dispatch => {
+    const res = await axios.delete(`/api/rules/${id}`);
     dispatch({ type: DELETE_RULE, payload: res.data });
 }
 
