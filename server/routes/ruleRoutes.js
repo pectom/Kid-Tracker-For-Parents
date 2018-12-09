@@ -41,7 +41,25 @@ ruleRouter.get("/api/rules",async (req,res,next) =>{
             startDate: {$lte: Date.now()},
             endDate: {$gte: Date.now()}
         });
-        res.send(rules);
+        const requiredAreasId = rules.map(rule => rule.areaId);
+        const requiredAreas = req.user.areas.filter(area =>
+            requiredAreasId.findIndex(area =>String(area._id) === String(area._id)) !== -1
+        );
+        const children = await req.user.children;
+      /*     rules.forEach(rule => {
+               rule.children = rule.children.map(x => children.filter(child => {
+                   return String(child._id)===x;
+               }));
+               rule.areaId = areas.filter(area => {
+                   return String(area._id) === rule.areaId
+               });
+           });*/
+      response = new Object();
+      response.rules = rules;
+      response.areas = requiredAreas;
+      response.children = children;
+      console.log(rules);
+        res.send(response);
     }catch (e) {
         console.log(e);
         res.status(404).send(e);
@@ -56,7 +74,25 @@ ruleRouter.get("/api/rules/:childId",async (req,res,next) =>{
             endDate: {$gte: Date.now()},
             children: {$all: [childId]}
         });
-        res.send(rules);
+        const requiredAreasId = rules.map(rule => rule.areaId);
+        const requiredAreas = req.user.areas.filter(area =>
+            requiredAreasId.findIndex(area =>String(area._id) === String(area._id)) !== -1
+        );
+        const  children = await req.user.children;
+        const childrenIndex = children.findIndex(child => String(child._id) === childId);
+        /*     rules.forEach(rule => {
+                 rule.children = rule.children.map(x => children.filter(child => {
+                     return String(child._id)===x;
+                 }));
+                 rule.areaId = areas.filter(area => {
+                     return String(area._id) === rule.areaId
+                 });
+             });*/
+        response = new Object();
+        response.rules = rules;
+        response.areas = requiredAreas;
+        response.child =  childrenIndex !== -1  ? children[childrenIndex] : "";
+        res.send(response);
     }catch (e) {
         console.log(e);
         res.status(404).send(e);
