@@ -19,5 +19,12 @@ authRouter.post('/local',
     (req,res) => {
         res.send();
     });
-
+authRouter.get('/child/token', passport.authenticate('google-token'),
+    function(req, res) {
+        res.send(req.user);
+});
+authRouter.get('/auth/parent/token', passport.authenticate('google-token'),
+    function(req, res) {
+        res.send(req.user);
+    });
 module.exports = authRouter;

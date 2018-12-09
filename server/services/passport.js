@@ -2,6 +2,8 @@ const passport = require('passport');
 const keys = require('../config/keys');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const LocalStrategy = require('passport-local').Strategy;
+const GoogleTokenStrategy = require('passport-google-token').Strategy;
+
 const mongoose = require('mongoose');
 
 const User = mongoose.model('users');
@@ -52,6 +54,26 @@ passport.use(new LocalStrategy({
                     return done(null,false);
                 }
                 return done(null,user)
+        });
+    }
+));
+passport.use('parent',new GoogleTokenStrategy({
+        clientID: keys.googleClientID,
+        clientSecret: keys.googleClientSecret
+    },
+    function(accessToken, refreshToken, profile, done) {
+        User.findOrCreate({ googleId: profile.id }, function (err, user) {
+            return done(err, user);
+        });
+    }
+));
+passport.use('child',new GoogleTokenStrategy({
+        clientID: keys.googleClientID,
+        clientSecret: keys.googleClientSecret
+    },
+    function(accessToken, refreshToken, profile, done) {
+        User.findOrCreate({ googleId: profile.id }, function (err, user) {
+            return done(err, user);
         });
     }
 ));

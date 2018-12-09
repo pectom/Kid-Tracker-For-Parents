@@ -1,17 +1,14 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const requireLogin = require('../middlewares/requireLogin');
-const User = mongoose.model('users');
-const Area =  mongoose.model('areas');
-const Child = mongoose.model('children');
 const Rule =  mongoose.model('rules');
 
 const ruleRouter = express.Router();
 
 ruleRouter.post('/api/rules',requireLogin, async(req,res,next) =>{
-   const {startDate, endDate, startTime, endTime, repetition, areaId, children} = req.body;
+   const {startDate, endDate, startTime, endTime, repetition, areaId, childId} = req.body;
 
-   if(startDate, endDate, startTime, endTime, areaId, children){
+   if(startDate, endDate, startTime, endTime, areaId, childId){
        const start =new Date(startDate  +'T'+ startTime );
        const end =new Date(endDate  +'T'+ endTime);
        const newRule = new Rule({
@@ -20,7 +17,7 @@ ruleRouter.post('/api/rules',requireLogin, async(req,res,next) =>{
            repetition,
            areaId,
            lastResponded: Date.now(),
-           children,
+           childId,
            _user: req.user.id
            });
        try{
@@ -52,8 +49,6 @@ ruleRouter.get("/api/rules/:childId",async (req,res,next) =>{
     try{
         const rules = await Rule.find({
             _user: req.user.id,
-            startDate: {$lte: Date.now()},
-            endDate: {$gte: Date.now()},
             children: {$all: [childId]}
         });
         res.send(rules);
@@ -75,9 +70,9 @@ ruleRouter.delete("/api/rules/:ruleId",async (req,res,next) =>{
     }
 });
 ruleRouter.put("/api/rules/:ruleId",async (req,res,next) =>{
-    const {startDate, endDate, startTime, endTime, repetition, areaId, children} = req.body;
+    const {startDate, endDate, startTime, endTime, repetition, areaId, childId} = req.body;
 
-    if(startDate, endDate, startTime, endTime, areaId, children){
+    if(startDate, endDate, startTime, endTime, areaId, childId){
         const ruleId = req.params.ruleId;
         const start =new Date(startDate  +'T'+ startTime );
         const end =new Date(endDate  +'T'+ endTime);
@@ -88,7 +83,7 @@ ruleRouter.put("/api/rules/:ruleId",async (req,res,next) =>{
                 repetition,
                 areaId,
                 lastResponded: Date.now(),
-                children,
+                childId,
             });
             res.status(201).send();
         }catch (e) {
