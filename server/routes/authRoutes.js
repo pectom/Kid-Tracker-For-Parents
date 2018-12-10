@@ -17,14 +17,14 @@ authRouter.get('/google/callback',
 authRouter.post('/local',
     passport.authenticate("local",{ failureRedirect: '/login' }),
     (req,res) => {
-        res.send();
+        res.send("succes");
     });
-authRouter.get('/child/token', passport.authenticate('google-token'),
-    function(req, res) {
+authRouter.get('/child/token', passport.authenticate('child-token'),
+    (req, res) => {
         res.send(req.user);
-});
-authRouter.get('/auth/parent/token', passport.authenticate('google-token'),
-    function(req, res) {
+    });
+authRouter.get('/parent/token', passport.authenticate('parent-token'),
+    (req, res) => {
         res.send(req.user);
     });
 module.exports = authRouter;

@@ -4,8 +4,9 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const LocalStrategy = require('passport-local').Strategy;
 const GoogleTokenStrategy = require('passport-google-token').Strategy;
 
-const mongoose = require('mongoose');
+const parentGoogleAuth = require('../utils/parentGoogleAuth');
 
+const mongoose = require('mongoose');
 const User = mongoose.model('users');
 
 passport.serializeUser((user, done) => {
@@ -13,6 +14,7 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((id, done) => {
+
     User.findById(id)
         .then(user => {
             done(null,user)
@@ -23,20 +25,7 @@ passport.use(new GoogleStrategy({
     clientSecret: keys.googleClientSecret,
     callbackURL: "/auth/google/callback",
         proxy: true
-    },(accessToken,refreshToken, profile, done) =>{
-    console.log(accessToken);
-        User.findOne({googleId: profile.id})
-        .then((existingUser)=>{
-            if(existingUser){
-                done(null,existingUser);
-            }else {
-                new User({googleId: profile.id})
-                    .save()
-                    .then(user => done(null,user));
-            }
-        })
-    }
-    )
+    },parentGoogleAuth)
 );
 
 passport.use(new LocalStrategy({
@@ -57,22 +46,17 @@ passport.use(new LocalStrategy({
         });
     }
 ));
-passport.use('parent',new GoogleTokenStrategy({
+passport.use('parent-token',new GoogleTokenStrategy({
         clientID: keys.googleClientID,
         clientSecret: keys.googleClientSecret
-    },
-    function(accessToken, refreshToken, profile, done) {
-        User.findOrCreate({ googleId: profile.id }, function (err, user) {
-            return done(err, user);
-        });
-    }
+    },parentGoogleAuth
 ));
-passport.use('child',new GoogleTokenStrategy({
+passport.use('child-token',new GoogleTokenStrategy({
         clientID: keys.googleClientID,
         clientSecret: keys.googleClientSecret
     },
     function(accessToken, refreshToken, profile, done) {
-        User.findOrCreate({ googleId: profile.id }, function (err, user) {
+        Child.findOrCreate({ googleId: profile.id }, function (err, user) {
             return done(err, user);
         });
     }
