@@ -27,7 +27,7 @@ class DeleteRule extends React.Component {
 
     handleClick = async () => {
         await this.props.deleteRule(this.props.id);
-        await this.props.fetchRules(this.props.child);
+        await this.props.fetchRules(this.props.child._id);
         this.close();
     }
 

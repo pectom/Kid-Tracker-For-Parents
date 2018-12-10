@@ -39,10 +39,10 @@ class EditRule extends React.Component {
             startTime: this.state.starttime,
             endTime: this.state.endtime,
             areaId: this.state.area,
-            child: this.props.child,
+            childId: this.props.child,
             repetition: this.state.repetition
         });
-        await this.props.fetchRules(this.props.child);
+        await this.props.fetchRules(this.props.child._id);
         this.close();
     }
 
