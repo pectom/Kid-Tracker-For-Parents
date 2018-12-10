@@ -13,6 +13,7 @@ export const DELETE_AREA = 'delete_area';
 export const UPDATE_AREA = 'update_area';
 
 export const FETCH_RULES = 'fetch_rules';
+export const FETCH_CURRENT_RULES = 'fetch_rules';
 export const CREATE_RULE = 'create_rule';
 export const DELETE_RULE = 'delete_rule';
 export const UPDATE_RULE = 'update_rule';

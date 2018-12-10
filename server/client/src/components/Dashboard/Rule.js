@@ -1,33 +1,66 @@
 import React from 'react';
 
 class Rule extends React.Component {
-    renderKidsIcons(kidsInitials) {
-        const icons = kidsInitials.map((kidInital) => {
-            return <i key={kidInital[1]} className={`circular icon inverted ${kidInital[1]}`}>{kidInital[0]}</i>
-        });
-        return icons;
-    }
+    repetitionOptions = [
+        {
+            text: 'codziennie',
+            value: 'DAILY'
+        },
+        {
+            text: 'cotygodniowo',
+            value: 'WEEKLY'
+        },
+        {
+            text: 'comiesięcznie',
+            value: 'MONTHLY'
+        },
+        {
+            text: 'co rok',
+            value: 'YEARLY'
+        },
+        {
+            text: 'dni robocze',
+            value: 'WORKDAYS'
+        },
+        {
+            text: 'weekendy',
+            value: 'WEEKENDS'
+        },
+    ];
 
     render() {
-        return (
+        console.log(this.props.child)
+        return(
             <div className="ui segment">
-                <div className="ui segment" style={{textAlign: 'center', fontSize: '20px'}}>
-                    {this.props.name} <i className={`${this.props.icon} icon`}/>
+                <div className="ui segment" style={{textAlign: "center", fontSize: "20px"}}>
+                    {this.props.area ? this.props.area.name : ''} <i className={`${this.props.area ? this.props.area.iconId : ''} icon`} />
                 </div>
                 <div className="ui grid">
-                    <div className="ui eight wide column">
-                        <div className="ui segment" style={{textAlign: 'center'}}>
-                            {this.props.time}
+                    <div className="ui six wide column">
+                        <div className="ui segment">
+                            {this.props.starttime} do {this.props.endtime}
                         </div>
                     </div>
-                    <div className="ui eight wide column">
-                        <div style={{textAlign: 'right'}}>
-                            {this.renderKidsIcons(this.props.kidsInitials)}
+                    <div className="ui ten wide column">
+                        <div className="ui segment">
+                            {this.props.startdate} do {this.props.enddate}
+                        </div>
+                    </div>
+                </div>
+                <div className="ui grid">
+                    <div className="ui ten wide column">
+                        <div className="ui segment">
+                            {this.repetitionOptions.filter(option => option.value === this.props.repetition)[0] ? this.repetitionOptions.filter(option => option.value === this.props.repetition)[0].text : ''}
+                        </div>
+                    </div>
+                    <div className="ui six wide column">
+                        <div style={{textAlign: "right"}}>
+                            <i className={`circular icon inverted ${this.props.child.iconColor}`}>{this.props.child.name ? this.props.child.name[0] : ''}</i>
                         </div>
                     </div>
                 </div>
             </div>
-        )
+        );
     }
 }
 

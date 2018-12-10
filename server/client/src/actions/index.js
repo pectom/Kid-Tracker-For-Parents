@@ -3,7 +3,7 @@ import axios from 'axios';
 import { FETCH_USER, REGISTER_USER, LOGIN_USER, 
         FETCH_CHILDREN, CREATE_CHILD, DELETE_CHILD, UPDATE_CHILD,
         FETCH_AREAS, CREATE_AREA, DELETE_AREA, UPDATE_AREA,
-        FETCH_RULES, CREATE_RULE, DELETE_RULE, UPDATE_RULE } from './types';
+        FETCH_RULES, FETCH_CURRENT_RULES, CREATE_RULE, DELETE_RULE, UPDATE_RULE } from './types';
         
 // LOGGING AND REGISTERING
 
@@ -86,4 +86,9 @@ export const deleteRule = id => async dispatch => {
 export const updateRule = values => async dispatch => {
     const res = await axios.put(`/api/rules/${values.id}`, values);
     dispatch({ type: UPDATE_RULE, payload: res.data });
+}
+
+export const fetchCurrentRules = () => async dispatch => {
+    const res = await axios.get(`/api/rules/`);
+    dispatch({ type: FETCH_CURRENT_RULES, payload: res.data });
 }
