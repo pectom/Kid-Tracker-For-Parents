@@ -19,11 +19,12 @@ authRouter.post('/local',
     (req,res) => {
         res.send("succes");
     });
-authRouter.get('/child/token', passport.authenticate('child-token'),
+
+authRouter.post('/child/token', passport.authenticate('child-token'),
     (req, res) => {
         res.send(req.user);
     });
-authRouter.get('/parent/token', passport.authenticate('parent-token'),
+authRouter.post('/parent/token', passport.authenticate('parent-token'),
     (req, res) => {
         res.send(req.user);
     });

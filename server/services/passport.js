@@ -5,6 +5,7 @@ const LocalStrategy = require('passport-local').Strategy;
 const GoogleTokenStrategy = require('passport-google-token').Strategy;
 
 const parentGoogleAuth = require('../utils/parentGoogleAuth');
+const childGoogleAuth = require('../utils/childGoogleAuth');
 
 const mongoose = require('mongoose');
 const User = mongoose.model('users');
@@ -43,7 +44,7 @@ passport.use(new LocalStrategy({
                     return done(null,false);
                 }
                 return done(null,user)
-        });
+            });
     }
 ));
 passport.use('parent-token',new GoogleTokenStrategy({
@@ -54,10 +55,5 @@ passport.use('parent-token',new GoogleTokenStrategy({
 passport.use('child-token',new GoogleTokenStrategy({
         clientID: keys.googleClientID,
         clientSecret: keys.googleClientSecret
-    },
-    function(accessToken, refreshToken, profile, done) {
-        Child.findOrCreate({ googleId: profile.id }, function (err, user) {
-            return done(err, user);
-        });
-    }
+    },childGoogleAuth
 ));
