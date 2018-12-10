@@ -17,7 +17,15 @@ authRouter.get('/google/callback',
 authRouter.post('/local',
     passport.authenticate("local",{ failureRedirect: '/login' }),
     (req,res) => {
-        res.send();
+        res.send("succes");
     });
 
+authRouter.post('/child/token', passport.authenticate('child-token'),
+    (req, res) => {
+        res.send(req.user);
+    });
+authRouter.post('/parent/token', passport.authenticate('parent-token'),
+    (req, res) => {
+        res.send(req.user);
+    });
 module.exports = authRouter;

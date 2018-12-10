@@ -24,12 +24,15 @@ const ruleSchema = new Schema({
         type: String,
         required: true
     },
-    children:{
-        type: [String],
+    childId:{
+        type: String,
         required: true
     },
     _user: {type: Schema.Types.ObjectId, ref: 'User'},
-
+    active: {
+        type: Boolean,
+        default: true
+    }
 });
 
 mongoose.model('rules',ruleSchema);
