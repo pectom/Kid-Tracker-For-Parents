@@ -30,19 +30,20 @@ class Register extends React.Component {
                     <form className="ui form" onSubmit={this.props.handleSubmit(values => console.log('Rejestrujemy'))} >
                         <div className="field">
                             <div className="two fields">
-                                <Field component={RegisterField} type="text" label="Imię" name="firstName" />
-                                <Field component={RegisterField} type="text" label="Nazwisko" name="lastName" />
+                                <Field id="register-name" component={RegisterField} type="text" label="Imię" name="firstName" />
+                                <Field id="register-surname" component={RegisterField} type="text" label="Nazwisko" name="lastName" />
                             </div>
                         </div>
-                        <Field component={RegisterField} type="text" label="Email" name="email" />
+                        <Field id="register-email" component={RegisterField} type="text" label="Email" name="email" />
                         <div className="field">
                             <div className="two fields">
-                                <Field component={RegisterField} type="password" label="Hasło" name="password" />
-                                <Field component={RegisterField} type="password" label="Powtórz hasło" name="passwordTwo" />
+                                <Field id="register-password" component={RegisterField} type="password" label="Hasło" name="password" />
+                                <Field id="register-password2" component={RegisterField} type="password" label="Powtórz hasło" name="passwordTwo" />
                             </div>
                         </div>
                         {this.renderMessage()}
-                        <button 
+                        <button
+                            id="register-button"
                             className="ui button primary" 
                             type="submit" 
                             onClick={() => this.myRegisterUser(this.props.formValues)} 

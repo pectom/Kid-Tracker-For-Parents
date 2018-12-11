@@ -1,4 +1,3 @@
-// mongo ds119024.mlab.com:19024/kid-tracker-dev -u Admin -p Zachara123
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const bcrypt = require('bcryptjs');

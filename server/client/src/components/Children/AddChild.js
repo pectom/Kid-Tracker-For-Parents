@@ -84,7 +84,7 @@ class AddChild extends React.Component {
                 open={this.state.open}
                 onClose={() => this.close()}
                 trigger={
-                    <button className="circular ui icon button blue" data-tooltip="Dodaj dziecko" onClick={() => this.open()}>
+                    <button id="add-child-button" className="circular ui icon button blue" data-tooltip="Dodaj dziecko" onClick={() => this.open()}>
                         <i className="icon plus large"></i>
                     </button>
                 }
@@ -96,17 +96,23 @@ class AddChild extends React.Component {
                             <div className="two fields">
                                 <div className="field">
                                     <label>Nazwa</label>
-                                    <input name="name" type="text" value={this.state.name} onChange={(e) => this.handleNameChange(e)} />
+                                    <input id="add-child-name" name="name" type="text" value={this.state.name} onChange={(e) => this.handleNameChange(e)} />
                                 </div>
                                 <div className="field">
                                     <label>Kolor ikonki</label>
-                                    <Dropdown value={this.state.iconColor} fluid selection options={this.colorOptions} onChange={(e,data) => this.handleIconColorChange(data)} />
+                                    <Dropdown 
+                                        id="add-child-iconColor" 
+                                        value={this.state.iconColor} 
+                                        fluid selection 
+                                        options={this.colorOptions} 
+                                        onChange={(e,data) => this.handleIconColorChange(data)} 
+                                    />
                                 </div>
                             </div>
                         </div>
                         <div className="field">
                             <label>Token z aplikacji dziecka</label>
-                            <input name="token" type="text" value={this.state.token} onChange={(e) => this.handleTokenChange(e)} />
+                            <input id="add-child-token" name="token" type="text" value={this.state.token} onChange={(e) => this.handleTokenChange(e)} />
                         </div>
                         
                     </form>

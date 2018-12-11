@@ -73,7 +73,7 @@ class EditChild extends React.Component {
                 open={this.state.open}
                 onClose={() => this.close()}
                 trigger={
-                    <button className="ui icon button" data-tooltip="Edytuj dane dziecka" onClick={() => this.open()}>
+                    <button id={`edit-child-${this.props.id}`} className="ui icon button" data-tooltip="Edytuj dane dziecka" onClick={() => this.open()}>
                                 <i className="edit icon" />
                     </button>
                 }
@@ -85,7 +85,8 @@ class EditChild extends React.Component {
                             <label>Nazwa</label>
                             <div className="two fields">
                                 <div className="field">
-                                    <input 
+                                    <input
+                                        id={`edit-child-name-${this.props.id}`}
                                         name="name" 
                                         type="text" 
                                         value={this.state.name} 
@@ -93,7 +94,8 @@ class EditChild extends React.Component {
                                     />
                                 </div>
                                 <div className="field">
-                                    <Dropdown 
+                                    <Dropdown
+                                        id={`edit-child-iconColor-${this.props.id}`}
                                         value={this.state.iconColor} 
                                         fluid selection 
                                         options={this.colorOptions} 
@@ -105,7 +107,7 @@ class EditChild extends React.Component {
                     </form>
                 </Modal.Content>
                 <Modal.Actions>
-                    <button className="ui button green" onClick={() => this.handleSaveClick()}>Zapisz</button>
+                    <button id={`edit-child-saveButton-${this.props.id}`} className="ui button green" onClick={() => this.handleSaveClick()}>Zapisz</button>
                 </Modal.Actions>
             </Modal>
         );

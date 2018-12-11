@@ -2,8 +2,12 @@ const passport = require('passport');
 const keys = require('../config/keys');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const LocalStrategy = require('passport-local').Strategy;
-const mongoose = require('mongoose');
+const GoogleTokenStrategy = require('passport-google-token').Strategy;
 
+const parentGoogleAuth = require('../utils/parentGoogleAuth');
+const childGoogleAuth = require('../utils/childGoogleAuth');
+
+const mongoose = require('mongoose');
 const User = mongoose.model('users');
 
 passport.serializeUser((user, done) => {
@@ -11,6 +15,7 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((id, done) => {
+
     User.findById(id)
         .then(user => {
             done(null,user)
@@ -21,20 +26,7 @@ passport.use(new GoogleStrategy({
     clientSecret: keys.googleClientSecret,
     callbackURL: "/auth/google/callback",
         proxy: true
-    },(accessToken,refreshToken, profile, done) =>{
-    console.log(accessToken);
-        User.findOne({googleId: profile.id})
-        .then((existingUser)=>{
-            if(existingUser){
-                done(null,existingUser);
-            }else {
-                new User({googleId: profile.id})
-                    .save()
-                    .then(user => done(null,user));
-            }
-        })
-    }
-    )
+    },parentGoogleAuth)
 );
 
 passport.use(new LocalStrategy({
@@ -52,6 +44,16 @@ passport.use(new LocalStrategy({
                     return done(null,false);
                 }
                 return done(null,user)
-        });
+            });
     }
+));
+passport.use('parent-token',new GoogleTokenStrategy({
+        clientID: keys.googleClientID,
+        clientSecret: keys.googleClientSecret
+    },parentGoogleAuth
+));
+passport.use('child-token',new GoogleTokenStrategy({
+        clientID: keys.googleClientID,
+        clientSecret: keys.googleClientSecret
+    },childGoogleAuth
 ));

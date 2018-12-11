@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const requireLogin = require('../middlewares/requireLogin');
+const requireLogin = require('../../middlewares/requireLogin');
 const User = mongoose.model('users');
 const Child = mongoose.model('children');
 
@@ -72,4 +72,5 @@ childrenRouter.delete('/api/children/:childId',requireLogin, async(req, res, nex
         console.log(e);
     }
 });
+childrenRouter.post('/api/children/:childId');
 module.exports = childrenRouter;

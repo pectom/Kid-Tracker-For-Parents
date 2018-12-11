@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jasmine JASMINE_CONFIG_PATH=server_spec/support/jasmine.json",
     "server": "nodemon index.js",
     "client": "npm run start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
@@ -27,6 +27,7 @@
     "concurrently": "^4.1.0",
     "cookie-session": "^2.0.0-beta.3",
     "express": "^4.16.4",
+    "google-maps-react": "^2.0.2",
     "mongoose": "^5.3.14",
     "morgan": "^1.9.1",
     "nodemon": "^1.18.6",
@@ -34,7 +35,15 @@
     "passport-google": "^0.3.0",
     "passport-google-oauth": "^1.0.0",
     "passport-google-oauth20": "^1.0.0",
+    "passport-google-token": "^0.1.2",
     "passport-local": "^1.0.0",
     "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "frisby": "^2.1.0",
+    "jasmine": "3.3.0",
+    "jasmine-node": "^2.0.1",
+    "request": "^2.88.0",
+    "selenium-webdriver": "^4.0.0-alpha.1"
   }
 }

@@ -15,28 +15,28 @@ class Header extends React.Component {
         } else if (this.props.auth === null) {
             return (
                 <div className="ui active inverted dimmer">
-                    <div className="ui large text loader">Loading</div>
+                    <div className="ui large text loader">Ładowanie</div>
                 </div>
             );
         }
         return (
             <div className="ui menu">
-                <Link className="item" to="/dashboard">
+                <Link id="header-logo" className="item" to="/dashboard">
                     <i className="map marker alternate icon big" />
                     GdzieJestMojeDziecko?
                 </Link>
                 <div className="right menu">
                     <div className="item">
-                        <Link className="ui standard button" to="/children">Dzieci</Link>
+                        <Link id="header-children" className="ui standard button" to="/children">Dzieci</Link>
                     </div>
                     <div className="item">
-                        <Link className="ui standard button" to="/areas">Obszary</Link>
+                        <Link id="header-areas" className="ui standard button" to="/areas">Obszary</Link>
                     </div>
                     <div className="item">
-                        <Link className="ui standard button" to="/rules">Reguły</Link>
+                        <Link id="header-rules" className="ui standard button" to="/rules">Reguły</Link>
                     </div>
                     <div className="item">
-                        <a className="ui primary button" href="/api/logout">Wyloguj</a>
+                        <a id="header-logout" className="ui primary button" href="/api/logout">Wyloguj</a>
                     </div>
                 </div>
             </div>

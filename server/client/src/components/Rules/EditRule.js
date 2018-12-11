@@ -1,5 +1,8 @@
 import React from 'react';
 import { Modal, Dropdown } from 'semantic-ui-react';
+import { connect } from 'react-redux';
+
+import * as actions from '../../actions';
 
 class EditRule extends React.Component {
     state = {
@@ -8,8 +11,12 @@ class EditRule extends React.Component {
         enddate: this.props.enddate,
         starttime: this.props.starttime,
         endtime: this.props.endtime,
-        area: this.props.area.value,
-        kids: this.props.kids.map(kid => kid[0])
+        area: this.props.area,
+        repetition: this.props.repetition
+    }
+
+    async componentDidMount() {
+        await this.props.fetchAreas();
     }
 
     close = () => {
@@ -24,9 +31,18 @@ class EditRule extends React.Component {
         })
     }
 
-
-    handleClick = () => {
-        console.log("Add area");
+    handleClick = async () => {
+        await this.props.updateRule({
+            id: this.props.id,
+            startDate: this.state.startdate,
+            endDate: this.state.enddate,
+            startTime: this.state.starttime,
+            endTime: this.state.endtime,
+            areaId: this.state.area,
+            childId: this.props.child,
+            repetition: this.state.repetition
+        });
+        await this.props.fetchRules(this.props.child._id);
         this.close();
     }
 
@@ -60,9 +76,9 @@ class EditRule extends React.Component {
         });
     }
 
-    handleKidChange = data => {
+    handleRepetitionChange = data => {
         this.setState({
-            kids: data.value
+            repetition: data.value
         });
     }
 
@@ -79,30 +95,44 @@ class EditRule extends React.Component {
         }
     ];
 
-    areaOptions = [
-        {
-            text: 'Dom',
-            value: 1
-        },
-        {
-            text: 'Basen',
-            value: 2
-        }
-    ];
+    prepareAreasOptions = () => {
+        const areas = this.props.areas ? this.props.areas : [];
+        return areas.map( area => {
+            return {
+                text: area.name,
+                value: area._id,
+                icon: {
+                    name:area.iconId
+                }
+            }
+        })
+    }
 
-    childOptions = [
+    repetitionOptions = [
         {
-            text: 'Jessica',
-            value: 'Jessica'
+            text: 'codziennie',
+            value: 'DAILY'
         },
         {
-            text: 'Brajan',
-            value: 'Brajan'
+            text: 'cotygodniowo',
+            value: 'WEEKLY'
         },
         {
-            text: 'Sebastian',
-            value: 'Sebastian'
-        }
+            text: 'comiesięcznie',
+            value: 'MONTHLY'
+        },
+        {
+            text: 'co rok',
+            value: 'YEARLY'
+        },
+        {
+            text: 'dni robocze',
+            value: 'WORKDAYS'
+        },
+        {
+            text: 'weekendy',
+            value: 'WEEKENDS'
+        },
     ];
 
     render() {
@@ -165,19 +195,18 @@ class EditRule extends React.Component {
                             <Dropdown 
                                 placeholder='Obszar' 
                                 fluid selection 
-                                options={this.areaOptions} 
+                                options={this.prepareAreasOptions()} 
                                 value={this.state.area} 
                                 onChange={(e, data) => this.handleAreaChange(data)}
                             />
                         </div>
                         <div className="field">
-                            <label>Dzieci</label>
+                            <label>Powtarzanie</label>
                             <Dropdown 
-                                placeholder='Dzieci' 
-                                fluid multiple selection 
-                                options={this.childOptions} 
-                                value={this.state.kids}
-                                onChange={(e,data) => this.handleKidChange(data)}
+                                fluid selection 
+                                options={this.repetitionOptions} 
+                                value={this.state.repetition}
+                                onChange={(e,data) => this.handleRepetitionChange(data)}
                             />
                         </div>
                         
@@ -191,4 +220,8 @@ class EditRule extends React.Component {
     }
 }
 
-export default EditRule;
+const mapStateToProps = ({ rules, areas }) => {
+    return { rules, areas };
+}
+
+export default connect(mapStateToProps, actions)(EditRule);

@@ -1,9 +1,52 @@
 import React from 'react';
 import Header from '../Header';
 import Sidebar from './Sidebar';
-import Map from '../../Map';
+import Map from '../Map';
+import { Marker, Circle } from 'react-google-maps';
+import { GoogleApiWrapper } from 'google-maps-react';
+
+import { connect } from 'react-redux';
+
+import * as actions from '../../actions';
+
 
 class Areas extends React.Component {
+    componentDidMount() {
+        this.props.fetchAreas();
+    }
+
+    renderMarkers() {
+        return this.props.areas ? this.props.areas.map( area => {
+            return (
+                <Marker
+                    key={area._id}
+                    position={{
+                        lat: area.coordinates ? area.coordinates[0] : 0,
+                        lng: area.coordinates ? area.coordinates[1] : 0
+                    }}
+                    text={area.name}
+                    label={area.name}
+                    icon={"Nothing here"}
+                />
+            )
+        }) : [];
+    }
+
+    renderCircles() {
+        return this.props.areas ? this.props.areas.map( area => {
+            return (
+                <Circle
+                    key={area._id}
+                    center={{
+                        lat: area.coordinates ? area.coordinates[0] : 0,
+                        lng: area.coordinates ? area.coordinates[1] : 0
+                    }}
+                    radius={area.radius ? area.radius : 0}
+                />
+            )
+        }) : [];
+    }
+
     render() {
         return (
             <div>
@@ -12,8 +55,12 @@ class Areas extends React.Component {
                     <div className="ui five wide column">
                         <Sidebar />
                     </div>
-                    <div className="ui eleven wide column">
-                        <Map mapSrc="https://www.openstreetmap.org/export/embed.html?bbox=19.77857360839844%2C50.01939873027272%2C20.059912109375003%2C50.07425960242971" />
+                    <div id='react-map' className="ui eleven wide column" style={{height: '100vh', width: '100%'}}>
+                        <Map 
+                            markers={this.renderMarkers()}
+                            circles={this.renderCircles()}
+                            google={this.props.google}
+                        />
                     </div>
                 </div>
             </div>
@@ -21,4 +68,13 @@ class Areas extends React.Component {
     }
 }
 
-export default Areas;
+const mapStateToProps = ({ areas }) => {
+    return {
+        areas
+    };
+};
+
+export default GoogleApiWrapper({
+    apiKey: process.env.REACT_APP_GOOGLE_KEY,
+    language: "pl"
+  })(connect(mapStateToProps, actions)(Areas));

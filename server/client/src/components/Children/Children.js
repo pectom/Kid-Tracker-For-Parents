@@ -1,7 +1,8 @@
 import React from 'react';
 import Header from '../Header';
-import Map from '../../Map';
 import Sidebar from './Sidebar';
+import Map from '../Map';
+import { GoogleApiWrapper } from 'google-maps-react';
 
 class Children extends React.Component {
     render() {
@@ -13,12 +14,14 @@ class Children extends React.Component {
                         <Sidebar />
                     </div>
                     <div className="ui eleven wide column">
-                        <Map mapSrc="https://www.openstreetmap.org/export/embed.html?bbox=19.77857360839844%2C50.01939873027272%2C20.059912109375003%2C50.07425960242971" />
+                        <Map />
                     </div>
                 </div>
             </div>
         );
     }
 }
-
-export default Children;
+export default GoogleApiWrapper({
+    apiKey: process.env.REACT_APP_GOOGLE_KEY,
+    language: "pl"
+  })(Children);
