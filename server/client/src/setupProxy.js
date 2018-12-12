@@ -14,5 +14,8 @@ module.exports = function(app) {
     app.use(proxy('/api/areas', { target: 'http://localhost:5000' }));
     app.use(proxy('/api/areas/*', { target: 'http://localhost:5000' }));
 
+    app.use(proxy('/api/rules', { target: 'http://localhost:5000' }));
+    app.use(proxy('/api/rules/*', { target: 'http://localhost:5000' }));
+
     app.use(proxy('/api/*', { target: 'http://localhost:5000' }));
 };

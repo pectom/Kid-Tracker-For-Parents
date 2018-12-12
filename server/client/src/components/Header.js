@@ -15,7 +15,7 @@ class Header extends React.Component {
         } else if (this.props.auth === null) {
             return (
                 <div className="ui active inverted dimmer">
-                    <div className="ui large text loader">Loading</div>
+                    <div className="ui large text loader">Ładowanie</div>
                 </div>
             );
         }

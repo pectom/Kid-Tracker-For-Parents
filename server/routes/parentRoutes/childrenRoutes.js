@@ -72,4 +72,5 @@ childrenRouter.delete('/api/children/:childId',requireLogin, async(req, res, nex
         console.log(e);
     }
 });
+childrenRouter.post('/api/children/:childId');
 module.exports = childrenRouter;

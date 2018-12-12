@@ -49,7 +49,7 @@ ruleRouter.get("/api/rules/:childId",async (req,res,next) =>{
     try{
         const rules = await Rule.find({
             _user: req.user.id,
-            children: {$all: [childId]}
+            childId: childId
         });
         res.send(rules);
     }catch (e) {
