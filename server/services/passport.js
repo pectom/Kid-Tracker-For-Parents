@@ -17,10 +17,17 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((id, done) => {
-
     User.findById(id)
         .then(user => {
-            done(null,user)
+            if(user){
+                done(null,user)
+            }else
+            {
+                ChildUser.findById(id)
+                    .then(user => {
+                        done(null,user)
+                    })
+            }
         });
 });
 passport.use(new GoogleStrategy({
