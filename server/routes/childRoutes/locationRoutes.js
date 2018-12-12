@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const requireLogin = require('../../middlewares/requireLogin');
-const ChildUser =  mongoose.model('child-user');
+const ChildUser =  mongoose.model('child-users');
 const locationRouter = express.Router();
 
 locationRouter.post("/api/location",requireLogin,async (req,res,next)=>{
@@ -51,3 +51,5 @@ locationRouter.get("/api/location",requireLogin,async (req,res,next)=>{
         res.status(400).send("Wrong user");
     }
 });
+
+module.exports = locationRouter;

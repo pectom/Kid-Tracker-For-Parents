@@ -15,9 +15,14 @@ authRouter.get('/google/callback',
 
 
 authRouter.post('/local',
-    passport.authenticate("local",{ failureRedirect: '/login' }),
+    passport.authenticate("parent-local",{ failureRedirect: '/login' }),
     (req,res) => {
-        res.send("succes");
+        res.send(req.user);
+    });
+authRouter.post('/local/child',
+    passport.authenticate("child-local",{ failureRedirect: '/login' }),
+    (req,res) => {
+        res.send(req.user);
     });
 
 authRouter.post('/child/token', passport.authenticate('child-token'),
