@@ -1,11 +1,14 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const requireLogin = require('../../middlewares/requireLogin');
+const requireChildren = require('../../middlewares/requireChildren');
+const requireParent = require('../../middlewares/requireParent');
+
 const Rule =  mongoose.model('rules');
 
 const ruleRouter = express.Router();
 
-ruleRouter.post('/api/rules',requireLogin, async(req,res,next) =>{
+ruleRouter.post('/api/rules',requireParent, async(req,res,next) =>{
    const {startDate, endDate, startTime, endTime, repetition, areaId, childId} = req.body;
 
    if(startDate, endDate, startTime, endTime, areaId, childId){
@@ -31,7 +34,7 @@ ruleRouter.post('/api/rules',requireLogin, async(req,res,next) =>{
        res.status(400).send("Incomplete request");
    }
 });
-ruleRouter.get("/api/rules",requireLogin,async (req,res,next) =>{
+ruleRouter.get("/api/rules",requireParent,async (req,res,next) =>{
     try{
         const rules = await Rule.find({
             _user: req.user.id,
@@ -44,7 +47,7 @@ ruleRouter.get("/api/rules",requireLogin,async (req,res,next) =>{
         res.status(404).send(e);
     }
 });
-ruleRouter.get("/api/rules/:childId",requireLogin,async (req,res,next) =>{
+ruleRouter.get("/api/rules/:childId",requireParent,async (req,res,next) =>{
     const childId = req.params.childId;
     try{
         const rules = await Rule.find({
@@ -57,7 +60,7 @@ ruleRouter.get("/api/rules/:childId",requireLogin,async (req,res,next) =>{
         res.status(404).send(e);
     }
 });
-ruleRouter.delete("/api/rules/:ruleId",requireLogin,async (req,res,next) =>{
+ruleRouter.delete("/api/rules/:ruleId",requireParent,async (req,res,next) =>{
     const ruleId = req.params.ruleId;
     try{
         const rules = await Rule.deleteOne({
@@ -69,7 +72,7 @@ ruleRouter.delete("/api/rules/:ruleId",requireLogin,async (req,res,next) =>{
         res.status(404).send(e);
     }
 });
-ruleRouter.put("/api/rules/:ruleId",requireLogin,async (req,res,next) =>{
+ruleRouter.put("/api/rules/:ruleId",requireParent,async (req,res,next) =>{
     const {startDate, endDate, startTime, endTime, repetition, areaId, childId} = req.body;
 
     if(startDate, endDate, startTime, endTime, areaId, childId){

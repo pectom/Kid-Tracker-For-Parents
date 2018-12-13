@@ -1,6 +1,10 @@
 const express = require('express');
 const mongoose = require('mongoose');
+
 const requireLogin = require('../../middlewares/requireLogin');
+const requireChildren = require('../../middlewares/requireChildren');
+const requireParent = require('../../middlewares/requireParent');
+
 const User = mongoose.model('users');
 const Child = mongoose.model('children');
 const ChildUser = mongoose.model('child-users');
@@ -9,7 +13,7 @@ const ConnectionCode = mongoose.model('codes');
 const childrenRouter = express.Router();
 
 
-childrenRouter.post('/api/children',requireLogin,async (req,res,next)=>{
+childrenRouter.post('/api/children',requireParent,async (req,res,next)=>{
     const {name, iconColor,code} = req.body;
     if(name && iconColor && code)
     { //sprawdzanie unikalnosci ikony i koloru
@@ -45,10 +49,10 @@ childrenRouter.post('/api/children',requireLogin,async (req,res,next)=>{
         res.status(400).send("Incomplete request");
     }
 });
-childrenRouter.get('/api/children',requireLogin,(req,res,next)=> {
+childrenRouter.get('/api/children',requireParent,(req,res,next)=> {
     res.send(req.user.children);
 });
-childrenRouter.put('/api/children/:childId',requireLogin, async (req,res,next) => {
+childrenRouter.put('/api/children/:childId',requireParent, async (req,res,next) => {
    const {name, iconColor} = req.body;
    const childId = req.params.childId;
    if(name && iconColor){
@@ -70,7 +74,7 @@ childrenRouter.put('/api/children/:childId',requireLogin, async (req,res,next) =
        res.status(400).send();
    }
 });
-childrenRouter.delete('/api/children/:childId',requireLogin, async(req, res, next) =>{
+childrenRouter.delete('/api/children/:childId',requireChildren, async(req, res, next) =>{
     try{
         const childId = req.params.childId;
         const children = req.user.children;
@@ -90,5 +94,4 @@ childrenRouter.delete('/api/children/:childId',requireLogin, async(req, res, nex
         console.log(e);
     }
 });
-childrenRouter.post('/api/children/:childId');
 module.exports = childrenRouter;

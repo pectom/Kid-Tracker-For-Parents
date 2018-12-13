@@ -1,13 +1,15 @@
 const express = require('express');
 const requireLogin = require('../../middlewares/requireLogin');
 const connectionRouter = express.Router();
+const requireChildren = require('../../middlewares/requireChildren');
+const requireParent = require('../../middlewares/requireParent');
 
 const mongoose = require('mongoose');
 const ChildUser = mongoose.model('child-users');
 const ConnectionCode = mongoose.model('codes');
 
 //dodac require children
-connectionRouter.get('/api/generate_code',requireLogin,async (req,res,next) =>{
+connectionRouter.get('/api/generate_code',requireChildren,async (req,res,next) =>{
     let added = false;
     let codeObject;
     while(!added){

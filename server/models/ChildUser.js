@@ -44,6 +44,9 @@ const childUserSchema = new Schema({
     longitude:{
         type: Number,
     },
+    locationTime:{
+      type: Date
+    },
     iconColor: {
         type: String,
         trim: true,

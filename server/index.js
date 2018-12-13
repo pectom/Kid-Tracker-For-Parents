@@ -17,7 +17,7 @@ require('./models/ConnectionCode');
 require('./services/passport');
 
 const locationRoutes = require('./routes/childRoutes/locationRoutes');
-const registrationRoutes = require('./routes/parentRoutes/registrationRoutes');
+const registrationRoutes = require('./routes/registrationRoutes');
 const childrenRoutes  = require('./routes/parentRoutes/childrenRoutes');
 const areaRoutes = require('./routes/parentRoutes/areaRoutes');
 const ruleRouter = require('./routes/parentRoutes/ruleRoutes');

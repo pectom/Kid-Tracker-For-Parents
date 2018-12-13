@@ -1,7 +1,7 @@
 const express = require('express');
 const registartionRouter = express.Router();
 const mongoose = require('mongoose');
-const {generatePassword} = require('../../utils/passwordManager');
+const {generatePassword} = require('../utils/passwordManager');
 
 const User = mongoose.model('users');
 const ChildUser = mongoose.model('child-users');

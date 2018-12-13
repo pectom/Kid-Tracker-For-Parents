@@ -13,7 +13,6 @@ authRouter.get('/google/callback',
                 res.redirect('/dashboard');
     });
 
-
 authRouter.post('/local',
     passport.authenticate("parent-local",{ failureRedirect: '/login' }),
     (req,res) => {
