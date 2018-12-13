@@ -15,10 +15,11 @@ locationRouter.post("/api/location",requireChildren,async (req,res,next)=>{
                     _id: req.user._id
                 },{
                     latitude,
-                    longitude
+                    longitude,
+                    locationTime: Date.now()
                 }
             );
-            res.status(204).send(child);
+            res.send(child).status(204);
         }catch (e) {
             console.log(e);
             res.status(404).send(e);
@@ -33,25 +34,23 @@ locationRouter.get("/api/location/:childId",requireParent,async (req,res,next)=>
         const child = await ChildUser.findOne({
            _id: childId
         });
-        const {latitude,longitude} = child;
+        const {latitude,longitude,locationTime} = child;
         res.send({
             latitude,
-            longitude
+            longitude,
+            locationTime
         })
     }catch (e) {
         res.status(404).send(e);
     }
 });
 locationRouter.get("/api/location",requireChildren,async (req,res,next)=>{
-    const {latitude,longitude} = req.user;
-    if(latitude && longitude) //mamy do czynienie z uzytkownikiem dziecko
+    const {latitude,longitude,locationTime} = req.user;
         res.send({
             latitude,
-            longitude
+            longitude,
+            locationTime
         });
-    else {
-        res.status(400).send("Wrong user");
-    }
 });
 
 module.exports = locationRouter;
