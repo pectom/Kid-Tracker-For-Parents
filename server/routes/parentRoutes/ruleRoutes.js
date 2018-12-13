@@ -1,7 +1,5 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const requireLogin = require('../../middlewares/requireLogin');
-const requireChildren = require('../../middlewares/requireChildren');
 
 const Rule =  mongoose.model('rules');
 

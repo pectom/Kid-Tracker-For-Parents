@@ -2,7 +2,6 @@ const express = require('express');
 const mongoose = require('mongoose');
 
 const User = mongoose.model('users');
-const Child = mongoose.model('children');
 const ChildUser = mongoose.model('child-users');
 const ConnectionCode = mongoose.model('codes');
 

@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const bcrypt = require('bcryptjs');
-const ChildSchema = require("./Child");
 const AreaSchema = require('./Area');
+
 const userSchema = new Schema({
    googleId: {
        type: String,
@@ -33,7 +33,6 @@ const userSchema = new Schema({
         type: String,
         default: "PARENT"
     },
-    children: [ChildSchema],
     child: {
        type: [String],
         unique: true
