@@ -66,7 +66,7 @@ class DeleteRule extends React.Component {
                 open={this.state.open}
                 onClose={() => this.close()}
                 trigger={
-                    <button className="ui icon button" data-tooltip="Usuń regułę" onClick={() => this.open()}>
+                    <button id={`rules-delete-rule-${this.props.id}-child-${this.props.child._id}`} className="ui icon button" data-tooltip="Usuń regułę" onClick={() => this.open()}>
                         <i className="trash alternate icon" />
                     </button>
                 }
@@ -99,7 +99,7 @@ class DeleteRule extends React.Component {
                 </div>
                 </Modal.Content>
                 <Modal.Actions>
-                    <button className="ui button green" onClick={() => this.handleClick()}>Usuń</button>
+                    <button id={`rules-delete-rule-${this.props.id}-child-${this.props.child._id}-deleteButton`} className="ui button green" onClick={() => this.handleClick()}>Usuń</button>
                 </Modal.Actions>
             </Modal>
         );

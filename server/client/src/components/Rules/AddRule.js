@@ -142,7 +142,7 @@ class AddRule extends React.Component {
                 open={this.state.open}
                 onClose={() => this.close()}
                 trigger={
-                    <button className="circular ui icon button blue" data-tooltip="Dodaj regułę" onClick={() => this.open()}>
+                    <button id={`rules-addRule-${this.props.child._id}`} className="circular ui icon button blue" data-tooltip="Dodaj regułę" onClick={() => this.open()}>
                         <i className="icon plus large"></i>
                     </button>
                 }

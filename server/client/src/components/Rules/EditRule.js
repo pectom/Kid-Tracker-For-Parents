@@ -142,7 +142,7 @@ class EditRule extends React.Component {
                 open={this.state.open}
                 onClose={() => this.close()}
                 trigger={
-                    <button className="ui icon button" data-tooltip="Edytuj regułę" onClick={() => this.open()}>
+                    <button id={`rules-edit-rule-${this.props.id}-child-${this.props.child._id}`} className="ui icon button" data-tooltip="Edytuj regułę" onClick={() => this.open()}>
                                 <i className="edit icon" />
                     </button>
                 }
@@ -153,7 +153,8 @@ class EditRule extends React.Component {
                         <div className="two fields">
                             <div className="field">
                                 <label>Data rozpoczęcia</label>
-                                <input 
+                                <input
+                                    id={`rules-edit-rule-${this.props.id}-child-${this.props.child._id}-startdate`} 
                                     name="startdate" 
                                     type="date" 
                                     value={this.state.startdate} 
@@ -162,7 +163,8 @@ class EditRule extends React.Component {
                             </div>
                             <div className="field">
                                 <label>Data zakończenia</label>
-                                <input 
+                                <input
+                                    id={`rules-edit-rule-${this.props.id}-child-${this.props.child._id}-enddate`} 
                                     name="enddate" 
                                     type="date" 
                                     value={this.state.enddate} 
@@ -174,6 +176,7 @@ class EditRule extends React.Component {
                             <div className="field">
                                 <label>Czas rozpoczęcia</label>
                                 <input 
+                                    id={`rules-edit-rule-${this.props.id}-child-${this.props.child._id}-starttime`} 
                                     name="starttime" 
                                     type="time" 
                                     value={this.state.starttime} 
@@ -182,7 +185,8 @@ class EditRule extends React.Component {
                             </div>
                             <div className="field">
                                 <label>Czas zakończenia</label>
-                                <input 
+                                <input
+                                    id={`rules-edit-rule-${this.props.id}-child-${this.props.child._id}-endtime`} 
                                     name="endtime" 
                                     type="time" 
                                     value={this.state.endtime} 
@@ -193,6 +197,7 @@ class EditRule extends React.Component {
                         <div className="field">
                             <label>Obszar</label>
                             <Dropdown 
+                                id={`rules-edit-rule-${this.props.id}-child-${this.props.child._id}-area`} 
                                 placeholder='Obszar' 
                                 fluid selection 
                                 options={this.prepareAreasOptions()} 
@@ -203,6 +208,7 @@ class EditRule extends React.Component {
                         <div className="field">
                             <label>Powtarzanie</label>
                             <Dropdown 
+                                id={`rules-edit-rule-${this.props.id}-child-${this.props.child._id}-repetition`} 
                                 fluid selection 
                                 options={this.repetitionOptions} 
                                 value={this.state.repetition}
@@ -213,7 +219,7 @@ class EditRule extends React.Component {
                     </form>
                 </Modal.Content>
                 <Modal.Actions>
-                    <button className="ui button green" onClick={() => this.handleClick()}>Zapisz</button>
+                    <button id={`rules-edit-rule-${this.props.id}-child-${this.props.child._id}-saveButton`} className="ui button green" onClick={() => this.handleClick()}>Zapisz</button>
                 </Modal.Actions>
             </Modal>
         );

@@ -24,7 +24,17 @@ class Sidebar extends React.Component {
     renderChildren() {
         const children = this.props.children ? this.props.children : [];
         return children.map(child => {
-            return <div key={child._id} style={{marginBottom: 10}} onClick={() => this.handleClick(child)}><Child key={child._id} name={child.name} iconColor={child.iconColor} id={child._id} /></div>;
+            return (
+                <div 
+                    id={`rules-chooseChild-${child._id}`} 
+                    key={child._id} 
+                    style={{marginBottom: 10,cursor:'pointer'}} 
+                    onClick={() => this.handleClick(child)}
+                    data-tooltip="Wybierz to dziecko"
+                >
+                    <Child key={child._id} name={child.name} iconColor={child.iconColor} id={child._id} />
+                </div>
+            );
         });
     }
 
@@ -53,7 +63,7 @@ class Sidebar extends React.Component {
                         </div>
                         <div className="ui grid" style={{marginTop:0}}>
                             <div className="ui twelve wide column">
-                                <button className="circular ui icon button yellow" data-tooltip="Wróć do wyboru dziecka" onClick={() => this.setState({choosenChild: false})}>
+                                <button id={`rules-goBack-${this.state.choosenChild._id}`} className="circular ui icon button yellow" data-tooltip="Wróć do wyboru dziecka" onClick={() => this.setState({choosenChild: false})}>
                                     <i className="icon angle left large"></i>
                                 </button>
                             </div>

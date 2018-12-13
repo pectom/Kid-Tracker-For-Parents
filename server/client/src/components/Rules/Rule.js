@@ -47,7 +47,7 @@ class Rule extends React.Component {
                     <div className="ui grid">
                         <div className="ui five wide column">
                             <div className="ui toggle checkbox">
-                                <input name="active" checked={this.state.active} type="checkbox" onChange={e => {this.handleToggle(e)}} />
+                                <input id={`rules-toggle-rule-${this.props.id}-child-${this.props.child._id}`} name="active" checked={this.state.active} type="checkbox" onChange={e => {this.handleToggle(e)}} />
                                 <label></label>
                             </div> 
                         </div>
