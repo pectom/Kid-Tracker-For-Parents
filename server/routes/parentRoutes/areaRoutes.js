@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 
 const User = mongoose.model('users');
-const Child = mongoose.model('children');
+const ChildUser = mongoose.model('child-users');
 const Area = mongoose.model('areas');
 const areaRouter = express.Router();
 //const validateIcon = require('../middlewares/validateIcon');
@@ -13,7 +13,6 @@ areaRouter.post('/',async (req,res,next)=>{
 
     if(name && iconId && longitude && latitude && radius && children)
     {
-        console.log(children);
         const parent = req.user;
         const newArea = new Area({
             name,
@@ -36,17 +35,26 @@ areaRouter.post('/',async (req,res,next)=>{
         res.status(400).send("Incomplete request");
     }
 });
-areaRouter.get('/', (req,res,next)=> {
-    const children = req.user.children;
-    req.user.areas.forEach(area =>
-        area.children = area.children.map(x => children.filter(child => {
-            return String(child._id)===x
-        })));
-    res.send(req.user.areas);
+areaRouter.get('/', async (req,res,next)=> {
+    try{
+        const children = await ChildUser.find(
+            {parentId: req.user._id}
+        );
+        req.user.areas.forEach(area =>
+            area.children = area.children.map(x => children.filter(child => {
+                    return String(child._id)===x
+                })[0]
+            ));
+        res.send(req.user.areas);
+    }catch(e){
+        res.status(400).send(e);
+    }
+
 });
 areaRouter.put('/:areaId', async (req,res,next) => {
     const {name, iconId, longitude, latitude, radius, children} = req.body;
     const areaId = req.params.areaId;
+
     if(name && iconId && longitude && latitude && radius && children){
         const areas = req.user.areas;
         const index = areas.findIndex(area => String(area._id) === areaId);
@@ -56,17 +64,21 @@ areaRouter.put('/:areaId', async (req,res,next) => {
                 coordinates: [latitude,longitude],
                 iconId,
                 radius,
-
             });
             newArea.children = children;
             newArea._id = areas[index]._id;
             areas[index] = newArea;
-            const user = await User.updateOne({
-                _id: req.user._id
-            },{
-                areas
-            });
-            res.send(req.user.areas).status(204);
+            try{
+                const user = await User.updateOne({
+                    _id: req.user._id
+                },{
+                    areas
+                });
+                res.send(req.user.areas).status(204);
+            }catch (e) {
+                res.status(400).send(e);
+
+            }
         }else{
             res.status(400).send("Area not found");
         }
@@ -76,7 +88,6 @@ areaRouter.put('/:areaId', async (req,res,next) => {
 });
 
 areaRouter.delete('/:areaId', async(req, res, next) =>{
-    const children = req.user.children;
     const areaId = req.params.areaId;
     const areas = req.user.areas;
     try{
@@ -88,10 +99,15 @@ areaRouter.delete('/:areaId', async(req, res, next) =>{
             },{
                 areas: areas
             });
+
+            const children = await ChildUser.find(
+                {parentId: req.user._id}
+            );
             req.user.areas.forEach(area =>
                 area.children = area.children.map(x => children.filter(child => {
-                    return String(child._id)===x
-                })));
+                        return String(child._id)===x
+                    })[0]
+                ));
             res.send(req.user.areas).status(204);
         }else{
             res.status(400).send("Wrong area id");
@@ -100,4 +116,5 @@ areaRouter.delete('/:areaId', async(req, res, next) =>{
         res.status(400).send(err);
     }
 });
+
 module.exports = areaRouter;
