@@ -74,7 +74,7 @@ ruleRouter.delete("/:ruleId",async (req,res,next) =>{
 ruleRouter.put("/:ruleId",async (req,res,next) =>{
     const {startDate, endDate, startTime, endTime, repetition, areaId, childId} = req.body;
 
-    if(startDate, endDate, startTime, endTime, areaId, childId){
+    if(startDate, endDate, startTime, endTime, areaId, childId,repetition){
         const ruleId = req.params.ruleId;
         const start =new Date(startDate  +'T'+ startTime );
         const end =new Date(endDate  +'T'+ endTime);
@@ -87,7 +87,7 @@ ruleRouter.put("/:ruleId",async (req,res,next) =>{
                 lastResponded: Date.now(),
                 childId,
             });
-            res.status(201).send();
+            res.status(201).send(req.user);
         }catch (e) {
             console.log(e);
             res.status(400).send('Something went wrong!')

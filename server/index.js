@@ -1,15 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const authRouter = require('./routes/authRoutes');
 const keys = require('./config/keys');
 const mongoose = require('mongoose');
 const passport = require("passport");
 const cookieSession = require("cookie-session");
-const requireParent = require('./middlewares/requireParent');
-const requireChild = require('./middlewares/requireChildren');
 
 const app = express();
-app.use(bodyParser.json());
 
 require('./models/User');
 require('./models/Child');
@@ -19,17 +15,12 @@ require('./models/ChildUser');
 require('./models/ConnectionCode');
 require('./services/passport');
 
-const registrationRoutes = require('./routes/registrationRoutes');
-
-const parentRouter = require('./routes/parentRouter');
-const childRouter = require('./routes/childRouter');
-
 const morgan = require('morgan');
+app.use(morgan('dev'));
 
 mongoose.connect(encodeURI(keys.mongoURI),{ useNewUrlParser: true });
 
-
-app.use(morgan('dev'));
+app.use(bodyParser.json());
 app.use(
   cookieSession({
       maxAge: 30*24*60*60*1000,
@@ -39,10 +30,8 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use('/auth',authRouter);
-app.use('/registration',registrationRoutes);
-app.use('/api/child',requireChild,childRouter);
-app.use('/api/parent',requireParent,parentRouter);
+const mainRouter = require('./routes/mainRouter');
+app.use(mainRouter);
 
 app.get('/api/current_user',(req,res) =>{
     if(!req.user) {
