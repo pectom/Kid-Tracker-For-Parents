@@ -3,28 +3,46 @@ const mongoose = require('mongoose');
 const requireLogin = require('../../middlewares/requireLogin');
 const User = mongoose.model('users');
 const Child = mongoose.model('children');
+const ChildUser = mongoose.model('child-users');
+const ConnectionCode = mongoose.model('codes');
 
 const childrenRouter = express.Router();
 
 
 childrenRouter.post('/api/children',requireLogin,async (req,res,next)=>{
-    const {name, iconColor} = req.body;
-    if(name && iconColor)
+    const {name, iconColor,code} = req.body;
+    if(name && iconColor && code)
     { //sprawdzanie unikalnosci ikony i koloru
         const parent = req.user;
+        //znalezienie kodu w celu pobrania idDziecka
+        const codeObject = await ConnectionCode.findOne({
+            code
+        });
+        const childId = codeObject ? codeObject.childId : req.user._id;
+//Deprecated
         const newChildren = new Child({
             name,
             iconColor,
         });
-
+        //dodanie id dziecka do rodzica
         const user = await User.updateOne({
             _id: parent._id
         },{
-            $push: {children: newChildren}
+            $push: {children: newChildren}, //deprecated
+            $push: {child: childId}
+        });
+        //dodanie informacji z webowki do dziecka
+        await ChildUser.updateOne({
+            _id: childId
+        },{
+            connected: true,
+            name,
+            iconColor,
+            parentId: parent._id
         });
         res.status(201).send(user);
     }else{
-        res.status(400).send();
+        res.status(400).send("Incomplete request");
     }
 });
 childrenRouter.get('/api/children',requireLogin,(req,res,next)=> {

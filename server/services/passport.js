@@ -43,18 +43,21 @@ passport.use("parent-local",new LocalStrategy({
         passwordField : 'password',
         passReqToCallback : true
     },
-    (req, email, password, done) => {
-        User.findOne({ email: email })
-            .then((user)  => {
-                if(!user) {
-                    return done(null,false);
-                }
-                if(!user.validPassword(user.password,password)){
-                    return done(null,false);
-                }
-                return done(null,user)
-            });
-    }
+    async (req, email, password, done) => {
+        try{
+            const user = await User.findOne({ email: email });
+            if(!user) {
+                return done("wrong email",false);
+            }
+            if(!(await validPassword(user.password,password))){
+                return done("wrong password",false);
+            }
+            return done(null,user)
+
+        }catch (e) {
+            console.log(e);
+            done(e, false);
+        }}
 ));
 //lokalne logowanie dziecka
 passport.use("child-local",new LocalStrategy({

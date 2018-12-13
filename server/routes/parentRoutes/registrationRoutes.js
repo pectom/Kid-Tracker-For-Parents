@@ -6,30 +6,25 @@ const {generatePassword} = require('../../utils/passwordManager');
 const User = mongoose.model('users');
 const ChildUser = mongoose.model('child-users');
 
-registartionRouter.post('/api/registration',(req,res,next) =>{
+registartionRouter.post('/api/registration',async(req,res,next) =>{
     const {email, password,firstName,lastName} = req.body;
     if(email && password &&
         firstName && lastName){
-            
         const userData = User({
             email: email,
             firstName: firstName,
-            lastName: lastName
+            lastName: lastName,
+            password: await generatePassword(password)
         });
-
-        userData.password = userData.generateHash(password);
-        userData.googleId = undefined;
-
-        User.create(userData, (err,user) => {
-           if(err){
-               console.log(err.message);
-               return next(err);
-           } else {
-               res.send(user);
-           }
-        });
+        try {
+            const user = await User.create(userData);
+            res.send(user);
+        }catch (e) {
+            console.log(e);
+            res.status(400).send("Something went wrong");
+        }
     } else {
-        return next(new Error("Wrong parameters"));
+        res.status(404).send("Incomplete request");
     }
 
 });

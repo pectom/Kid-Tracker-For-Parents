@@ -19,8 +19,10 @@ const childUserSchema = new Schema({
     password: {
         type: String
     },
+
     parentId: {type: Schema.Types.ObjectId, ref: 'User'},
     childrenId: String,
+
     name: {
         String
     },
@@ -46,6 +48,10 @@ const childUserSchema = new Schema({
         type: String,
         trim: true,
     },
+    type:{
+        type: String,
+        default: "CHILD"
+    }
 });
 
 mongoose.model('child-users',childUserSchema);

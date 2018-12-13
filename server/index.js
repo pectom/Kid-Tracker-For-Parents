@@ -13,6 +13,7 @@ require('./models/Child');
 require('./models/Area');
 require('./models/Rule');
 require('./models/ChildUser');
+require('./models/ConnectionCode');
 require('./services/passport');
 
 const locationRoutes = require('./routes/childRoutes/locationRoutes');
@@ -20,6 +21,7 @@ const registrationRoutes = require('./routes/parentRoutes/registrationRoutes');
 const childrenRoutes  = require('./routes/parentRoutes/childrenRoutes');
 const areaRoutes = require('./routes/parentRoutes/areaRoutes');
 const ruleRouter = require('./routes/parentRoutes/ruleRoutes');
+const connectionRouter = require('./routes/childRoutes/connectionRoutes');
 
 const morgan = require('morgan');
 
@@ -43,6 +45,7 @@ app.use(childrenRoutes);
 app.use(areaRoutes);
 app.use(ruleRouter);
 app.use(locationRoutes);
+app.use(connectionRouter);
 
 app.get('/api/current_user',(req,res) =>{
     if(!req.user) {
