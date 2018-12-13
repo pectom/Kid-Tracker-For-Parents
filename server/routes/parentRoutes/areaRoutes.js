@@ -1,10 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
 
-const requireLogin = require('../../middlewares/requireLogin');
-const requireChildren = require('../../middlewares/requireChildren');
-const requireParent = require('../../middlewares/requireParent');
-
 const User = mongoose.model('users');
 const Child = mongoose.model('children');
 const Area = mongoose.model('areas');
@@ -12,7 +8,7 @@ const areaRouter = express.Router();
 //const validateIcon = require('../middlewares/validateIcon');
 
 
-areaRouter.post('/api/areas',requireParent,async (req,res,next)=>{
+areaRouter.post('/',async (req,res,next)=>{
     const {name, iconId, longitude, latitude, radius, children} = req.body;
 
     if(name && iconId && longitude && latitude && radius && children)
@@ -40,7 +36,7 @@ areaRouter.post('/api/areas',requireParent,async (req,res,next)=>{
         res.status(400).send("Incomplete request");
     }
 });
-areaRouter.get('/api/areas',requireParent, (req,res,next)=> {
+areaRouter.get('/', (req,res,next)=> {
     const children = req.user.children;
     req.user.areas.forEach(area =>
         area.children = area.children.map(x => children.filter(child => {
@@ -48,7 +44,7 @@ areaRouter.get('/api/areas',requireParent, (req,res,next)=> {
         })));
     res.send(req.user.areas);
 });
-areaRouter.put('/api/areas/:areaId',requireParent, async (req,res,next) => {
+areaRouter.put('/:areaId', async (req,res,next) => {
     const {name, iconId, longitude, latitude, radius, children} = req.body;
     const areaId = req.params.areaId;
     if(name && iconId && longitude && latitude && radius && children){
@@ -79,7 +75,7 @@ areaRouter.put('/api/areas/:areaId',requireParent, async (req,res,next) => {
     }
 });
 
-areaRouter.delete('/api/areas/:areaId',requireParent, async(req, res, next) =>{
+areaRouter.delete('/:areaId', async(req, res, next) =>{
     const children = req.user.children;
     const areaId = req.params.areaId;
     const areas = req.user.areas;

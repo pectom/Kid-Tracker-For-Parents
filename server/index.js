@@ -5,6 +5,9 @@ const keys = require('./config/keys');
 const mongoose = require('mongoose');
 const passport = require("passport");
 const cookieSession = require("cookie-session");
+const requireParent = require('./middlewares/requireParent');
+const requireChild = require('./middlewares/requireChildren');
+
 const app = express();
 app.use(bodyParser.json());
 
@@ -16,12 +19,10 @@ require('./models/ChildUser');
 require('./models/ConnectionCode');
 require('./services/passport');
 
-const locationRoutes = require('./routes/childRoutes/locationRoutes');
 const registrationRoutes = require('./routes/registrationRoutes');
-const childrenRoutes  = require('./routes/parentRoutes/childrenRoutes');
-const areaRoutes = require('./routes/parentRoutes/areaRoutes');
-const ruleRouter = require('./routes/parentRoutes/ruleRoutes');
-const connectionRouter = require('./routes/childRoutes/connectionRoutes');
+
+const parentRouter = require('./routes/parentRouter');
+const childRouter = require('./routes/childRouter');
 
 const morgan = require('morgan');
 
@@ -39,13 +40,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/auth',authRouter);
-
-app.use(registrationRoutes);
-app.use(childrenRoutes);
-app.use(areaRoutes);
-app.use(ruleRouter);
-app.use(locationRoutes);
-app.use(connectionRouter);
+app.use('/registration',registrationRoutes);
+app.use('/api/child',requireChild,childRouter);
+app.use('/api/parent',requireParent,parentRouter);
 
 app.get('/api/current_user',(req,res) =>{
     if(!req.user) {

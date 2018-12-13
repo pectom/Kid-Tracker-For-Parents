@@ -13,18 +13,18 @@ authRouter.get('/google/callback',
                 res.redirect('/dashboard');
     });
 
-authRouter.post('/local',
+authRouter.post('/parent/local/',
     passport.authenticate("parent-local",{ failureRedirect: '/login' }),
     (req,res) => {
         res.send(req.user);
     });
-authRouter.post('/local/child',
+authRouter.post('/child/local/',
     passport.authenticate("child-local",{ failureRedirect: '/login' }),
     (req,res) => {
         res.send(req.user);
     });
 
-authRouter.post('/child/token', passport.authenticate('child-token'),
+authRouter.post('p/child/', passport.authenticate('child-token'),
     (req, res) => {
         res.send(req.user);
     });

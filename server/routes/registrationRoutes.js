@@ -6,7 +6,7 @@ const {generatePassword} = require('../utils/passwordManager');
 const User = mongoose.model('users');
 const ChildUser = mongoose.model('child-users');
 
-registartionRouter.post('/api/registration',async(req,res,next) =>{
+registartionRouter.post('/parent/',async(req,res,next) =>{
     const {email, password,firstName,lastName} = req.body;
     if(email && password &&
         firstName && lastName){
@@ -28,7 +28,7 @@ registartionRouter.post('/api/registration',async(req,res,next) =>{
     }
 
 });
-registartionRouter.post('/api/registration/child',async (req,res,next) =>{
+registartionRouter.post('/child/',async (req,res,next) =>{
     const {email, password} = req.body;
     if(email && password){
     try{

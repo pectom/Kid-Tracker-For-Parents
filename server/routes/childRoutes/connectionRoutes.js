@@ -9,7 +9,7 @@ const ChildUser = mongoose.model('child-users');
 const ConnectionCode = mongoose.model('codes');
 
 //dodac require children
-connectionRouter.get('/api/generate_code',requireChildren,async (req,res,next) =>{
+connectionRouter.get('/new',requireChildren,async (req,res,next) =>{
     let added = false;
     let codeObject;
     while(!added){
@@ -29,7 +29,7 @@ connectionRouter.get('/api/generate_code',requireChildren,async (req,res,next) =
     }
     res.send(codeObject);
 });
-connectionRouter.get('/api/codes',requireLogin,async (req,res,next) =>{
+connectionRouter.get('/codes',async (req,res,next) =>{
     try{
         const codes = await ConnectionCode.find();
         res.send(codes);
@@ -37,7 +37,7 @@ connectionRouter.get('/api/codes',requireLogin,async (req,res,next) =>{
         res.status(400).send(e);
     }
 });
-connectionRouter.get('/api/code/:codeValue',requireLogin,async (req,res,next) =>{
+connectionRouter.get('/:codeValue',async (req,res,next) =>{
     const {codeValue} = req.params;
     try{
         const code = await ConnectionCode.findOne({

@@ -6,7 +6,7 @@ const requireParent = require('../../middlewares/requireParent');
 const ChildUser =  mongoose.model('child-users');
 const locationRouter = express.Router();
 
-locationRouter.post("/api/location",requireChildren,async (req,res,next)=>{
+locationRouter.post("/",async (req,res,next)=>{
     const {latitude, longitude} = req.body;
     if(latitude && longitude){
         try{
@@ -28,7 +28,7 @@ locationRouter.post("/api/location",requireChildren,async (req,res,next)=>{
         res.status(400).send("Incomplete request");
     }
 });
-locationRouter.get("/api/location/:childId",requireParent,async (req,res,next)=>{
+locationRouter.get("/:childId",async (req,res,next)=>{
     const childId = req.params.childId;
     try{
         const child = await ChildUser.findOne({
@@ -44,7 +44,7 @@ locationRouter.get("/api/location/:childId",requireParent,async (req,res,next)=>
         res.status(404).send(e);
     }
 });
-locationRouter.get("/api/location",requireChildren,async (req,res,next)=>{
+locationRouter.get("/",async (req,res,next)=>{
     const {latitude,longitude,locationTime} = req.user;
         res.send({
             latitude,
