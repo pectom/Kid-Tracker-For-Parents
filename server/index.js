@@ -8,7 +8,6 @@ const cookieSession = require("cookie-session");
 const app = express();
 
 require('./models/User');
-require('./models/Child');
 require('./models/Area');
 require('./models/Rule');
 require('./models/ChildUser');
