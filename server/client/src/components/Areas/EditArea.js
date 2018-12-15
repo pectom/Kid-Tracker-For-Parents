@@ -95,6 +95,16 @@ class EditArea extends React.Component {
             value: 'building',
             icon: 'building'
         },
+        {
+            text: 'praca',
+            value: 'briefcase',
+            icon: 'briefcase'
+        },
+        {
+            text: 'książka',
+            value: 'book',
+            icon: 'book'
+        },
     ]
 
     prepareChildrenOptions = () => {
