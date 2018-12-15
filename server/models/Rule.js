@@ -16,7 +16,7 @@ const ruleSchema = new Schema({
     },
     repetition: {
         type: String,
-        enum: ['DAILY', 'WEEKLY','MONTHLY','YEARLY', 'WORKDAYS',
+        enum: ['NONE','DAILY', 'WEEKLY','MONTHLY','YEARLY', 'WORKDAYS',
             'WEEKENDS'
         ]
     },

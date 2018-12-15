@@ -1,33 +1,29 @@
 const express = require('express');
-const registartionRouter = express.Router();
 const mongoose = require('mongoose');
+const registartionRouter = express.Router();
+const {generatePassword} = require('../../utils/passwordManager');
 
 const User = mongoose.model('users');
 
-
-registartionRouter.post('/api/registration',(req,res,next) =>{
-    if(req.body.email && req.body.password &&
-        req.body.firstName && req.body.lastName){
-            
+registartionRouter.post('/',async(req,res,next) =>{
+    const {email, password,firstName,lastName} = req.body;
+    if(email && password &&
+        firstName && lastName){
         const userData = User({
-            email: req.body.email,
-            firstName: req.body.firstName,
-            lastName: req.body.lastName
+            email: email,
+            firstName: firstName,
+            lastName: lastName,
+            password: await generatePassword(password)
         });
-
-        userData.password = userData.generateHash(req.body.password);
-        userData.googleId = undefined;
-
-        User.create(userData, (err,user) => {
-           if(err){
-               console.log(err.message);
-               return next(err);
-           } else {
-               res.send();
-           }
-        });
+        try {
+            const user = await User.create(userData);
+            res.send(user);
+        }catch (e) {
+            console.log(e);
+            res.status(400).send("Something went wrong");
+        }
     } else {
-        return next(new Error("Wrong parameters"));
+        res.status(404).send("Incomplete request");
     }
 
 });

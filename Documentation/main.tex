@@ -95,8 +95,43 @@
 			\begin{tabular}{c}
 				\includegraphics[width=.95\textwidth]{moduly_interfejsy_komunikacyjne}
 			\end{tabular} 
-			\caption{Architecture, modules and interfaces}
+			\caption{Architektura, moduły i interfejsy}
 		\end{figure}
+
+		\subsection{Frontend aplikacji webowej}
+
+			\subsubsection{Frameworki, biblioteki i technologie}
+
+				\begin{itemize}
+					\item React - tworzenie komponentów
+					\item Redux - przechowywanie i udostępnianie danych komponentom
+					\item axios - tworzenie zapytań do serwera backendowego
+					\item reduxThunk - umożliwia asynchroniczne oczekiwanie na odpowiedzi serwera backendowego,
+					\item react-router-dom - tworzenie odnośników do różnych komponentów aplikacji
+					\item react-google-maps - tworzenie komponentów React odpowiedzialnych za wyświetlanie map Google
+					\item semantic-ui-react - tworzenie komponentów z stylizacją semantic ui
+				\end{itemize}
+
+			\subsubsection{Podział na foldery}
+
+				\begin{itemize}
+					\item actions - akcje wykorzystywane przez redux i reduxThunk do komunikacji frontendu z backendowym serwerem,
+					\item components - komponenty React,
+					\item reducers - funkcje potrzebne do prawidłowego działania redux
+				\end{itemize}
+
+			\subsubsection{Komponenty}
+
+				\begin{itemize}
+					\item App - komponent główny aplikacji zawierający BrowserRouter odpowiadający za prawidłowe wyświetlanie komponentów ze względu na ścieżke wpisaną w pole adresu przeglądarki,
+					\item Header - komponent zawierający menu, wyświetlany po zalogowaniu się do aplikacji na górze ekranu,
+					\item Map - komponent obsługujący wyświetlanie map Google,
+					\item folder Landing - zawiera komponenty odpowiedzialne za wyświetlanie ekranu powitalnego, logowania, rejestracji i logowania za pomocą Google,
+					\item folder Dashboard - zawiera komponenty wyświetlające aktualnie obowiązujące reguły i wyświetlające mapę z aktualnymi położeniami dzieci,
+					\item folder Children - zwiera komponenty wyświetlające powiązane z kontem rodzica dzieci, umożliwia dodawanie nowego dziecka, edycję istniejącego i usunięcie istniejącego,
+					\item folder Areas - zawiera komponenty wyświetlające powiązane z kontem rodzica obszary, umożliwia dodawanie nowego obszaru, edycję istniejącego i usunięcie istniejącego,
+					\item folder Rules - zawiera komponenty wyświetlające powiązane z kontem rodzica reguły wybranego dziecka, umożliwia dodawanie nowej reguły, edycję istniejącej i usunięcie istniejącej.
+				\end{itemize}
 
 		\subsection{API}
 
