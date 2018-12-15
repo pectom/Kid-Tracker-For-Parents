@@ -29,10 +29,15 @@ const userSchema = new Schema({
        type:String,
         trim: true
     },
-    type: {
-       type: String,
+    type:{
+        type: String,
+        default: "PARENT"
     },
     children: [ChildSchema],
+    child: {
+       type: [String],
+        unique: true
+    },
     areas: [AreaSchema]
 });
 
