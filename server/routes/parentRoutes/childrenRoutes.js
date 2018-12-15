@@ -21,7 +21,7 @@ childrenRouter.post('/',async (req,res,next)=>{
         const user = await User.updateOne({
             _id: parent._id
         },{
-            $push: {child: childId}
+            $push: {children: childId}
         });
         //dodanie informacji z webowki do dziecka
         await ChildUser.updateOne({
@@ -71,19 +71,20 @@ childrenRouter.put('/:childId', async (req,res,next) => {
 childrenRouter.delete('/:childId', async(req, res, next) =>{
     try{
         const childId = req.params.childId;
-        const child = req.user.child;
-        const index = await child.findIndex(id => String(id) === String(childId));
+        const children = req.user.children;
+        console.log(children);
+        const index = await children.findIndex(id => String(id) === String(childId));
         if(index !== -1){
-            child.splice(index,1);
+            children.splice(index,1);
             await User.updateOne({
                 _id: req.user._id
             },{
-                child
+                children
             });
             await ChildUser.find({_id: childId})
                 .remove()
                 .exec();
-            return res.send(child).status(204);
+            return res.send(children).status(204);
         }else{
             res.status(400).send("Children not found");
         }

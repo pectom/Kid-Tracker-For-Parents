@@ -33,7 +33,7 @@ const userSchema = new Schema({
         type: String,
         default: "PARENT"
     },
-    child: {
+    children: {
        type: [String],
         unique: true
     },
