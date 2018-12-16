@@ -8,7 +8,7 @@ import * as actions from '../../actions';
 class Area extends React.Component {
 
     renderChildrenIcons() {
-        return this.props.children ? this.props.children.map(childTab => { return childTab[0] ? childTab[0] : [] }).map(child => {
+        return this.props.children ? this.props.children.map(child => {
             return <i key={child._id} className={`circular icon inverted ${child.iconColor}`}>{child.name ? child.name[0] : ''}</i>
         }) : [];
     }
@@ -28,7 +28,7 @@ class Area extends React.Component {
                             id={this.props.id}
                             name={this.props.name} 
                             icon={this.props.icon} 
-                            myChildren={this.props.children ? this.props.children.map(childTab => { return childTab[0] ? childTab[0] : [] }) : []} 
+                            myChildren={this.props.children ? this.props.children : []} 
                             lat={this.props.lat} 
                             lon={this.props.lon} 
                             rad={this.props.rad} 
@@ -36,7 +36,7 @@ class Area extends React.Component {
                         <DeleteArea 
                             name={this.props.name} 
                             icon={this.props.icon} 
-                            myChildren={this.props.children ? this.props.children.map(childTab => { return childTab[0] ? childTab[0] : [] }) : []}
+                            myChildren={this.props.children ? this.props.children : []}
                             id={this.props.id}
                         />
                     </div>

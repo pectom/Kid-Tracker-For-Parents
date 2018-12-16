@@ -11,14 +11,12 @@ class EditRule extends React.Component {
         enddate: this.props.enddate,
         starttime: this.props.starttime,
         endtime: this.props.endtime,
-        area: this.props.area.value,
-        kids: this.props.kids.map(kid => kid[0])
+        area: this.props.area,
+        repetition: this.props.repetition
     }
 
     async componentDidMount() {
-        await this.props.fetchChildren();
         await this.props.fetchAreas();
-        await this.props.fetchRules();
     }
 
     close = () => {
@@ -33,8 +31,18 @@ class EditRule extends React.Component {
         })
     }
 
-    handleClick = () => {
-        console.log("Edit rule");
+    handleClick = async () => {
+        await this.props.updateRule({
+            id: this.props.id,
+            startDate: this.state.startdate,
+            endDate: this.state.enddate,
+            startTime: this.state.starttime,
+            endTime: this.state.endtime,
+            areaId: this.state.area,
+            childId: this.props.child,
+            repetition: this.state.repetition
+        });
+        await this.props.fetchRules(this.props.child._id);
         this.close();
     }
 
@@ -68,9 +76,9 @@ class EditRule extends React.Component {
         });
     }
 
-    handleKidChange = data => {
+    handleRepetitionChange = data => {
         this.setState({
-            kids: data.value
+            repetition: data.value
         });
     }
 
@@ -87,23 +95,6 @@ class EditRule extends React.Component {
         }
     ];
 
-    prepareChildrenOptions = () => {
-        const children = this.props.children ? this.props.children : [];
-        return children.map( child => {
-            return {
-                text: child.name,
-                value: child._id,
-                icon: {
-                    name:'',
-                    circular: true,
-                    color: child.iconColor,
-                    inverted: true,
-                    size: 'tiny'
-                }
-            }
-        })
-    }
-
     prepareAreasOptions = () => {
         const areas = this.props.areas ? this.props.areas : [];
         return areas.map( area => {
@@ -117,6 +108,33 @@ class EditRule extends React.Component {
         })
     }
 
+    repetitionOptions = [
+        {
+            text: 'codziennie',
+            value: 'DAILY'
+        },
+        {
+            text: 'cotygodniowo',
+            value: 'WEEKLY'
+        },
+        {
+            text: 'comiesięcznie',
+            value: 'MONTHLY'
+        },
+        {
+            text: 'co rok',
+            value: 'YEARLY'
+        },
+        {
+            text: 'dni robocze',
+            value: 'WORKDAYS'
+        },
+        {
+            text: 'weekendy',
+            value: 'WEEKENDS'
+        },
+    ];
+
     render() {
         return (
             <Modal
@@ -124,7 +142,7 @@ class EditRule extends React.Component {
                 open={this.state.open}
                 onClose={() => this.close()}
                 trigger={
-                    <button className="ui icon button" data-tooltip="Edytuj regułę" onClick={() => this.open()}>
+                    <button id={`rules-edit-rule-${this.props.id}-child-${this.props.child._id}`} className="ui icon button" data-tooltip="Edytuj regułę" onClick={() => this.open()}>
                                 <i className="edit icon" />
                     </button>
                 }
@@ -135,7 +153,8 @@ class EditRule extends React.Component {
                         <div className="two fields">
                             <div className="field">
                                 <label>Data rozpoczęcia</label>
-                                <input 
+                                <input
+                                    id={`rules-edit-rule-${this.props.id}-child-${this.props.child._id}-startdate`} 
                                     name="startdate" 
                                     type="date" 
                                     value={this.state.startdate} 
@@ -144,7 +163,8 @@ class EditRule extends React.Component {
                             </div>
                             <div className="field">
                                 <label>Data zakończenia</label>
-                                <input 
+                                <input
+                                    id={`rules-edit-rule-${this.props.id}-child-${this.props.child._id}-enddate`} 
                                     name="enddate" 
                                     type="date" 
                                     value={this.state.enddate} 
@@ -156,6 +176,7 @@ class EditRule extends React.Component {
                             <div className="field">
                                 <label>Czas rozpoczęcia</label>
                                 <input 
+                                    id={`rules-edit-rule-${this.props.id}-child-${this.props.child._id}-starttime`} 
                                     name="starttime" 
                                     type="time" 
                                     value={this.state.starttime} 
@@ -164,7 +185,8 @@ class EditRule extends React.Component {
                             </div>
                             <div className="field">
                                 <label>Czas zakończenia</label>
-                                <input 
+                                <input
+                                    id={`rules-edit-rule-${this.props.id}-child-${this.props.child._id}-endtime`} 
                                     name="endtime" 
                                     type="time" 
                                     value={this.state.endtime} 
@@ -175,6 +197,7 @@ class EditRule extends React.Component {
                         <div className="field">
                             <label>Obszar</label>
                             <Dropdown 
+                                id={`rules-edit-rule-${this.props.id}-child-${this.props.child._id}-area`} 
                                 placeholder='Obszar' 
                                 fluid selection 
                                 options={this.prepareAreasOptions()} 
@@ -183,28 +206,28 @@ class EditRule extends React.Component {
                             />
                         </div>
                         <div className="field">
-                            <label>Dzieci</label>
+                            <label>Powtarzanie</label>
                             <Dropdown 
-                                placeholder='Dzieci' 
-                                fluid multiple selection 
-                                options={this.prepareChildrenOptions()} 
-                                value={this.state.kids}
-                                onChange={(e,data) => this.handleKidChange(data)}
+                                id={`rules-edit-rule-${this.props.id}-child-${this.props.child._id}-repetition`} 
+                                fluid selection 
+                                options={this.repetitionOptions} 
+                                value={this.state.repetition}
+                                onChange={(e,data) => this.handleRepetitionChange(data)}
                             />
                         </div>
                         
                     </form>
                 </Modal.Content>
                 <Modal.Actions>
-                    <button className="ui button green" onClick={() => this.handleClick()}>Zapisz</button>
+                    <button id={`rules-edit-rule-${this.props.id}-child-${this.props.child._id}-saveButton`} className="ui button green" onClick={() => this.handleClick()}>Zapisz</button>
                 </Modal.Actions>
             </Modal>
         );
     }
 }
 
-const mapStateToProps = ({ rules, children, areas }) => {
-    return { rules, children, areas };
+const mapStateToProps = ({ rules, areas }) => {
+    return { rules, areas };
 }
 
 export default connect(mapStateToProps, actions)(EditRule);

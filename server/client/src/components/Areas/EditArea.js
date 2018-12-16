@@ -95,6 +95,16 @@ class EditArea extends React.Component {
             value: 'building',
             icon: 'building'
         },
+        {
+            text: 'praca',
+            value: 'briefcase',
+            icon: 'briefcase'
+        },
+        {
+            text: 'książka',
+            value: 'book',
+            icon: 'book'
+        },
     ]
 
     prepareChildrenOptions = () => {
@@ -121,7 +131,7 @@ class EditArea extends React.Component {
                 open={this.state.open}
                 onClose={() => this.close()}
                 trigger={
-                    <button className="ui icon button" data-tooltip="Edytuj obszar" onClick={() => this.open()}>
+                    <button id={`area-editArea-${this.props.id}`} className="ui icon button" data-tooltip="Edytuj obszar" onClick={() => this.open()}>
                                 <i className="edit icon" />
                     </button>
                 }
@@ -134,6 +144,7 @@ class EditArea extends React.Component {
                             <div className="two fields">
                                 <div className="field">
                                     <input
+                                        id={`area-editArea-name-${this.props.id}`}
                                         name="name" 
                                         type="text" 
                                         value={this.state.name} 
@@ -141,7 +152,8 @@ class EditArea extends React.Component {
                                     />
                                 </div>
                                 <div className="field">
-                                    <Dropdown 
+                                    <Dropdown
+                                        id={`area-editArea-icon-${this.props.id}`}
                                         value={this.state.icon} 
                                         fluid selection 
                                         options={this.iconOptions} 
@@ -154,19 +166,20 @@ class EditArea extends React.Component {
                             <label>Lokalizacja</label>
                             <div className="two fields">
                                 <div className="field">
-                                    <input name="lat" type="text" value={this.state.lat} onChange={e => this.handleLatChange(e)} />
+                                    <input id={`area-editArea-latitude-${this.props.id}`} name="lat" type="text" value={this.state.lat} onChange={e => this.handleLatChange(e)} />
                                 </div>
                                 <div className="field">
-                                    <input name="lon" type="text" value={this.state.lon} onChange={e => this.handleLonChange(e)} />
+                                    <input id={`area-editArea-longitude-${this.props.id}`} name="lon" type="text" value={this.state.lon} onChange={e => this.handleLonChange(e)} />
                                 </div>
                                 <div className="field">
-                                    <input name="rad" type="text" value={this.state.rad} onChange={e => this.handleRadChange(e)} />
+                                    <input id={`area-editArea-radius-${this.props.id}`} name="rad" type="text" value={this.state.rad} onChange={e => this.handleRadChange(e)} />
                                 </div>
                             </div>
                         </div>
                         <div className="field">
                             <label>Dzieci</label>
-                            <Dropdown 
+                            <Dropdown
+                                id={`area-editArea-children-${this.props.id}`}
                                 value={this.state.childrenIds} 
                                 fluid multiple selection 
                                 options={this.prepareChildrenOptions()} 
@@ -177,7 +190,7 @@ class EditArea extends React.Component {
                     </form>
                 </Modal.Content>
                 <Modal.Actions>
-                    <button className="ui button green" onClick={() => this.handleSaveClick()}>Zapisz</button>
+                    <button id={`area-editArea-save-${this.props.id}`} className="ui button green" onClick={() => this.handleSaveClick()}>Zapisz</button>
                 </Modal.Actions>
             </Modal>
         );

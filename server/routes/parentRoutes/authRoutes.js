@@ -13,11 +13,10 @@ authRouter.get('/google/callback',
         res.redirect('/dashboard');
     });
 
-
-authRouter.post('/local',
-    passport.authenticate("local",{ failureRedirect: '/login' }),
+authRouter.post('/local/',
+    passport.authenticate("parent-local",{ failureRedirect: '/login' }),
     (req,res) => {
-        res.send();
+        res.send(req.user);
     });
 
-module.exports = authRouter;
+module.exports =  authRouter;

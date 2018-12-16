@@ -9,7 +9,7 @@ class AddChild extends React.Component {
         open: false,
         name: '',
         iconColor: 'red',
-        token: ''
+        code: ''
     }
 
     close = () => {
@@ -29,6 +29,7 @@ class AddChild extends React.Component {
             user: this.props.auth._id,
             name: this.state.name,
             iconColor: this.state.iconColor,
+            code: this.state.code
         });
         this.props.fetchChildren();
         this.close();
@@ -42,7 +43,7 @@ class AddChild extends React.Component {
 
     handleTokenChange = (e) => {
         this.setState({
-            token: e.target.value
+            code: e.target.value
         })
     }
 
@@ -112,7 +113,7 @@ class AddChild extends React.Component {
                         </div>
                         <div className="field">
                             <label>Token z aplikacji dziecka</label>
-                            <input id="add-child-token" name="token" type="text" value={this.state.token} onChange={(e) => this.handleTokenChange(e)} />
+                            <input id="add-child-code" name="code" type="text" value={this.state.code} onChange={(e) => this.handleTokenChange(e)} />
                         </div>
                         
                     </form>

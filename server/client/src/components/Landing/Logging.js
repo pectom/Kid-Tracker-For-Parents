@@ -34,7 +34,7 @@ class Logging extends React.Component {
                     Lub
                 </div>
                 <div className="ui segment" style={{textAlign: 'center'}}>
-                    <a id="google-button" className="ui google plus button" href="/auth/google">
+                    <a id="google-button" className="ui google plus button" href="/auth/parent/google">
                         <i className="google icon" />
                         Zaloguj z Google
                     </a>

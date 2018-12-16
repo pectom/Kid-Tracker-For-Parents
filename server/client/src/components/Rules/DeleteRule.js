@@ -1,9 +1,16 @@
 import React from 'react';
 import { Modal } from 'semantic-ui-react';
+import { connect } from 'react-redux';
+
+import * as actions from '../../actions';
 
 class DeleteRule extends React.Component {
     state = {
         open: false
+    }
+
+    async componentDidMount() {
+        await this.props.fetchAreas();
     }
 
     close = () => {
@@ -18,14 +25,39 @@ class DeleteRule extends React.Component {
         })
     }
 
-    handleClick = () => {
-        console.log("Delete rule");
+    handleClick = async () => {
+        await this.props.deleteRule(this.props.id);
+        await this.props.fetchRules(this.props.child._id);
         this.close();
     }
 
-    renderKidsIcons = () => this.props.kids.map( kidInital => 
-        <i key={kidInital[1]} className={`circular icon inverted ${kidInital[1]}`}>{kidInital[0][0]}</i>
-    );
+    repetitionOptions = [
+        {
+            text: 'codziennie',
+            value: 'DAILY'
+        },
+        {
+            text: 'cotygodniowo',
+            value: 'WEEKLY'
+        },
+        {
+            text: 'comiesięcznie',
+            value: 'MONTHLY'
+        },
+        {
+            text: 'co rok',
+            value: 'YEARLY'
+        },
+        {
+            text: 'dni robocze',
+            value: 'WORKDAYS'
+        },
+        {
+            text: 'weekendy',
+            value: 'WEEKENDS'
+        },
+    ];
+
 
     render() {
         return (
@@ -34,7 +66,7 @@ class DeleteRule extends React.Component {
                 open={this.state.open}
                 onClose={() => this.close()}
                 trigger={
-                    <button className="ui icon button" data-tooltip="Usuń regułę" onClick={() => this.open()}>
+                    <button id={`rules-delete-rule-${this.props.id}-child-${this.props.child._id}`} className="ui icon button" data-tooltip="Usuń regułę" onClick={() => this.open()}>
                         <i className="trash alternate icon" />
                     </button>
                 }
@@ -43,26 +75,39 @@ class DeleteRule extends React.Component {
                 <Modal.Content>
                 <div className="ui segment">
                     <div className="ui segment" style={{textAlign: "center", fontSize: "20px"}}>
-                        {this.props.area.text} <i className={`${this.props.icon} icon`} />
+                        {this.props.area ? this.props.area.name : ''} <i className={`${this.props.area ? this.props.area.iconId : ''} icon`} />
                     </div>
                     <div className="ui grid">
-                        <div className="ui eight wide column">
+                        <div className="ui six wide column">
                             <div className="ui segment">
-                                {this.props.starttime}-{this.props.endtime}
+                                {this.props.starttime} do {this.props.endtime}
                             </div>
                         </div>
-                        <div className="ui eight wide column">
-                            {this.renderKidsIcons()}
+                        <div className="ui ten wide column">
+                            <div className="ui segment">
+                                {this.props.startdate} do {this.props.enddate}
+                            </div>
+                        </div>
+                    </div>
+                    <div className="ui grid">
+                        <div className="ui ten wide column">
+                            <div className="ui segment">
+                                {this.repetitionOptions.filter(option => option.value === this.props.repetition)[0] ? this.repetitionOptions.filter(option => option.value === this.props.repetition)[0].text : ''}
+                            </div>
                         </div>
                     </div>
                 </div>
                 </Modal.Content>
                 <Modal.Actions>
-                    <button className="ui button green" onClick={() => this.handleClick()}>Usuń</button>
+                    <button id={`rules-delete-rule-${this.props.id}-child-${this.props.child._id}-deleteButton`} className="ui button green" onClick={() => this.handleClick()}>Usuń</button>
                 </Modal.Actions>
             </Modal>
         );
     }
 }
 
-export default DeleteRule;
+const mapStateToProps = ({ rules, areas }) => {
+    return { rules, areas };
+}
+
+export default connect(mapStateToProps, actions)(DeleteRule);
