@@ -1,12 +1,12 @@
-var selenium = require('selenium-webdriver');
+const selenium = require('selenium-webdriver');
 
 describe('Selenium Tutorial', function() {
-    var driver;
+    const driver = new selenium.Builder().
+    withCapabilities(selenium.Capabilities.chrome())
+        .build();
+    const By = selenium.By;
+    let until = selenium.until;
     beforeEach(function(done) {
-        driver = new selenium.Builder().
-        withCapabilities(selenium.Capabilities.chrome())
-            .build();
-
         driver.get('http://localhost:3000/').then(done);
     });
 
@@ -14,11 +14,36 @@ describe('Selenium Tutorial', function() {
         driver.quit().then(done);
     });
 
-    // Test to ensure we are on the home page by checking the <body> tag id attribute
-    it('Should be on the home page', function(done) {
-        return driver.findById("login-email").then(function(elem) {
-            expect(elem).toBeDefined().then(done);
-        });
-    });
+    // it('Should be on the home page', function (done) {
+    //
+    //     driver.wait(until.elementLocated(By.id("login-email")), 5000);
+    //
+    //     driver.findElement(By.id('login-email'))
+    //         .then(el => {
+    //             expect(el).toBeDefined();
+    //             done();
+    //         });
+    //
+    // });
 
+    it('Should be logged', function (done) {
+
+        driver
+            .wait(until.elementLocated(By.id("login-email")), 5000);
+
+        driver.findElement(By.id('login-email')).sendKeys('aga@aga.com');
+        driver.findElement(By.id('login-password')).sendKeys('aga');
+        driver.findElement(By.id('login-button')).click();
+
+        setTimeout(() => {
+            driver.getCurrentUrl().then(function(value) {
+                expect(value).toContain('/dashboard');
+                done();
+            });
+        },4000);
+
+
+
+
+    });
 });
