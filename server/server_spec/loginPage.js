@@ -27,7 +27,6 @@ describe('Selenium Tutorial', function() {
     });
 
     it('Should be logged', function (done) {
-
         driver.wait(until.elementLocated(By.id("login-email")), 10000).then(
             () => {
                 driver.findElement(By.id('login-email')).sendKeys('aga@aga.com').then(
