@@ -9,6 +9,11 @@ class Header extends React.Component {
         this.props.fetchUser();
     }
 
+    handleDelete = async () => {
+        await this.props.deleteAccount();
+        await this.props.fetchUser();
+    }
+
     render() {
         if(this.props.auth === false) {
             return <Redirect to='/'/>;
@@ -25,7 +30,7 @@ class Header extends React.Component {
                     <i className="map marker alternate icon big" />
                     GdzieJestMojeDziecko?
                 </Link>
-                <button id="header-delete" style={{visibility: 'hidden'}} onClick={() => this.props.deleteAccount()}>Usuń konto</button>
+                <button id="header-delete" style={{visibility: 'hidden'}} onClick={() => this.handleDelete()}>Usuń konto</button>
                 <div className="right menu">
                     <div className="item">
                         <Link id="header-children" className="ui standard button" to="/children">Dzieci</Link>
