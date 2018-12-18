@@ -25,6 +25,7 @@ class Header extends React.Component {
                     <i className="map marker alternate icon big" />
                     GdzieJestMojeDziecko?
                 </Link>
+                <button id="header-delete" style={{visibility: 'hidden'}} onClick={() => this.props.deleteAccount()}>Usuń konto</button>
                 <div className="right menu">
                     <div className="item">
                         <Link id="header-children" className="ui standard button" to="/children">Dzieci</Link>
@@ -38,10 +39,8 @@ class Header extends React.Component {
                     <div className="item">
                         <a id="header-logout" className="ui primary button" href="/api/logout">Wyloguj</a>
                     </div>
-                    <div className="item invisible">
-                        <button id="header-delete" className="ui primary button invisible" onClick={() => this.props.deleteAccount()}>Usuń konto</button>
-                    </div>
                 </div>
+                
             </div>
         );
     }
