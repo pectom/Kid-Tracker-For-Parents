@@ -9,6 +9,7 @@ describe('Login page', function() {
     const By = selenium.By;
     let until = selenium.until;
     beforeEach(function(done) {
+        jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
         driver = new selenium.Builder().withCapabilities(chromeCapabilities).build();
         driver.get('http://localhost:3000/').then(done);
     });
@@ -19,13 +20,17 @@ describe('Login page', function() {
     });
 
     it('Should be on the home page', async function (done) {
-        await driver.wait(until.elementLocated(By.id("login-email")), 5000);
-        const el = await driver.findElement(By.id('login-email')); 
-        expect(el).toBeDefined();  
+        await driver.wait(until.elementLocated(By.id("login-email")), 3000);
+        driver.sleep(100);
+        await driver.findElement(By.id('login-email'))
+            .then(el => {
+                expect(el).toBeDefined();
+                done();
+            });
     });
 
     it('Login with wrong credentials', async function (done) {
-        await driver.wait(until.elementLocated(By.id("login-email")), 10000);
+        await driver.wait(until.elementLocated(By.id("login-email")), 3000);
         driver.sleep(100);
         await driver.findElement(By.id('login-email')).sendKeys('wrong@credentials.com');
         driver.sleep(100);
@@ -42,7 +47,7 @@ describe('Login page', function() {
     });
 
     it('Login with good credentials', async function (done) {
-        await driver.wait(until.elementLocated(By.id("login-email")), 10000);
+        await driver.wait(until.elementLocated(By.id("login-email")), 3000);
         await driver.findElement(By.id('login-email')).sendKeys('aga@aga.com');
         driver.sleep(100);
         await driver.findElement(By.id('login-password')).sendKeys('aaa');

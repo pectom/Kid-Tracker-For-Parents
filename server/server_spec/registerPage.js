@@ -9,6 +9,7 @@ describe('Register page', function() {
     const By = selenium.By;
     let until = selenium.until;
     beforeEach(function(done) {
+        jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
         driver = new selenium.Builder().withCapabilities(chromeCapabilities).build();
         driver.get('http://localhost:3000/').then(done);
     });
@@ -19,7 +20,8 @@ describe('Register page', function() {
     });
 
     it('Should be on register tab', async function (done) {
-        await driver.wait(until.elementLocated(By.id("register-tab")), 5000);
+        await driver.wait(until.elementLocated(By.id("register-tab")), 3000);
+        driver.sleep(100);
         await driver.findElement(By.id('register-tab')).click();
         driver.sleep(100);
         await driver.findElement(By.id('register-email'))
@@ -30,28 +32,28 @@ describe('Register page', function() {
     });
 
     it('Register with wrong credentials', async function (done) {
-        await driver.wait(until.elementLocated(By.id("register-tab")), 10000);
+        await driver.wait(until.elementLocated(By.id("register-tab")), 3000);
         driver.sleep(100);
         await driver.findElement(By.id('register-tab')).click();
         driver.sleep(100);
-        await driver.findElement(By.id('register-name')).sendKeys('wrong');
+        await driver.findElement(By.id('register-name')).sendKeys('wrong1');
         driver.sleep(100);
-        await driver.findElement(By.id('register-surname')).sendKeys('credentials');
+        await driver.findElement(By.id('register-surname')).sendKeys('credentials1');
         driver.sleep(100);
-        await driver.findElement(By.id('register-email')).sendKeys('wrong.credentials.com');
+        await driver.findElement(By.id('register-email')).sendKeys('wrong.credentials1.com');
         driver.sleep(100);
-        await driver.findElement(By.id('register-password')).sendKeys('wrongCredentials');
+        await driver.findElement(By.id('register-password')).sendKeys('wrongCredentials1');
         driver.sleep(100);
-        await driver.findElement(By.id('register-password2')).sendKeys('wrongCredentials');
+        await driver.findElement(By.id('register-password2')).sendKeys('wrongCredentials1');
         driver.sleep(100);
         await driver.findElement(By.id('register-button')).click();
         driver.sleep(100);
 
         await driver.findElement(By.id('login-tab')).click();
         driver.sleep(100);
-        await driver.findElement(By.id('login-email')).sendKeys('wrong.credentials.com');
+        await driver.findElement(By.id('login-email')).sendKeys('wrong.credentials1.com');
         driver.sleep(100);
-        await driver.findElement(By.id('login-password')).sendKeys('wrongCredentials');
+        await driver.findElement(By.id('login-password')).sendKeys('wrongCredentials1');
         driver.sleep(100);
         await driver.findElement(By.id('login-button')).click();
         driver.sleep(100);
@@ -64,30 +66,31 @@ describe('Register page', function() {
     });
 
     it('Register with good credentials', async function (done) {
-        await driver.wait(until.elementLocated(By.id("register-tab")), 10000);
+        await driver.wait(until.elementLocated(By.id("register-tab")), 3000);
+        //driver.sleep(100);
         await driver.findElement(By.id('register-tab')).click();
-        driver.sleep(100);
+        //driver.sleep(100);
         await driver.findElement(By.id('register-name')).sendKeys('aga');
-        driver.sleep(100);
+        //driver.sleep(100);
         await driver.findElement(By.id('register-surname')).sendKeys('aga');
-        driver.sleep(100);
+        //driver.sleep(100);
         await driver.findElement(By.id('register-email')).sendKeys('aga@aga.pl');
-        driver.sleep(100);
+        //driver.sleep(100);
         await driver.findElement(By.id('register-password')).sendKeys('aga');
-        driver.sleep(100);
+        //driver.sleep(100);
         await driver.findElement(By.id('register-password2')).sendKeys('aga');
-        driver.sleep(100);
+        //driver.sleep(100);
         await driver.findElement(By.id('register-button')).click();
 
-        driver.sleep(100);
+        //driver.sleep(100);
         await driver.findElement(By.id('login-tab')).click();
-        driver.sleep(100);
+        //driver.sleep(100);
         await driver.findElement(By.id('login-email')).sendKeys('aga@aga.pl');
-        driver.sleep(100);
+        //driver.sleep(100);
         await driver.findElement(By.id('login-password')).sendKeys('aga');
-        driver.sleep(100);
+        //driver.sleep(100);
         await driver.findElement(By.id('login-button')).click();
-        driver.sleep(100);
+        //driver.sleep(100);
         setTimeout(
             () => {
                 driver.getCurrentUrl().then(function(value) {
