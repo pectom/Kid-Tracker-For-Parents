@@ -1,7 +1,7 @@
 {
   "spec_dir": "server_spec",
   "spec_files": [
-    "registerPage.js"
+    "*.js"
   ],
   "helpers": [
     "helpers/**/*.js"

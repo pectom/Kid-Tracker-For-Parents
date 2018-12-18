@@ -27,7 +27,7 @@ describe('Login page', function() {
             });
     });
 
-    it('Login with wrong credentials', async function (done) {
+    it('Shouldn\'t login with not existing credentials', async function (done) {
         await driver.wait(until.elementLocated(By.id("login-email")), 3000);
         await driver.findElement(By.id('login-email')).sendKeys('wrong@credentials.com');
         await driver.findElement(By.id('login-password')).sendKeys('wrongCredentials');
@@ -49,8 +49,13 @@ describe('Login page', function() {
             () => {
                 driver.getCurrentUrl().then(function(value) {
                     expect(value).toContain('/dashboard');
-                    done();
             })}, 3000);
+        setTimeout(async () => {
+            await driver.findElement(By.id('header-logout')).click();
+            done();
+        }, 1000);
     })
 
+    //todo - login with wrong password
+    //todo - login with not valid email
 });
