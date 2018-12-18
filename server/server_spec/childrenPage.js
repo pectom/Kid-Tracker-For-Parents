@@ -19,13 +19,15 @@ describe('Children page', function() {
         await driver.findElement(By.id('login-button')).click();
         await driver.wait(until.elementLocated(By.id("header-children")), 3000);
         await driver.findElement(By.id('header-children')).click();
-        var children = await driver.findElements(By.className("child-component"));
-        size = children.size;
     });
 
-    afterEach(function(done) {
-        driver.quit()
-            .then(done)
+    afterEach(async function(done) {
+        setTimeout(async () => {
+            await driver.findElement(By.id('header-logout')).click();
+            driver.quit()
+                .then(done)
+        }, 1000)
+
     });
 
     it('Should be on children tab', async function (done) {
@@ -37,19 +39,21 @@ describe('Children page', function() {
                 })}, 3000);
     });
 
-    it('Souldn\'t add child with wrong token', async function (done) {
+    it('Shouldn\'t add child with wrong token', async function (done) {
         await driver.wait(until.elementLocated(By.id('add-child-button')), 3000);
+        var children = await driver.findElements(By.className("child-component"));
+        size = children.size;
         await driver.findElement(By.id('add-child-button')).click();
         await driver.findElement(By.id('add-child-name')).sendKeys('aaa');
         await driver.findElement(By.id('add-child-code')).sendKeys('1234456');
         await driver.findElement(By.id('save-child-button')).click();
-        var children  = driver.wait(until.elementLocated(By.id("child-component")), 3000).catch(() => 'cos');
-        var currentSize;
-        if(children === 'cos')
-            currentSize = 0;
-        else
-            currentSize = children.size;
-        expect(currentSize).toEqual(size);
+
+        driver.wait(until.elementLocated(By.className("child-component")), 3000)
+            .then(children = driver.findElements(By.className("child-component")),
+                () => children  = []);
+        expect(children.size).toEqual(size);
+        done();
     });
 
+    //todo - Should add child with valid token
 });
