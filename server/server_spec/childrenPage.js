@@ -51,5 +51,8 @@ describe('Children page', function() {
             currentSize = children.size;
         expect(currentSize).toEqual(size);
     });
-
+    //todo - should edit child
+    //todo - shouldn't send request to db if nothing changed in child
+    //todo - should delete child
+    //todo - shouldn't delete child if parent not sure
 });
