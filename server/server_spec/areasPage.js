@@ -1,7 +1,6 @@
 const selenium = require('selenium-webdriver');
 
 describe('Areas page', function() {
-
     let chromeOptions = {'args': ['--no-sandbox']};
     let chromeCapabilities = selenium.Capabilities.chrome().set('chromeOptions', chromeOptions);
     let driver = undefined;
@@ -22,7 +21,6 @@ describe('Areas page', function() {
         await driver.wait(until.elementLocated(By.className("edit icon")), 3000);
         let children = await driver.findElements(By.className("edit icon"));
         size = children.length;
-        console.log(size);
         done();
     });
 
@@ -39,14 +37,14 @@ describe('Areas page', function() {
 
     it('Should be on children tab', async function (done) {
         setTimeout(
-            () => {
+            async () => {
                 driver.getCurrentUrl().then(function(value) {
                     expect(value).toContain('/areas');
                     done();
                 })}, 3000);
     });
 
-    it('Shouldn\'t add areas', async function (done) {
+    it('Should add areas', async function (done) {
         await driver.wait(until.elementLocated(By.id('area-addArea')), 3000);
         await driver.findElement(By.id('area-addArea')).click();
         await driver.findElement(By.id('area-addArea-name')).sendKeys('aaa');
@@ -55,12 +53,28 @@ describe('Areas page', function() {
         await driver.findElement(By.className('ui button green')).click();
         setTimeout(
             async () => {
-                await driver.wait(until.elementLocated(By.className("edit icon")), 3000);
                 let children = await driver.findElements(By.className("edit icon"));
                 expect(children.length).toEqual(size+1);
                 done();
             },
-            2000
+            4000
+        );
+        expect(false);
+        done();
+    });
+
+    it('Shouldn\'t add areas', async function (done) {
+        await driver.wait(until.elementLocated(By.id('area-addArea')), 3000);
+        await driver.findElement(By.id('area-addArea')).click();
+        await driver.findElement(By.id('area-addArea-longitude')).sendKeys(5);
+        await driver.findElement(By.className('ui button green')).click();
+        setTimeout(
+            async () => {
+                let children = await driver.findElements(By.className("edit icon"));
+                expect(children.length).toEqual(size);
+                done();
+            },
+            4000
         );
         expect(false);
         done();
