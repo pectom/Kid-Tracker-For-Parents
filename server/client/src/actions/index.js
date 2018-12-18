@@ -3,7 +3,8 @@ import axios from 'axios';
 import { FETCH_USER, REGISTER_USER, LOGIN_USER, 
         FETCH_CHILDREN, CREATE_CHILD, DELETE_CHILD, UPDATE_CHILD,
         FETCH_AREAS, CREATE_AREA, DELETE_AREA, UPDATE_AREA,
-        FETCH_RULES, FETCH_CURRENT_RULES, CREATE_RULE, DELETE_RULE, UPDATE_RULE } from './types';
+        FETCH_RULES, FETCH_CURRENT_RULES, CREATE_RULE, DELETE_RULE, UPDATE_RULE,
+        DELETE_ACCOUNT } from './types';
         
 // LOGGING AND REGISTERING
 
@@ -20,6 +21,13 @@ export const registerUser = values => async dispatch => {
 export const loginUser = values => async dispatch => {
     const res = await axios.post('/auth/parent/local', values);
     dispatch({ type: LOGIN_USER, payload: res.data });
+};
+
+// DELETING ACCOUNT
+
+export const deleteAccount = () => async dispatch => {
+    const res = await axios.delete('/api/parent/');
+    dispatch({ type: DELETE_ACCOUNT, payload: res.data });
 };
 
 // CHILDREN ACTIONS

@@ -4,7 +4,7 @@ class RegisterField extends React.Component {
     renderError({error, touched}) {
         if(touched && error) {
             return (
-                <div className="ui red message" >
+                <div id={`alert-register-${error}`} className="ui red message" >
                     {error}
                 </div>
             );

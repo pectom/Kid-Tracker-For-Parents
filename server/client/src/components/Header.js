@@ -38,14 +38,17 @@ class Header extends React.Component {
                     <div className="item">
                         <a id="header-logout" className="ui primary button" href="/api/logout">Wyloguj</a>
                     </div>
+                    <div className="item invisible">
+                        <button id="header-delete" className="ui primary button invisible" onClick={() => this.props.deleteAccount()}>Usuń konto</button>
+                    </div>
                 </div>
             </div>
         );
     }
 }
 
-const mapStateToProps = ({ auth }) => {
-    return { auth };
+const mapStateToProps = ({ auth, account }) => {
+    return { auth, account };
 };
 
 export default connect(mapStateToProps, actions)(Header);
