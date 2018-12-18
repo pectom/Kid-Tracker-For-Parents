@@ -24,6 +24,7 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
+    "chromedriver": "^2.45.0",
     "concurrently": "^4.1.0",
     "cookie-session": "^2.0.0-beta.3",
     "express": "^4.16.4",
@@ -41,7 +42,7 @@
   },
   "devDependencies": {
     "frisby": "^2.1.0",
-    "jasmine": "3.3.0",
+    "jasmine": "^3.3.0",
     "jasmine-node": "^2.0.1",
     "request": "^2.88.0",
     "selenium-webdriver": "^4.0.0-alpha.1"

@@ -20,11 +20,8 @@ describe('Login page', function() {
 
     it('Should be on the home page', async function (done) {
         await driver.wait(until.elementLocated(By.id("login-email")), 5000);
-        await driver.findElement(By.id('login-email'))
-            .then(el => {
-                expect(el).toBeDefined();
-                done();
-            });
+        const el = await driver.findElement(By.id('login-email')); 
+        expect(el).toBeDefined();  
     });
 
     it('Login with wrong credentials', async function (done) {
