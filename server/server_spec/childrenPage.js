@@ -11,6 +11,19 @@ describe('Login page', function() {
     beforeEach(function(done) {
         driver = new selenium.Builder().withCapabilities(chromeCapabilities).build();
         driver.get('http://localhost:3000/').then(done);
+        await driver.wait(until.elementLocated(By.id("login-email")), 10000);
+        await driver.findElement(By.id('login-email')).sendKeys('aga@aga.com');
+        driver.sleep(100);
+        await driver.findElement(By.id('login-password')).sendKeys('aaa');
+        driver.sleep(100);
+        await driver.findElement(By.id('login-button')).click();
+        driver.sleep(100);
+        setTimeout(
+            () => {
+                driver.getCurrentUrl().then(function(value) {
+                    expect(value).toContain('/dashboard');
+                    done();
+                })}, 3000);
     });
 
     afterEach(function(done) {
@@ -57,7 +70,7 @@ describe('Login page', function() {
                 driver.getCurrentUrl().then(function(value) {
                     expect(value).toContain('/dashboard');
                     done();
-            })}, 3000);
+                })}, 3000);
     })
 
 });
