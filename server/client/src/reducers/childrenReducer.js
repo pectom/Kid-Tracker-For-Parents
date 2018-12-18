@@ -5,7 +5,10 @@ export default function(state = [], action) {
         case FETCH_CHILDREN:
             return action.payload;
         case CREATE_CHILD:
-            return [...state, action.payload];
+            if(!action.payload.electionId)
+                return [...state, action.payload];
+            else
+                return [...state];
         case DELETE_CHILD:
             return action.payload;
         case UPDATE_CHILD:
