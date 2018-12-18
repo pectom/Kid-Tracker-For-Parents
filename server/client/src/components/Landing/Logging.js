@@ -9,7 +9,7 @@ import * as actions from '../../actions';
 class Logging extends React.Component {
     async myLoginUser(values) {
         await this.props.loginUser(values);
-        this.props.fetchUser();
+        await this.props.fetchUser();
     }
     
 
