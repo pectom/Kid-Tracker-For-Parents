@@ -119,7 +119,7 @@ class AddChild extends React.Component {
                     </form>
                 </Modal.Content>
                 <Modal.Actions>
-                    <button className="ui button green" onClick={() => this.handleClick()}>Dodaj</button>
+                    <button id="save-child-button" className="ui button green" onClick={() => this.handleClick()}>Dodaj</button>
                 </Modal.Actions>
             </Modal>
         );
