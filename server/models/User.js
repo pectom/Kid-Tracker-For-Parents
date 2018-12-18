@@ -35,7 +35,6 @@ const userSchema = new Schema({
     },
     children: {
        type: [String],
-        unique: true
     },
     areas: [AreaSchema]
 });
