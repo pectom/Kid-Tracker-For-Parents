@@ -41,6 +41,15 @@ class AddArea extends React.Component {
             children: this.state.children
         });
         await this.props.fetchAreas();
+        this.setState({
+            open: false,
+            name: '',
+            iconId: 'home',
+            latitude: 0,
+            longitude: 0,
+            radius: 100,
+            children: []
+        });
         this.close();
     }
 
