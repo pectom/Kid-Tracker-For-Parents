@@ -2,7 +2,6 @@ const selenium = require('selenium-webdriver');
 
 describe('Login page', function() {
 
-    jasmine.getEnv().defaultTimeoutInterval = 200000;
     let chromeOptions = {'args': ['--no-sandbox']};
     let chromeCapabilities = selenium.Capabilities.chrome().set('chromeOptions', chromeOptions);
     var driver = undefined;
@@ -21,7 +20,6 @@ describe('Login page', function() {
 
     it('Should be on the home page', async function (done) {
         await driver.wait(until.elementLocated(By.id("login-email")), 3000);
-        driver.sleep(100);
         await driver.findElement(By.id('login-email'))
             .then(el => {
                 expect(el).toBeDefined();
@@ -31,13 +29,9 @@ describe('Login page', function() {
 
     it('Login with wrong credentials', async function (done) {
         await driver.wait(until.elementLocated(By.id("login-email")), 3000);
-        driver.sleep(100);
         await driver.findElement(By.id('login-email')).sendKeys('wrong@credentials.com');
-        driver.sleep(100);
         await driver.findElement(By.id('login-password')).sendKeys('wrongCredentials');
-        driver.sleep(100);
         await driver.findElement(By.id('login-button')).click();
-        driver.sleep(100);
         setTimeout(
             () => {
                 driver.getCurrentUrl().then(function(value) {
@@ -49,11 +43,8 @@ describe('Login page', function() {
     it('Login with good credentials', async function (done) {
         await driver.wait(until.elementLocated(By.id("login-email")), 3000);
         await driver.findElement(By.id('login-email')).sendKeys('aga@aga.com');
-        driver.sleep(100);
         await driver.findElement(By.id('login-password')).sendKeys('aaa');
-        driver.sleep(100);
         await driver.findElement(By.id('login-button')).click();
-        driver.sleep(100);
         setTimeout(
             () => {
                 driver.getCurrentUrl().then(function(value) {
