@@ -57,32 +57,38 @@
 			curl -sL https://deb.nodesource.com/setup_11.x | sudo -E bash -
 			sudo apt-get install -y nodejs
 		\end{lstlisting}
-
-		Kolejnym krokiem jest przejście do folderu \lstinline{/server} w projekcie i zainstalowanie potrzebnych bibliotek dla części serwera naszej aplikacji uruchamiając następującą instrukcję:
-
+		Kolejnym krokiem jest przejście do folderu \lstinline{/server} w projekcie i zainstalowanie potrzebnych bibliotek, uruchamiając następującą instrukcję:
 		\begin{lstlisting}
 			npm install
 		\end{lstlisting}
 
-		Tą instrukcję uruchamiamy również w folderze \lstinline{/server/client} projektu, aby zainstalować biblioteki wykorzystywane w części klienckiej naszej aplikacji.
+		Tę instrukcję uruchamiamy również w folderze \lstinline{/server/client} projektu, aby zainstalować biblioteki wykorzystywane w części klienckiej naszej aplikacji.
 
-		Aby uruchomić współbieżnie serwer i klienta uruchamiamy zdefiniowany skrypt:
-
+		Współbieżne uruchomienie serwera oraz części klienckiej realizowane jest przez komendę:
 		\begin{lstlisting}
 			npm run dev
 		\end{lstlisting}
 
 	\section{Jak uruchomić aplikację webową na "produkcji"?}
-
-		Aby uruchomić aplikację na produkcji należy przejść do adresu \href{https://kid-tracker.herokuapp.com/}{https://kid-tracker.herokuapp.com/} w przeglądarce wspierającej składnie JavaScript 2017.
-
-		Aby wdrożyć aplikację na produkcję należy zastosować następujące kroki:
-
+		Aplikacja została wdrożona na serwerze udostępnianym przez serwis heroku.
+		W tym celu pliki źródłowe aplikacji umieszone zostały w repozytorium serwisu.
+		Konieczne było także skonfigurowanie odpowienich zmiennych środowiskowych, które wykorzystywane są przez aplikację: 
 		\begin{itemize}
-			\item Tomek !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-			\item Zrób
-			\item Deployment
+			\item GOOGLE\_CLIENT\_ID,
+			\item GOOGLE\_CLIENT\_SECRT,
+			\item MONGO\_URI,
+			\item COOKIE\_KEY
 		\end{itemize}
+		W celu zapewnia odpowiedniej komunikacji między serwer, a aplikacją kliencką, należy przekierować ścieżki klienta na 
+		folder zawierający zbudowaną aplikację,
+		\begin{lstlisting}
+			app.use(express.static('client/build'));
+		\end{lstlisting}
+		oraz dodać skrypt dokonujący budowy części klienckiej na serwerze heroku.
+		\begin{lstlisting}
+			"heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+		\end{lstlisting}
+		Aplikacja znajduje się pod adresem: \href{https://kid-tracker.herokuapp.com/}{https://kid-tracker.herokuapp.com/}.
 
 	\section{Dokumentacja użytkownika (czyli opis interfejsu - co gdzie i jak można zrobić)}
 
@@ -132,29 +138,95 @@
 					\item folder Areas - zawiera komponenty wyświetlające powiązane z kontem rodzica obszary, umożliwia dodawanie nowego obszaru, edycję istniejącego i usunięcie istniejącego,
 					\item folder Rules - zawiera komponenty wyświetlające powiązane z kontem rodzica reguły wybranego dziecka, umożliwia dodawanie nowej reguły, edycję istniejącej i usunięcie istniejącej.
 				\end{itemize}
+		\subsection{Backend}
+		\subsubsection{Wykorzystywane pakiety Node.js}
+		\begin{itemize}
+			\item Express - framework używany do tworzenia serwerów w technologii Node.js
+			\item concurrently - współbieżne uruchamianie skryptów
+			\item mongoose - tworzenia obiektów MongoDB  
+			\item nodemon - restartowanie serwera w przypadku wprowadzania zmian
+			\item passport - autentyfikacja użytkowania
+			\item passport-google-oauth20 - autentyfikacja przy użyciu konta google
+			\item passport-local - lokalna autentyfikacja 
+			\item morgan - logowanie żądań 
+			\item body-parser - parsowanie żądań do serwera 
+			\item bcryptjs - kryptowanie haseł
+			\item cookie-session - utrzymywanie sesji i przechowywanie informacji o ciasteczkach po stronie klienta
+			\item path - wspomaganie pracy ze ścieżkami plików i folderów	
+		\end{itemize}
+		\subsubsection{Testy i dokumentacja - Postman}
+		Do testowania API użyo aplikacji postman, w której wygenerowano dokumentację, dostępną pod adresem:
 
-		\subsection{API}
+		\href{https://documenter.getpostman.com/view/5735789/Rzn6v3JY}{		https://documenter.getpostman.com/view/5735789/Rzn6v3JY}.
 
-			Aplikacja komunikuje się z serwerem poprzez RESTowe API. Aplikacja kliencka użyje systemu axios aby komunikować się poprzez zapytania i odpowiedzi serwera, serwer komunikuje się z bazą danych MongoDB poprzez bibliotekę mongoose.
+		\subsubsection{API}
+
+			Aplikacja komunikuje się z serwerem poprzez RESTowe API.
 			
 			\begin{itemize}
-				\item \textbackslash api\textbackslash current\_user - bieżący zalogowany użytkownik,
-				\item \textbackslash api\textbackslash logout - wylogowanie użytkownika,
-				\item \textbackslash api\textbackslash googleAuth - logowanie z Googlem,
-				\item \textbackslash api\textbackslash register - rejestrowanie nowego użytkownika,
-				\item \textbackslash api\textbackslash login - logowanie emailem i hasłem,
-				\item \textbackslash api\textbackslash rules - reguły dla bieżącego użytkownika,
-				\item \textbackslash api\textbackslash rules\textbackslash create - tworzenie nowej reguły,
-				\item \textbackslash api\textbackslash rules\textbackslash update - modyfikacja reguły,
-				\item \textbackslash api\textbackslash rules\textbackslash delete - usuwanie reguły,
-				\item \textbackslash api\textbackslash areas - areas for current user,
-				\item \textbackslash api\textbackslash areas\textbackslash create - tworzenie nowego obszaru,
-				\item \textbackslash api\textbackslash areas\textbackslash update - modyfikacja obszaru,
-				\item \textbackslash api\textbackslash areas\textbackslash delete - usuwanie obszaru,	
-				\item \textbackslash api\textbackslash children - dzieci dla bieżącego użytkownia,
-				\item \textbackslash api\textbackslash children\textbackslash create - tworzenie nowego dziecka,
-				\item \textbackslash api\textbackslash children\textbackslash update - modyfikacja dziecka,
-				\item \textbackslash api\textbackslash children\textbackslash delete - usuwanie dziecka.
+				\item Rodzic
+				\begin{itemize}
+					\item Rejestracja i logowanie
+					 \begin{itemize}
+						\item POST \textbackslash registration\textbackslash parent- rejestrowanie nowego rodzica,
+						\item GET \textbackslash auth\textbackslash parent\textbackslash google - logowanie dziecka z Googlem,
+						\item GET \textbackslash auth\textbackslash parent\textbackslash local - logowanie emailem i hasłem.		
+					\end{itemize}
+					\item Dzieci
+					\begin{itemize}
+						\item GET \textbackslash api\textbackslash parent\textbackslash children - pobranie danych o wszystkich dzieciach dla bieżącego rodzica,
+						\item POST \textbackslash api\textbackslash parent\textbackslash children - tworzenie nowego dziecka,
+						\item PUT \textbackslash api\textbackslash parent\textbackslash children\textbackslash :childId - modyfikacja dziecka,
+						\item DELETE \textbackslash api\textbackslash parent\textbackslash children\textbackslash :childId - usuwanie dziecka.								
+					\end{itemize}
+					\item Reguły
+					\begin{itemize}
+						\item GET \textbackslash api\textbackslash parent\textbackslash rules - pobranie bieżących reguł dla wszystkich
+						\item GET \textbackslash api\textbackslash parent\textbackslash rules\textbackslash :childId  - pobranie wszystkich reguł dla określonego dziecka
+						\item POST \textbackslash api\textbackslash parent\textbackslash rules - dodanie nowej reguły 
+						\item PUT \textbackslash api\textbackslash parent\textbackslash rules\textbackslash :ruleId - modyfikacja wybranej reguły,
+						\item DELETE \textbackslash api\textbackslash parent\textbackslash rules\textbackslash :ruleId - usuwanie wybranej reguły.		
+					\end{itemize}
+					\item Obszary
+					\begin{itemize}		
+						\item GET \textbackslash api\textbackslash parent\textbackslash areas - pobranie wszystkich obaszarów dla bieżącego użytkownia,
+						\item POST \textbackslash api\textbackslash parent\textbackslash areas - tworzenie nowego obszaru,
+						\item PUT \textbackslash api\textbackslash parent\textbackslash areas\textbackslash :areaId - modyfikacja wybranego obszaru,
+						\item DELETE \textbackslash api\textbackslash parent\textbackslash  areas\textbackslash :areaId - usuwanie wybranego obszaru.	
+					\end{itemize}
+					\item Lokalizacja
+					\begin{itemize}
+						\item GET \textbackslash api\textbackslash parent\textbackslash location\textbackslash :childId - pobranie loklizacja wybranego dziecka
+					\end{itemize}
+					\item Łącznie z dzieckiem
+					\begin{itemize}
+						\item GET \textbackslash api\textbackslash parent\textbackslash code\textbackslash :codeValue - pobranie dziecka o podanym kodzie
+					\end{itemize}
+				\end{itemize}
+				\item Dziecko
+				\begin{itemize}
+					\item Rejestracja i logowanie
+					\begin{itemize}
+						\item POST \textbackslash registration \textbackslash child
+						\item GET \textbackslash auth\textbackslash child\textbackslash google - logowanie dziecka z Googlem,
+						\item GET \textbackslash auth\textbackslash child\textbackslash local - logowanie dziecka emailem i hasłem,	
+					\end{itemize}
+					\item Lokalizacja
+					\begin{itemize}
+						\item POST \textbackslash api\textbackslash child\textbackslash location - dodaje lokalizacje do dziecka i aktualizuje czas jej dodania
+						\item GET \textbackslash api\textbackslash child\textbackslash location - pobranie lokalizacji ostatniej lokalizacji dziecka z bazy danych		
+					\end{itemize}				
+						\item Łączenie z rodziciem
+					\begin{itemize}
+						\item GET \textbackslash api\textbackslash child\textbackslash code - pobranie nowo utworzonego kodu łączenia						
+					\end{itemize}
+
+				\end{itemize}
+				\item Użytkownik
+				\begin{itemize}
+					\item \textbackslash api\textbackslash current\_user - zwraca bieżącego zalogowanego użytkownika,
+					\item \textbackslash api\textbackslash logout - wylogowanie użytkownika.
+				\end{itemize}
 			\end{itemize}
 		
 		\subsection{Diagramy bazy danych}
@@ -162,18 +234,43 @@
 			\begin{figure}[H] 
 				\centering
 				\begin{tabular}{c}
-					\includegraphics[width=.95\textwidth]{usersDatabase}
+					\includegraphics[width=.95\textwidth]{relacjeWBazie.png}
 				\end{tabular} 
-				\caption{Schemat dokumentu użytkownika}
+				\caption{Dokumenty w bazie danych}
 			\end{figure}
 
 			\begin{figure}[H] 
 				\centering 
 				\begin{tabular}{c}
-					\includegraphics[width=.70\textwidth]{rulesDatabase} 
+					\includegraphics[]{users.png} 
 				\end{tabular} 
-				\caption{Schemat dokumentu reguły}
+				\caption{Schemat dokumentu użytkownika rodzica}
 			\end{figure}
+
+			\begin{figure}[H] 
+				\centering 
+				\begin{tabular}{c}
+					\includegraphics[]{childUser.png} 
+				\end{tabular} 
+				\caption{Schemat dokumentu użytkownika dziecka}
+			\end{figure}
+
+			\begin{figure}[H] 
+				\centering 
+				\begin{tabular}{c}
+					\includegraphics[]{rules.png} 
+				\end{tabular} 
+				\caption{Schemat dokumentu relacji}
+			\end{figure}
+
+			\begin{figure}[H] 
+				\centering 
+				\begin{tabular}{c}
+					\includegraphics[]{codes.png} 
+				\end{tabular} 
+				\caption{Schemat dokumentu kodu}
+			\end{figure}
+
 
 
 	\section{Testy automatyczne (jednostkowe i funkcjonalne) aplikacji}

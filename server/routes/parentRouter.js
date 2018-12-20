@@ -17,7 +17,7 @@ parentRouter.use('/location', locationRouter);
 parentRouter.delete('/',async (req,res,next) =>{
    try{
        await User.deleteOne({_id: req.user._id});
-       res.send({delete: "ok"}).status(204);
+       res.send({message: "User has been deleted"}).status(204);
    } catch (e) {
        console.log(e);
        res.status(400).send(e);
