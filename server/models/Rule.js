@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
 const {Schema} = mongoose;
+const ChildUsers =  require('./ChildUser');
+const Areas =  require('./Area');
+
 
 const ruleSchema = new Schema({
     lastResponded: {

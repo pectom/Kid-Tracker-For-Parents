@@ -3,7 +3,8 @@ const {Schema} = mongoose;
 
 const areaSchema = new Schema({
     name:{
-      type: String
+      type: String,
+        required: [true,'Name is required']
     },
     coordinates: {
         type: [Number],
@@ -16,6 +17,17 @@ const areaSchema = new Schema({
     },
     radius: {
       type: Number
+    },
+    location: {
+        type: {
+            type: String,
+            enum: ['Polygon'],
+            required: true
+        },
+        coordinates: {
+            type: [[[Number]]],
+            required: true
+        }
     },
     children: [String]
 });

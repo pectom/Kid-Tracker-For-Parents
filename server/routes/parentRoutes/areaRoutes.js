@@ -117,4 +117,55 @@ areaRouter.delete('/:areaId', async(req, res, next) =>{
     }
 });
 
+//tylko do testów!!
+areaRouter.delete('/all/area', async(req, res, next) =>{
+    try{
+            const user = await User.updateOne({
+                _id: req.user._id
+            },{
+                areas: []
+            });
+            res.send(req.user.areas).status(204);
+    }catch (err) {
+        res.status(400).send(err);
+    }
+});
+
+areaRouter.post('/geoJson',async (req,res,next)=>{
+    const {name, iconId, children,coordinates} = req.body;
+
+    if(name && iconId  && children && coordinates)
+    {
+        const parent = req.user;
+        const newArea = new Area({
+            name,
+            location: {
+                type: 'Polygon',
+                coordinates
+            },
+            iconId,
+            children
+        });
+        let error = newArea.validateSync();
+        if(!error){
+            try {
+                const user = await User.updateOne({
+                    _id: parent._id
+                },{
+                    $push: {areas: newArea}
+                });
+                res.status(201).send(user);
+
+            }catch (e) {
+                res.status(400).send(e);
+            }
+        }else{
+            console.log(error);
+            res.status(400).send(error.message);
+        };
+
+    }else{
+        res.status(400).send("Incomplete request");
+    }
+});
 module.exports = areaRouter;
