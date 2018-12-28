@@ -37,12 +37,6 @@ const childUserSchema = new Schema({
         },
         trim: true
     },
-    latitude:{
-        type: Number,
-    },
-    longitude:{
-        type: Number,
-    },
     locationTime:{
       type: Date
     },
