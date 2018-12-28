@@ -37,5 +37,21 @@ const ruleSchema = new Schema({
         default: true
     }
 });
-
+ruleSchema.methods.checkRule = function(){
+    try {
+        const area = Areas.findOne(this.areaId);
+        const child = ChildUsers.findOne({
+                _id: this.childId,
+                location: {
+                    $geoWithin:{
+                        $geometry: area.location
+                    }
+                }
+            }
+    );
+        return child;
+    }catch (e) {
+        console.log(e);
+    }
+};
 mongoose.model('rules',ruleSchema);

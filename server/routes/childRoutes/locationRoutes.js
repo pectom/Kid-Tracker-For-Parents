@@ -27,12 +27,41 @@ locationRouter.post("/",async (req,res,next)=>{
     }
 });
 locationRouter.get("/",async (req,res,next)=>{
-    const {latitude,longitude,locationTime} = req.user;
+    const {locationTime,location} = req.user;
         res.send({
             latitude,
             longitude,
             locationTime
         });
 });
-
+locationRouter.post("/geoJson",async (req,res,next)=>{
+    const {latitude, longitude} = req.body;
+    if(latitude && longitude){
+        try{
+            const child = await ChildUser.updateOne(
+                {
+                    _id: req.user._id
+                },{
+                    location: {
+                        coordinates: [longitude,latitude]
+                    },
+                    locationTime: Date.now()
+                }
+            );
+            res.send(child).status(204);
+        }catch (e) {
+            console.log(e);
+            res.status(404).send(e);
+        }
+    }else{
+        res.status(400).send("Incomplete request");
+    }
+});
+locationRouter.get("/geoJson",async (req,res,next)=>{
+    const {locationTime,location} = req.user;
+    res.send({
+        location,
+        locationTime
+    });
+});
 module.exports = locationRouter;
