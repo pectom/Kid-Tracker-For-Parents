@@ -3,6 +3,7 @@ import { Modal, Dropdown } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 
 import * as actions from '../../actions';
+import AreaChooser from './AreaChooser';
 
 class AddArea extends React.Component {
     componentDidMount() {
@@ -11,11 +12,10 @@ class AddArea extends React.Component {
 
     state = {
         open: false,
+        choosingArea: false,
         name: '',
         iconId: 'home',
-        latitude: 0,
-        longitude: 0,
-        radius: 100,
+        area: {},
         children: []
     }
 
@@ -31,26 +31,39 @@ class AddArea extends React.Component {
         })
     }
 
-    handleClick = async () => {
-        await this.props.createArea({
-            name: this.state.name,
-            iconId: this.state.iconId,
-            longitude: this.state.longitude,
-            latitude: this.state.latitude,
-            radius: this.state.radius,
-            children: this.state.children
-        });
-        await this.props.fetchAreas();
+    handleNextButton = () => {
         this.setState({
+            choosingArea: true
+        })
+    }
+
+    handleBackButton = () => {
+        this.setState({
+            choosingArea: false
+        })
+    }
+
+    handleAreaComplete = async (area) => {
+        this.setState({
+            area: area,
             open: false,
             name: '',
             iconId: 'home',
-            latitude: 0,
-            longitude: 0,
-            radius: 100,
-            children: []
+            children: [],
+            area: {}
         });
+        await this.makeRequest();
+        await this.props.fetchAreas();
         this.close();
+    }
+
+    makeRequest = async () => {
+        await this.props.createArea({
+            name: this.state.name,
+            iconId: this.state.iconId,
+            children: this.state.children,
+            area: this.state.area
+        });  
     }
 
     handleNameChange = e => {
@@ -62,24 +75,6 @@ class AddArea extends React.Component {
     handleIconIdChange = data => {
         this.setState({
             iconId: data.value
-        });
-    }
-
-    handleLatitudeChange = e => {
-        this.setState({
-            latitude: e.target.value
-        });
-    }
-
-    handleLongitudeChange = e => {
-        this.setState({
-            longitude: e.target.value
-        });
-    }
-
-    handleRadiusChange = e => {
-        this.setState({
-            radius: e.target.value
         });
     }
 
@@ -129,6 +124,76 @@ class AddArea extends React.Component {
         },
     ]
 
+    renderModal = () => {
+        if(this.state.choosingArea) {
+            return (
+                <AreaChooser handleAreaComplete={(area) => this.handleAreaComplete(area)} />
+            );
+        }
+        else {
+            return (
+                    <Modal.Content>
+                        <form className="ui form">
+                            <div className="field">
+                                
+                                <div className="two fields">
+                                    <div className="field">
+                                        <label>Nazwa</label>
+                                        <input 
+                                            id="area-addArea-name" 
+                                            name="name" 
+                                            type="text" 
+                                            value={this.state.name} 
+                                            onChange={(e) => this.handleNameChange(e)} 
+                                        />
+                                    </div>
+                                    <div className="field">
+                                        <label>Ikona</label>
+                                        <Dropdown 
+                                            id="area-addArea-icon" 
+                                            value={this.state.iconId} 
+                                            onChange={(e, data) => this.handleIconIdChange(data)} 
+                                            fluid selection 
+                                            options={this.iconOptions} 
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div className="field">
+                                <label>Dzieci</label>
+                                <Dropdown
+                                    id="area-addArea-children" 
+                                    value={this.state.children} 
+                                    onChange={(e, data) => this.handleChildrenChange(data)} 
+                                    fluid multiple selection 
+                                    options={this.prepareChildrenOptions()} 
+                                />
+                            </div>
+                            
+                        </form>
+                    </Modal.Content>
+            );
+        }
+    }
+
+    renderActions = () => {
+        if(this.state.choosingArea) {
+            return (
+                <Modal.Actions>
+                    <button className="ui button yellow left" onClick={() => this.handleBackButton()}>Wróć</button>
+                </Modal.Actions>
+            );
+        }
+        else {
+            return(
+                <Modal.Actions>
+                    <button className="ui button yellow" onClick={() => this.handleNextButton()}>Dalej</button>
+                </Modal.Actions>
+            );
+        }
+    }
+
     render() {
         return (
             <Modal
@@ -142,66 +207,8 @@ class AddArea extends React.Component {
                 }
             >
                 <Modal.Header>Dodaj obszar</Modal.Header>
-                <Modal.Content>
-                    <form className="ui form">
-                        <div className="field">
-                            
-                            <div className="two fields">
-                                <div className="field">
-                                    <label>Nazwa</label>
-                                    <input 
-                                        id="area-addArea-name" 
-                                        name="name" 
-                                        type="text" 
-                                        value={this.state.name} 
-                                        onChange={(e) => this.handleNameChange(e)} 
-                                    />
-                                </div>
-                                <div className="field">
-                                    <label>Ikona</label>
-                                    <Dropdown 
-                                        id="area-addArea-icon" 
-                                        value={this.state.iconId} 
-                                        onChange={(e, data) => this.handleIconIdChange(data)} 
-                                        fluid selection 
-                                        options={this.iconOptions} 
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                        <div className="field">
-                            <label>Lokalizacja</label>
-                            <div className="two fields">
-                                <div className="field">
-                                    <label>Szerokość geograficzna</label>
-                                    <input id="area-addArea-latitude" name="lat" type="text" value={this.state.latitude} onChange={(e) => this.handleLatitudeChange(e)} />
-                                </div>
-                                <div className="field">
-                                    <label>Długość geograficzna</label>
-                                    <input id="area-addArea-longitude" name="lon" type="text" value={this.state.longitude} onChange={(e) => this.handleLongitudeChange(e)} />
-                                </div>
-                                <div className="field">
-                                    <label>Promień</label>
-                                    <input id="area-addArea-radius" name="rad" type="text" value={this.state.radius} onChange={(e) => this.handleRadiusChange(e)} />
-                                </div>
-                            </div>
-                        </div>
-                        <div className="field">
-                            <label>Dzieci</label>
-                            <Dropdown
-                                id="area-addArea-children" 
-                                value={this.state.children} 
-                                onChange={(e, data) => this.handleChildrenChange(data)} 
-                                fluid multiple selection 
-                                options={this.prepareChildrenOptions()} 
-                            />
-                        </div>
-                        
-                    </form>
-                </Modal.Content>
-                <Modal.Actions>
-                    <button className="ui button green" onClick={() => this.handleClick()}>Dodaj</button>
-                </Modal.Actions>
+                {this.renderModal()}
+                {this.renderActions()}
             </Modal>
         );
     }
