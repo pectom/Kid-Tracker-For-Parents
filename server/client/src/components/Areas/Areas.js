@@ -76,5 +76,6 @@ const mapStateToProps = ({ areas }) => {
 
 export default GoogleApiWrapper({
     apiKey: process.env.REACT_APP_GOOGLE_KEY,
-    language: "pl"
+    language: "pl",
+    libraries: ['geometry','drawing','places']
   })(connect(mapStateToProps, actions)(Areas));

@@ -27,7 +27,7 @@ class Register extends React.Component {
         return (
             <div>
                 <div className="ui segment">
-                    <form className="ui form" onSubmit={this.props.handleSubmit(values => console.log('Rejestrujemy'))} >
+                    <form className="ui form" onSubmit={this.props.handleSubmit((values) => this.myRegisterUser(values))} >
                         <div className="field">
                             <div className="two fields">
                                 <Field id="register-name" component={RegisterField} type="text" label="Imię" name="firstName" />
@@ -45,8 +45,7 @@ class Register extends React.Component {
                         <button
                             id="register-button"
                             className="ui button primary" 
-                            type="submit" 
-                            onClick={() => this.myRegisterUser(this.props.formValues)} 
+                            type="submit"
                         >
                             Zarejestruj
                         </button>

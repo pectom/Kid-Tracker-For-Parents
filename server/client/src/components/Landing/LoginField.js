@@ -4,7 +4,7 @@ class LoginField extends React.Component {
     renderError({error, touched}) {
         if(touched && error) {
             return (
-                <div className="ui red message" >
+                <div id={`alert-login-${error}`} className="ui red message" >
                     {error}
                 </div>
             );

@@ -23,5 +23,6 @@ class Dashboard extends React.Component {
 }
 export default GoogleApiWrapper({
     apiKey: process.env.REACT_APP_GOOGLE_KEY,
-    language: "pl"
+    language: "pl",
+    libraries: ['geometry','drawing','places']
   })(Dashboard);
