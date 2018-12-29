@@ -20,10 +20,7 @@ class Areas extends React.Component {
             return (
                 <Polygon
                     key={area._id}
-                    paths={area.location.coordinates}
-                    text={area.name}
-                    label={area.name}
-                    icon={"Nothing here"}
+                    paths={area.location ? area.location.coordinates : []}
                 />
             )
         }) : [];
@@ -37,7 +34,7 @@ class Areas extends React.Component {
                     text={area.name}
                     label={area.name}
                     icon={"Nothing here"}
-                    position={area.location.coordinates[0]}
+                    position={area.location ? area.location.coordinates[0]: {lat:0, lng:0}}
                 />
             )
         }) : [];

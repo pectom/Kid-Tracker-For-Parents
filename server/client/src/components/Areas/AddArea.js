@@ -21,7 +21,8 @@ class AddArea extends React.Component {
 
     close = () => {
         this.setState({
-            open: false
+            open: false,
+            choosingArea: false
         })
     }
 

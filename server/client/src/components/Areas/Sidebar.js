@@ -19,7 +19,7 @@ class Sidebar extends React.Component {
                     icon={area.iconId} 
                     name={area.name} 
                     children={area.children} 
-                    area={area.location.coordinates}
+                    area={area.location ? area.location.coordinates : []}
                     id={area._id} 
                 />
             );

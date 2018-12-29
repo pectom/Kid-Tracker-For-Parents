@@ -70,7 +70,7 @@ export const deleteArea = values => async dispatch => {
 }
 
 export const updateArea = values => async dispatch => {
-    const res = await axios.put(`/api/parent/areas/${values.id}`, {name: values.name, iconId: values.iconId, longitude: values.longitude, latitude: values.latitude, radius: values.radius, children: values.children});
+    const res = await axios.put(`/api/parent/areas/${values.id}`, {name: values.name, iconId: values.iconId, area: values.area, children: values.children});
     dispatch({ type: UPDATE_AREA, payload: res.data });
 }
 

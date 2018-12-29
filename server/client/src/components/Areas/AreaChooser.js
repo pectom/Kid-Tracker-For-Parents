@@ -22,6 +22,7 @@ class AreaChooser extends React.Component {
                         }}
                         onPolygonComplete = {(event,data) => this.handlePolygonComplete(event,data) }
                     />
+                    {this.props.polygons}
                 </GoogleMap>
             });
         return(

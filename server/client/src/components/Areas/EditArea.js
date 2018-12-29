@@ -1,6 +1,8 @@
 import React from 'react';
 import { Modal, Dropdown } from 'semantic-ui-react';
 import { connect } from 'react-redux';
+import AreaChooser from './AreaChooser';
+import { Polygon } from 'react-google-maps';
 
 import * as actions from '../../actions';
 
@@ -23,7 +25,8 @@ class EditArea extends React.Component {
 
     close = () => {
         this.setState({
-            open: false
+            open: false,
+            editingArea: false
         })
     }
 
@@ -49,7 +52,6 @@ class EditArea extends React.Component {
     }
 
     handleSaveClick = async () => {
-        console.log(this.state.area)
         await this.props.updateArea({
             name: this.state.name,
             iconId: this.state.icon,
@@ -131,9 +133,19 @@ class EditArea extends React.Component {
         })
     }
 
+    renderPolygon() {
+        return (
+            <Polygon
+                paths={this.props.area}
+            />
+        );
+    }
+
     renderContent = () => {
         if(this.state.editingArea) {
-
+            return (
+                <AreaChooser handleAreaComplete={(area) => this.handleAreaEdited(area)} polygons={this.renderPolygon()} />
+            );
         }
         else {
             return (
@@ -198,6 +210,7 @@ class EditArea extends React.Component {
     }
 
     render() {
+        console.log(this.state)
         return (
             <Modal
                 size="tiny"
