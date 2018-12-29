@@ -29,9 +29,7 @@ class Area extends React.Component {
                             name={this.props.name} 
                             icon={this.props.icon} 
                             myChildren={this.props.children ? this.props.children : []} 
-                            lat={this.props.lat} 
-                            lon={this.props.lon} 
-                            rad={this.props.rad} 
+                            area={this.props.area}
                         />
                         <DeleteArea 
                             name={this.props.name} 

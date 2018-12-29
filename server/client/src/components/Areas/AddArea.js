@@ -50,10 +50,11 @@ class AddArea extends React.Component {
         await this.makeRequest();
         this.setState({
             open: false,
+            choosingArea: false,
             name: '',
             iconId: 'home',
-            children: [],
-            area: {}
+            area: {},
+            children: []
         });
         await this.props.fetchAreas();
         this.close();

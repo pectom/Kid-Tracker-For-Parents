@@ -8,6 +8,7 @@ import * as actions from '../../actions';
 class Sidebar extends React.Component {
     async componentDidMount() {
         await this.props.fetchAreas();
+        console.log(this.props.areas)
     }
 
     renderAreas = () => {
@@ -19,9 +20,7 @@ class Sidebar extends React.Component {
                     icon={area.iconId} 
                     name={area.name} 
                     children={area.children} 
-                    lat={area.coordinates ? area.coordinates[0] : 0} 
-                    lon={area.coordinates ? area.coordinates[1] : 0} 
-                    rad={area.radius} 
+                    area={area.area}
                     id={area._id} 
                 />
             );
