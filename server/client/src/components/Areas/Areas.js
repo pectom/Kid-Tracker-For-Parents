@@ -2,7 +2,7 @@ import React from 'react';
 import Header from '../Header';
 import Sidebar from './Sidebar';
 import Map from '../Map';
-import { Marker, Circle } from 'react-google-maps';
+import { Polygon, Marker } from 'react-google-maps';
 import { GoogleApiWrapper } from 'google-maps-react';
 
 import { connect } from 'react-redux';
@@ -15,15 +15,12 @@ class Areas extends React.Component {
         this.props.fetchAreas();
     }
 
-    renderMarkers() {
+    renderPolygons() {
         return this.props.areas ? this.props.areas.map( area => {
             return (
-                <Marker
+                <Polygon
                     key={area._id}
-                    position={{
-                        lat: area.coordinates ? area.coordinates[0] : 0,
-                        lng: area.coordinates ? area.coordinates[1] : 0
-                    }}
+                    paths={area.location.coordinates}
                     text={area.name}
                     label={area.name}
                     icon={"Nothing here"}
@@ -32,16 +29,15 @@ class Areas extends React.Component {
         }) : [];
     }
 
-    renderCircles() {
+    renderMarkers() {
         return this.props.areas ? this.props.areas.map( area => {
             return (
-                <Circle
+                <Marker
                     key={area._id}
-                    center={{
-                        lat: area.coordinates ? area.coordinates[0] : 0,
-                        lng: area.coordinates ? area.coordinates[1] : 0
-                    }}
-                    radius={area.radius ? area.radius : 0}
+                    text={area.name}
+                    label={area.name}
+                    icon={"Nothing here"}
+                    position={area.location.coordinates[0]}
                 />
             )
         }) : [];
@@ -57,8 +53,8 @@ class Areas extends React.Component {
                     </div>
                     <div id='react-map' className="ui eleven wide column" style={{height: '100vh', width: '100%'}}>
                         <Map 
+                            polygons={this.renderPolygons()}
                             markers={this.renderMarkers()}
-                            circles={this.renderCircles()}
                             google={this.props.google}
                         />
                     </div>

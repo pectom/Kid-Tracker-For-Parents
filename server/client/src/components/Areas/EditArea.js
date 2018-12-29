@@ -7,11 +7,10 @@ import * as actions from '../../actions';
 class EditArea extends React.Component {
     state = {
         open: false,
+        editingArea: false,
         name: this.props.name,
         icon: this.props.icon,
-        lat: this.props.lat,
-        lon: this.props.lon,
-        rad: this.props.rad,
+        area: this.props.area,
         childrenIds: []
     }
 
@@ -34,18 +33,44 @@ class EditArea extends React.Component {
         });
     }
 
-    handleSaveClick = async () => {
+    handleAreaEdited = async (area) => {
+        this.setState({
+            area
+        });
         await this.props.updateArea({
             name: this.state.name,
             iconId: this.state.icon,
-            longitude: this.state.lon,
-            latitude: this.state.lat,
-            radius: this.state.rad,
             children: this.state.childrenIds,
+            area: this.state.area,
             id: this.props.id
         });
         this.props.fetchAreas();
         this.close();
+    }
+
+    handleSaveClick = async () => {
+        console.log(this.state.area)
+        await this.props.updateArea({
+            name: this.state.name,
+            iconId: this.state.icon,
+            children: this.state.childrenIds,
+            area: this.state.area,
+            id: this.props.id
+        });
+        this.props.fetchAreas();
+        this.close();
+    }
+
+    handleNextClick = () => {
+        this.setState({
+            editingArea: true
+        })
+    }
+
+    handleBackClick = () => {
+        this.setState({
+            editingArea: false
+        })
     }
 
     handleNameChange = e => {
@@ -57,24 +82,6 @@ class EditArea extends React.Component {
     handleIconChange = data => {
         this.setState({
             icon: data.value
-        });
-    }
-
-    handleLatChange = e => {
-        this.setState({
-            lat: e.target.value
-        });
-    }
-
-    handleLonChange = e => {
-        this.setState({
-            lon: e.target.value
-        });
-    }
-
-    handleRadChange = e => {
-        this.setState({
-            rad: e.target.value
         });
     }
 
@@ -124,19 +131,12 @@ class EditArea extends React.Component {
         })
     }
 
-    render() {
-        return (
-            <Modal
-                size="tiny"
-                open={this.state.open}
-                onClose={() => this.close()}
-                trigger={
-                    <button id={`area-editArea-${this.props.id}`} className="ui icon button" data-tooltip="Edytuj obszar" onClick={() => this.open()}>
-                                <i className="edit icon" />
-                    </button>
-                }
-            >
-                <Modal.Header>Edytuj obszar</Modal.Header>
+    renderContent = () => {
+        if(this.state.editingArea) {
+
+        }
+        else {
+            return (
                 <Modal.Content>
                     <form className="ui form">
                         <div className="field">
@@ -163,20 +163,6 @@ class EditArea extends React.Component {
                             </div>
                         </div>
                         <div className="field">
-                            <label>Lokalizacja</label>
-                            <div className="two fields">
-                                <div className="field">
-                                    <input id={`area-editArea-latitude-${this.props.id}`} name="lat" type="text" value={this.state.lat} onChange={e => this.handleLatChange(e)} />
-                                </div>
-                                <div className="field">
-                                    <input id={`area-editArea-longitude-${this.props.id}`} name="lon" type="text" value={this.state.lon} onChange={e => this.handleLonChange(e)} />
-                                </div>
-                                <div className="field">
-                                    <input id={`area-editArea-radius-${this.props.id}`} name="rad" type="text" value={this.state.rad} onChange={e => this.handleRadChange(e)} />
-                                </div>
-                            </div>
-                        </div>
-                        <div className="field">
                             <label>Dzieci</label>
                             <Dropdown
                                 id={`area-editArea-children-${this.props.id}`}
@@ -189,9 +175,43 @@ class EditArea extends React.Component {
                         
                     </form>
                 </Modal.Content>
+            );
+        }
+    }
+
+    renderActions = () => {
+        if(this.state.editingArea) {
+            return(
                 <Modal.Actions>
-                    <button id={`area-editArea-save-${this.props.id}`} className="ui button green" onClick={() => this.handleSaveClick()}>Zapisz</button>
+                    <button className="ui button yellow" onClick={() => this.handleBackClick()}>Wróć</button>
+                    <button className="ui button green" onClick={() => this.handleSaveClick()}>Zapisz</button>
                 </Modal.Actions>
+            );
+        }
+        else {
+            return(
+                <Modal.Actions>
+                    <button className="ui button yellow" onClick={() => this.handleNextClick()}>Dalej</button>
+                </Modal.Actions>
+            );
+        }
+    }
+
+    render() {
+        return (
+            <Modal
+                size="tiny"
+                open={this.state.open}
+                onClose={() => this.close()}
+                trigger={
+                    <button id={`area-editArea-${this.props.id}`} className="ui icon button" data-tooltip="Edytuj obszar" onClick={() => this.open()}>
+                                <i className="edit icon" />
+                    </button>
+                }
+            >
+                <Modal.Header>Edytuj obszar</Modal.Header>
+                {this.renderContent()}
+                {this.renderActions()}
             </Modal>
         );
     }

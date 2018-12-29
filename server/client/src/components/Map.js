@@ -9,7 +9,7 @@ class Map extends Component {
                 defaultZoom = { 15 }
             >
                 {this.props.markers}
-                {this.props.circles}
+                {this.props.polygons}
             </GoogleMap>
         });
         return(
