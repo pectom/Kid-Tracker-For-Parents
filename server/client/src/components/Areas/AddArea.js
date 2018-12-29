@@ -46,13 +46,15 @@ class AddArea extends React.Component {
     handleAreaComplete = async (area) => {
         this.setState({
             area: area,
+        });
+        await this.makeRequest();
+        this.setState({
             open: false,
             name: '',
             iconId: 'home',
             children: [],
             area: {}
         });
-        await this.makeRequest();
         await this.props.fetchAreas();
         this.close();
     }

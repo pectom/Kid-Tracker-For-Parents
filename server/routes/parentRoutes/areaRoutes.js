@@ -8,29 +8,40 @@ const areaRouter = express.Router();
 //const validateIcon = require('../middlewares/validateIcon');
 
 
-areaRouter.post('/',async (req,res,next)=>{
-    const {name, iconId, longitude, latitude, radius, children} = req.body;
 
-    if(name && iconId && longitude && latitude && radius && children)
+areaRouter.post('/',async (req,res,next)=>{
+    const {name, iconId, children,area} = req.body;
+
+    if(name && iconId  && children && area)
     {
         const parent = req.user;
         const newArea = new Area({
             name,
-            coordinates: [latitude,longitude],
+            location: {
+                type: 'Polygon',
+                area
+            },
             iconId,
-            radius,
             children
         });
-    try {
-        const user = await User.updateOne({
-            _id: parent._id
-        },{
-            $push: {areas: newArea}
-        });
-        res.status(201).send(user);
-    }catch (e) {
-        res.status(400).send();
-    }
+        let error = newArea.validateSync();
+        if(!error){
+            try {
+                const user = await User.updateOne({
+                    _id: parent._id
+                },{
+                    $push: {areas: newArea}
+                });
+                res.status(201).send(user);
+
+            }catch (e) {
+                res.status(400).send(e);
+            }
+        }else{
+            console.log(error);
+            res.status(400).send(error.message);
+        };
+
     }else{
         res.status(400).send("Incomplete request");
     }
@@ -131,41 +142,4 @@ areaRouter.delete('/all/area', async(req, res, next) =>{
     }
 });
 
-areaRouter.post('/geoJson',async (req,res,next)=>{
-    const {name, iconId, children,coordinates} = req.body;
-
-    if(name && iconId  && children && coordinates)
-    {
-        const parent = req.user;
-        const newArea = new Area({
-            name,
-            location: {
-                type: 'Polygon',
-                coordinates
-            },
-            iconId,
-            children
-        });
-        let error = newArea.validateSync();
-        if(!error){
-            try {
-                const user = await User.updateOne({
-                    _id: parent._id
-                },{
-                    $push: {areas: newArea}
-                });
-                res.status(201).send(user);
-
-            }catch (e) {
-                res.status(400).send(e);
-            }
-        }else{
-            console.log(error);
-            res.status(400).send(error.message);
-        };
-
-    }else{
-        res.status(400).send("Incomplete request");
-    }
-});
 module.exports = areaRouter;
