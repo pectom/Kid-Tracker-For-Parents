@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 const {Schema} = mongoose;
-const ChildUsers =  require('./ChildUser');
-const Areas =  require('./Area');
+
+const ChildUser =  mongoose.model("child-users");
+const User =  mongoose.model('users');
 
 
 const ruleSchema = new Schema({
@@ -35,23 +36,36 @@ const ruleSchema = new Schema({
     active: {
         type: Boolean,
         default: true
+    },
+    notification: {
+        type: Boolean,
+        default: false
     }
 });
-ruleSchema.methods.checkRule = function(){
+ruleSchema.methods.checkRule = async function(){
     try {
-        const area = Areas.findOne(this.areaId);
-        const child = ChildUsers.findOne({
-                _id: this.childId,
-                location: {
-                    $geoWithin:{
-                        $geometry: area.location
+        const user = await User.findOne({
+            _id: this._user
+        });
+        const areas = user.areas;
+        const index = areas.findIndex(area => String(area._id) === this.areaId);
+        const area = areas[index];
+        if(index !== -1) {
+            const child = await ChildUser.findOne({
+                    _id: this.childId,
+                    location: {
+                        $geoWithin: {
+                            $geometry: area.location
+                        }
                     }
                 }
-            }
-    );
-        return child;
+            );
+            //child broke the rule
+            this.notification = child ? false : true;
+        }
+        return this.notification;
     }catch (e) {
-        console.log(e);
+        return null;
     }
 };
 mongoose.model('rules',ruleSchema);

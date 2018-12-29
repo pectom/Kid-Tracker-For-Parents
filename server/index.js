@@ -9,8 +9,8 @@ const app = express();
 
 require('./models/User');
 require('./models/Area');
-require('./models/Rule');
 require('./models/ChildUser');
+require('./models/Rule');
 require('./models/ConnectionCode');
 require('./services/passport');
 
