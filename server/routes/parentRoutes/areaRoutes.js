@@ -27,7 +27,6 @@ areaRouter.post('/',async (req,res,next)=>{
             iconId,
             children
         });
-        console.log(newArea);
         let error = newArea.validateSync();
         if(!error){
             try {
@@ -57,7 +56,6 @@ areaRouter.get('/', async (req,res,next)=> {
         );
         req.user.areas.forEach(area =>{
             area.location.coordinates = area.location.coordinates[0].map(cords =>{
-                console.log(cords);
                 return {lat: cords[0], lng: cords[1]};
             })
         });
@@ -74,18 +72,24 @@ areaRouter.get('/', async (req,res,next)=> {
 
 });
 areaRouter.put('/:areaId', async (req,res,next) => {
-    const {name, iconId, longitude, latitude, radius, children} = req.body;
+    const {name, iconId, children,area} = req.body;
     const areaId = req.params.areaId;
 
-    if(name && iconId && longitude && latitude && radius && children){
+    if(name && iconId && children && area){
         const areas = req.user.areas;
         const index = areas.findIndex(area => String(area._id) === areaId);
         if(index !== -1){
+            const coordinates = [area.map(area => {
+                return [area.lat,area.lng]
+            })];
             const newArea = new Area({
                 name,
-                coordinates: [latitude,longitude],
+                location: {
+                    type: 'Polygon',
+                    coordinates
+                },
                 iconId,
-                radius,
+                children
             });
             newArea.children = children;
             newArea._id = areas[index]._id;

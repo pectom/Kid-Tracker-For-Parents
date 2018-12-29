@@ -6,17 +6,10 @@ const areaSchema = new Schema({
       type: String,
         required: [true,'Name is required']
     },
-    coordinates: {
-        type: [Number],
-        required: true
-    },
     iconId:{
         type: String,
         trim: true,
         required: true
-    },
-    radius: {
-      type: Number
     },
     location: {
         type: {
