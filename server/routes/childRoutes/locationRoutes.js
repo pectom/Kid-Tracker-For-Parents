@@ -52,6 +52,7 @@ async function checkAllCurrentRulesForChild(childId){
             await rule.save();
             }
         );
+
     }catch (e) {
         console.log(e);
         return e;

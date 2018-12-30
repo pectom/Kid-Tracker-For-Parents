@@ -5,15 +5,16 @@ const {generatePassword} = require('../../utils/passwordManager');
 
 const User = mongoose.model('users');
 
-registartionRouter.post('/',async(req,res,next) =>{
-    const {email, password,firstName,lastName} = req.body;
+registartionRouter.post('/',async(req,res) =>{
+    const {email, password,firstName,lastName,firebaseToken} = req.body;
     if(email && password &&
         firstName && lastName){
         const userData = User({
             email: email,
             firstName: firstName,
             lastName: lastName,
-            password: await generatePassword(password)
+            password: await generatePassword(password),
+            firebaseToken: firebaseToken ? firebaseToken : ""
         });
         try {
             const user = await User.create(userData);

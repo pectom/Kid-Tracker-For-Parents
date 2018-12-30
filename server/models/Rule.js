@@ -3,6 +3,7 @@ const {Schema} = mongoose;
 
 const ChildUser =  mongoose.model("child-users");
 const User =  mongoose.model('users');
+const {sendNotification} = require("../services/firebase");
 
 
 const ruleSchema = new Schema({
@@ -47,10 +48,14 @@ ruleSchema.methods.checkRule = async function(){
         const user = await User.findOne({
             _id: this._user
         });
+
         const areas = user.areas;
         const index = areas.findIndex(area => String(area._id) === this.areaId);
-        const area = areas[index];
+
+
         if(index !== -1) {
+            const area = areas[index];
+            console.log(area);
             const child = await ChildUser.findOne({
                     _id: this.childId,
                     location: {
@@ -62,9 +67,14 @@ ruleSchema.methods.checkRule = async function(){
             );
             //child broke the rule
             this.notification = child ? false : true;
+
+            if(!child){
+                sendNotification(user,this,area)
+            }
         }
         return this.notification;
     }catch (e) {
+        console.log(e);
         return null;
     }
 };

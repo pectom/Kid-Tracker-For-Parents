@@ -36,7 +36,8 @@ const userSchema = new Schema({
     children: {
        type: [String],
     },
-    areas: [AreaSchema]
+    areas: [AreaSchema],
+    firebaseToken: String
 });
 
 userSchema.methods.generateHash = (password) =>{
