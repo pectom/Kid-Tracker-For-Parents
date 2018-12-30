@@ -16,7 +16,6 @@ class Dashboard extends React.Component {
     }
 
     renderMarkers() {
-        console.log(this.props.children)
         return this.props.children ? this.props.children.map( child => {
             return (
                 <Marker
@@ -37,11 +36,11 @@ class Dashboard extends React.Component {
                     }
                     position={{lat: child.location.coordinates[0], lng: child.location.coordinates[1]}}
                 >
-                    {/* {
+                    {
                         <InfoWindow>
                             <div>{`Czas pomiaru: ${child.locationTime.substr(0,10)} ${child.locationTime.substr(11,5)}`}</div>
                         </InfoWindow>
-                    } */}
+                    }
                 </Marker>
             )
         }) : [];

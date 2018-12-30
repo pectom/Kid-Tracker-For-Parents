@@ -5,13 +5,20 @@ import { connect } from 'react-redux';
 import * as actions from '../../actions';
 
 class RulesForChild extends React.Component {
+    state = {
+        loaded: false
+    }
+
     async componentDidMount() {
         await this.props.fetchAreas();
         await this.props.fetchRules(this.props.child._id);
+        this.setState({
+            loaded: true
+        });
     }
 
     renderRules = () => {
-        return this.props.rules ? this.props.rules.map( rule => {
+        return this.state.loaded && this.props.rules ? this.props.rules.map( rule => {
             const area = this.props.areas ? this.props.areas.filter(area => area._id === rule.areaId) : [];
             return (<Rule 
                 key={rule._id}
@@ -29,7 +36,6 @@ class RulesForChild extends React.Component {
     };
 
     render() {
-        console.log(this.props.rules)
         return (
             <div>
                 {this.renderRules()}

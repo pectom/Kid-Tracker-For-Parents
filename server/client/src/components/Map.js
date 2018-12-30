@@ -6,7 +6,7 @@ class Map extends Component {
    render() {
         const GoogleMapExample = withGoogleMap(props => {
             const bounds = new window.google.maps.LatLngBounds();
-            this.props.markers.map(marker => {
+            this.props.markers && this.props.markers.map(marker => {
                 return bounds.extend(marker.props.position);
             });
             return <GoogleMap
