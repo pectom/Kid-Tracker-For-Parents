@@ -2,9 +2,15 @@ import React, { Component } from 'react';
 import { withGoogleMap, GoogleMap } from 'react-google-maps';
 
 class Map extends Component {
+
    render() {
         const GoogleMapExample = withGoogleMap(props => {
+            const bounds = new window.google.maps.LatLngBounds();
+            this.props.markers.map(marker => {
+                return bounds.extend(marker.props.position);
+            });
             return <GoogleMap
+                ref={map => map && map.fitBounds(bounds)}
                 defaultCenter = { { lat: 50.067124,  lng: 19.914019 } }
                 defaultZoom = { 15 }
             >

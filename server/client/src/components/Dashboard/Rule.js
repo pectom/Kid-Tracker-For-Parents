@@ -29,7 +29,6 @@ class Rule extends React.Component {
     ];
 
     render() {
-        console.log(this.props.child)
         return(
             <div className="ui segment">
                 <div className="ui segment" style={{textAlign: "center", fontSize: "20px"}}>

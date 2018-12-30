@@ -17,11 +17,11 @@ class Areas extends React.Component {
 
     renderPolygons() {
         return this.props.areas ? this.props.areas.map( area => {
-            console.log(this.props.areas);
+            //console.log(area.location && area.location.coordinates ? area.location.coordinates : [{lat:0.1,lng:0.1}]);
             return (
                 <Polygon
                     key={area._id}
-                    paths={area.location ? area.location.coordinates : []}
+                    paths={area.location && area.location.coordinates ? area.location.coordinates : [{lat:0.1,lng:0.1}]}
                 />
             );
         }) : [];

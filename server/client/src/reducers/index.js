@@ -4,11 +4,13 @@ import { reducer as reduxForm } from 'redux-form';
 import childrenReducer from './childrenReducer';
 import areasReducer from './areasReducer';
 import rulesReducer from './rulesReducer';
+import locationReducer from './locationReducer';
 
 export default combineReducers({
     auth: authReducer,
     form: reduxForm,
     children: childrenReducer,
     areas: areasReducer,
-    rules: rulesReducer
+    rules: rulesReducer,
+    location: locationReducer
 });
