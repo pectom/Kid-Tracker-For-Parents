@@ -60,6 +60,7 @@ export const fetchAreas = () => async dispatch => {
 }
 
 export const createArea = values => async dispatch => {
+    values.area = [...values.area, values.area[0]];
     const res = await axios.post('/api/parent/areas', values);
     dispatch({ type: CREATE_AREA, payload: res.data });
 }
