@@ -21,7 +21,7 @@ class Children extends React.Component {
                 <Marker
                     key={child._id}
                     label={{
-                        text: child.name[0],
+                        text: child.name ? child.name[0] : '',
                         fontSize: '20px',
                         color: 'white'
                     }}
@@ -34,11 +34,11 @@ class Children extends React.Component {
                             strokeOpacity: 0
                         }
                     }
-                    position={{lat: child.location.coordinates[0], lng: child.location.coordinates[1]}}
+                    position={{lat: child.location ? child.location.coordinates[0] : 0, lng: child.location ? child.location.coordinates[1] : 0}}
                 >
                     {
                         <InfoWindow>
-                            <div>{`Czas pomiaru: ${child.locationTime.substr(0,10)} ${child.locationTime.substr(11,5)}`}</div>
+                            <div>{`Czas pomiaru: ${child.locationTime ? child.locationTime.substr(0,10) : ''} ${child.locationTime ? child.locationTime.substr(11,5) : ''}`}</div>
                         </InfoWindow>
                     }
                 </Marker>
@@ -50,7 +50,7 @@ class Children extends React.Component {
         return (
             <div>
                 <Header />
-                <div className="ui grid">
+                <div className="ui stackable grid">
                     <div className="ui five wide column">
                         <Sidebar />
                     </div>

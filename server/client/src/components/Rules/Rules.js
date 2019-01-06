@@ -44,7 +44,7 @@ class Rules extends React.Component {
         return(
             <div>
                 <Header />
-                <div className="ui grid">
+                <div className="ui stackable grid">
                     <div className="ui five wide column">
                         <Sidebar />
                     </div>

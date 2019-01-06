@@ -61,7 +61,7 @@ class Sidebar extends React.Component {
                         <div>
                             <RulesForChild child={this.state.choosenChild} />
                         </div>
-                        <div className="ui grid" style={{marginTop:0}}>
+                        <div className="ui stackable grid" style={{marginTop:0}}>
                             <div className="ui twelve wide column">
                                 <button id={`rules-goBack-${this.state.choosenChild._id}`} className="circular ui icon button yellow" data-tooltip="Wróć do wyboru dziecka" onClick={() => this.setState({choosenChild: false})}>
                                     <i className="icon angle left large"></i>

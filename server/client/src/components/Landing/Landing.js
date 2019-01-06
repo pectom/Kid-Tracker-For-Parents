@@ -50,7 +50,7 @@ class Landing extends React.Component {
                         <i className="map marker alternate icon big" />
                         GdzieJestMojeDziecko?
                     </div>
-                    <div className="ui grid">
+                    <div className="ui stackable grid">
                         <div className="eight wide column">
                             <SneakPeak />
                         </div>
