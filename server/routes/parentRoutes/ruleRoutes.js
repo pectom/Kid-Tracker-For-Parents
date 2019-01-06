@@ -36,7 +36,8 @@ ruleRouter.get("/",async (req,res,next) =>{
         const rules = await Rule.find({
             _user: req.user.id,
             startDate: {$lte: Date.now()},
-            endDate: {$gte: Date.now()}
+            endDate: {$gte: Date.now()},
+            active: true
         });
         res.send(rules);
     }catch (e) {
