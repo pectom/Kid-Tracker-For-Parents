@@ -5,7 +5,7 @@ import { DrawingManager } from 'react-google-maps/lib/components/drawing/Drawing
 class AreaChooser extends React.Component {
 
     handlePolygonComplete = (event) => {
-        event.latLngs.j[0].j.forEach(latLng => console.log(latLng.lat() + "  " + latLng.lng()))
+        //event.latLngs.j[0].j.forEach(latLng => console.log(latLng.lat() + "  " + latLng.lng()))
         this.props.handleAreaComplete(event.latLngs.j[0].j);
     }
 

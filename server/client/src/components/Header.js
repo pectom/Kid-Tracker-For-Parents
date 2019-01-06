@@ -25,28 +25,21 @@ class Header extends React.Component {
             );
         }
         return (
-            <div className="ui menu">
+            <div className="ui stackable menu">
                 <Link id="header-logo" className="item" to="/dashboard">
                     <i className="map marker alternate icon big" />
                     GdzieJestMojeDziecko?
                 </Link>
-                <button id="header-delete" style={{visibility: 'hidden'}} onClick={() => this.handleDelete()}>Usuń konto</button>
+                <button style={{margin:0, padding:0, visibility: 'hidden', width:0, height:0, border:0}} id="header-delete" onClick={() => this.handleDelete()}></button>
                 <div className="right menu">
-                    <div className="item">
-                        <Link id="header-children" className="ui standard button" to="/children">Dzieci</Link>
-                    </div>
-                    <div className="item">
-                        <Link id="header-areas" className="ui standard button" to="/areas">Obszary</Link>
-                    </div>
-                    <div className="item">
-                        <Link id="header-rules" className="ui standard button" to="/rules">Reguły</Link>
-                    </div>
-                    <div className="item">
-                        <a id="header-logout" className="ui primary button" href="/api/logout">Wyloguj</a>
-                    </div>
+                        <Link id="header-children" className="item" to="/children">Dzieci</Link>
+                        <Link id="header-areas" className="item" to="/areas">Obszary</Link>
+                        <Link id="header-rules" className="item" to="/rules">Reguły</Link>
+                        <a id="header-logout" className="item" href="/api/logout">Wyloguj</a>
                 </div>
                 
             </div>
+            
         );
     }
 }

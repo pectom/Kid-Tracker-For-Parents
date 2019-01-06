@@ -10,7 +10,7 @@ class Child extends React.Component {
     render() {
         return (
             <div className="ui segment">
-                <div className="ui grid">
+                <div className="ui stackable grid">
                     <div className="ui eight wide column">
                         <div className="ui segment" style={{textAlign: 'center', fontSize: '20px'}}>
                             {this.props.name}

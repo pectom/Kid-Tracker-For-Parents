@@ -17,12 +17,13 @@ class Areas extends React.Component {
 
     renderPolygons() {
         return this.props.areas ? this.props.areas.map( area => {
+            //console.log(area.location && area.location.coordinates ? area.location.coordinates : [{lat:0.1,lng:0.1}]);
             return (
                 <Polygon
                     key={area._id}
-                    paths={area.location ? area.location.coordinates : []}
+                    paths={area.location && area.location.coordinates ? area.location.coordinates : [{lat:0.1,lng:0.1}]}
                 />
-            )
+            );
         }) : [];
     }
 
@@ -44,7 +45,7 @@ class Areas extends React.Component {
         return (
             <div>
                 <Header />
-                <div className="ui grid">
+                <div className="ui stackable grid">
                     <div className="ui five wide column">
                         <Sidebar />
                     </div>

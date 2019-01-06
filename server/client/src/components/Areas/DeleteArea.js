@@ -51,7 +51,7 @@ class DeleteArea extends React.Component {
                 <Modal.Header>Jesteś pewien?</Modal.Header>
                 <Modal.Content>
                     <div className="ui segment">
-                        <div className="ui grid">
+                        <div className="ui stackable grid">
                             <div className="ui ten wide column">
                                 <div className="ui segment" style={{textAlign: 'center', fontSize: '20px'}}>
                                     {this.props.name}  <i className={`${this.props.icon} icon`} />

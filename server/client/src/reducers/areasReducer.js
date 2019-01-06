@@ -5,11 +5,11 @@ export default function(state = [], action) {
         case FETCH_AREAS:
             return action.payload;
         case CREATE_AREA:
-            return [...state, action.payload];
+            return [...state];
         case DELETE_AREA:
-            return action.payload;
+            return [...state];
         case UPDATE_AREA:
-            return [...state, action.payload];
+            return [...state];
         default:
             return state;
     }

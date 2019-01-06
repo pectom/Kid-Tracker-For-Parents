@@ -77,7 +77,7 @@ class DeleteRule extends React.Component {
                     <div className="ui segment" style={{textAlign: "center", fontSize: "20px"}}>
                         {this.props.area ? this.props.area.name : ''} <i className={`${this.props.area ? this.props.area.iconId : ''} icon`} />
                     </div>
-                    <div className="ui grid">
+                    <div className="ui stackable grid">
                         <div className="ui six wide column">
                             <div className="ui segment">
                                 {this.props.starttime} do {this.props.endtime}
@@ -89,7 +89,7 @@ class DeleteRule extends React.Component {
                             </div>
                         </div>
                     </div>
-                    <div className="ui grid">
+                    <div className="ui stackable grid">
                         <div className="ui ten wide column">
                             <div className="ui segment">
                                 {this.repetitionOptions.filter(option => option.value === this.props.repetition)[0] ? this.repetitionOptions.filter(option => option.value === this.props.repetition)[0].text : ''}

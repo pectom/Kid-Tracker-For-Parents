@@ -210,7 +210,6 @@ class EditArea extends React.Component {
     }
 
     render() {
-        console.log(this.state)
         return (
             <Modal
                 size="tiny"

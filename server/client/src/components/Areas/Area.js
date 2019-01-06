@@ -15,11 +15,11 @@ class Area extends React.Component {
 
     render() {
         return (
-            <div className="ui segment">
+            <div className="ui segment" key={this.props._id}>
                 <div className="ui segment" style={{textAlign: "center", fontSize: "20px"}}>
                     {this.props.name} <i className={`${this.props.icon} icon`} />
                 </div>
-                <div className="ui grid">
+                <div className="ui stackable grid">
                     <div className="ui ten wide column">
                         {this.renderChildrenIcons()}
                     </div>

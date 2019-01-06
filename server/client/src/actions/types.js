@@ -19,3 +19,4 @@ export const DELETE_RULE = 'delete_rule';
 export const UPDATE_RULE = 'update_rule';
 
 export const DELETE_ACCOUNT = 'delete-account';
+export const FETCH_CURRENT_LOCATION = 'location';
