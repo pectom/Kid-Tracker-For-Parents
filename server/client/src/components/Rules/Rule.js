@@ -1,13 +1,17 @@
 import React from 'react';
 import EditRule from './EditRule';
 import DeleteRule from './DeleteRule';
+import { connect } from 'react-redux';
+
+import * as actions from '../../actions';
 
 class Rule extends React.Component {
     state = {
-        active: false
+        active: this.props.active
     };
 
-    handleToggle = () => {
+    handleToggle = async () => {
+        await this.props.toggleActivityRule({id : this.props.id});
         this.setState ({
             active: !this.state.active
         });
@@ -41,13 +45,20 @@ class Rule extends React.Component {
     ];
 
     render() {
+        //console.log(this.state);
         return(
             <div className="ui segment">
                 <div className="ui segment" style={{textAlign: "center", fontSize: "20px"}}>
                     <div className="ui stackable grid">
                         <div className="ui five wide column">
                             <div className="ui toggle checkbox">
-                                <input id={`rules-toggle-rule-${this.props.id}-child-${this.props.child._id}`} name="active" checked={this.state.active} type="checkbox" onChange={e => {this.handleToggle(e)}} />
+                                <input 
+                                    id={`rules-toggle-rule-${this.props.id}-child-${this.props.child._id}`} 
+                                    name="active" 
+                                    checked={this.state.active} 
+                                    type="checkbox" 
+                                    onChange={e => {this.handleToggle(e)}} 
+                                />
                                 <label></label>
                             </div> 
                         </div>
@@ -106,4 +117,8 @@ class Rule extends React.Component {
     }
 }
 
-export default Rule;
+const mapStateToProps = ({ rules }) => {
+    return { rules };
+}
+
+export default connect(mapStateToProps, actions)(Rule);

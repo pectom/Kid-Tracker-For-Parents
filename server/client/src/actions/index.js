@@ -4,7 +4,7 @@ import { FETCH_USER, REGISTER_USER, LOGIN_USER,
         FETCH_CHILDREN, CREATE_CHILD, DELETE_CHILD, UPDATE_CHILD,
         FETCH_AREAS, CREATE_AREA, DELETE_AREA, UPDATE_AREA,
         FETCH_RULES, FETCH_CURRENT_RULES, CREATE_RULE, DELETE_RULE, UPDATE_RULE,
-        DELETE_ACCOUNT, FETCH_CURRENT_LOCATION } from './types';
+        DELETE_ACCOUNT, FETCH_CURRENT_LOCATION, TOOGLE_ACTIVITY_RULE } from './types';
         
 // LOGGING AND REGISTERING
 
@@ -100,6 +100,11 @@ export const updateRule = values => async dispatch => {
 export const fetchCurrentRules = () => async dispatch => {
     const res = await axios.get(`/api/parent/rules/`);
     dispatch({ type: FETCH_CURRENT_RULES, payload: res.data });
+}
+
+export const toggleActivityRule = values => async dispatch => {
+    const res = await axios.put(`/api/parent/rules/${values.id}/active/`);
+    dispatch({ type: TOOGLE_ACTIVITY_RULE, payload: res.data });
 }
 
 // CURRENT LOCATION
