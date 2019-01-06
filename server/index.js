@@ -4,6 +4,7 @@ const keys = require('./config/keys');
 const mongoose = require('mongoose');
 const passport = require("passport");
 const cookieSession = require("cookie-session");
+const admin = require('firebase-admin');
 
 const app = express();
 

@@ -2,22 +2,29 @@ const admin = require('firebase-admin');
 
 const keys = require('../config/keys');
 
-admin.initializeApp({
+const defaultApp = admin.initializeApp({
     credential: admin.credential.cert({
         projectId: keys.firebaseProjectId,
         clientEmail: keys.firebaseClientEmail,
-        privateKey: keys.firebasePrivateKey
+        privateKey: keys.firebasePrivateKey.replace(/\\n/g, '\n')
     }),
+    databaseURL: keys.fireBaseDB
 });
-function sendNotification(user,rule,area) {
+
+function sendNotification(user,child,rule,area) {
     const registrationToken = user.firebaseToken;
+    console.log(user);
+    console.log(rule);
+    console.log(area);
     const message = {
-        data: {
-            area:area.name
-        },
-        token: registrationToken
+            notification: {
+                title: child.name + 'powiadomionko',
+                body: '',
+                icon: '',
+                color: '#f45342'
+            }
     };
-    admin.messaging().send(message)
+    admin.messaging().sendToDevice(registrationToken,message)
         .then((response) => {
             // Response is a message ID string.
             console.log('Successfully sent message:', response);
