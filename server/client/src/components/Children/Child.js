@@ -4,7 +4,11 @@ import DeleteChild from './DeleteChild';
 
 class Child extends React.Component {
     renderKidIcon(name, color) {
-        return <i className={`circular icon inverted ${color}`}>{name ? name[0] : ''}</i>
+        return (
+            <i className={`circular icon inverted`} ref={(node) => { if (node) { node.style.setProperty("background-color", color, "important"); }}}>
+                {name ? name[0] : ''}
+            </i>
+        );
     }
 
     render() {

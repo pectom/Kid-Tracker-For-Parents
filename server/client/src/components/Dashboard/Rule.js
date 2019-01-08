@@ -54,7 +54,12 @@ class Rule extends React.Component {
                     </div>
                     <div className="ui six wide column">
                         <div style={{textAlign: "right"}}>
-                            <i className={`circular icon inverted ${this.props.child ? this.props.child.iconColor : ''}`}>{this.props.child ? this.props.child.name[0] : ''}</i>
+                            <i 
+                                className={`circular icon inverted `} 
+                                ref={(node) => { if (node) { node.style.setProperty("background-color", this.props.child ? this.props.child.iconColor : '', "important"); }}}
+                            >
+                                {this.props.child ? this.props.child.name[0] : ''}
+                            </i>
                         </div>
                     </div>
                 </div>

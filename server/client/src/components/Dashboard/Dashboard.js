@@ -30,7 +30,7 @@ class Dashboard extends React.Component {
                             path: 0,
                             scale: 15,
                             fillColor: child.iconColor,
-                            fillOpacity: 0.6,
+                            fillOpacity: 0.8,
                             strokeOpacity: 0
                         }
                     }
