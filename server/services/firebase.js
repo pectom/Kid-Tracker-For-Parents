@@ -16,11 +16,10 @@ function sendNotification(user,child,rule,area) {
     console.log(user);
     console.log(rule);
     console.log(area);
+    const name = child.name[0].toUpperCase()+child.name.substr(1);
     const message = {
             notification: {
-                title: child.name + 'powiadomionko',
-                body: '',
-                icon: '',
+                title: name + 'opuścił/a obszar: '+ area.name,
                 color: '#f45342'
             }
     };
