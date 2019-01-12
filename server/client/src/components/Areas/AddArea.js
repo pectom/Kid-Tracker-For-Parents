@@ -83,6 +83,7 @@ class AddArea extends React.Component {
     }
 
     handleChildrenChange = data => {
+        console.log(data)
         this.setState({
             children: data.value
         });
@@ -93,14 +94,7 @@ class AddArea extends React.Component {
         return children.map( child => {
             return {
                 text: child.name,
-                value: child._id,
-                icon: {
-                    name:'',
-                    circular: true,
-                    color: child.iconColor,
-                    inverted: true,
-                    size: 'tiny'
-                }
+                value: child._id
             }
         })
     }

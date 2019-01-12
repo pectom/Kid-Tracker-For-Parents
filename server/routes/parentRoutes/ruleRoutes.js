@@ -101,7 +101,7 @@ ruleRouter.put("/:ruleId/active",async (req,res) =>{
         const rule = await Rule.findOne({_id: ruleId});
         rule.active = !rule.active;
         rule.save();
-        res.status(201).send({success: true, active: rule.active});
+        res.status(201).send({success: true, active: rule.active, ruleId});
     }catch (e) {
         res.status(400).send({success: false, message: e.message});
     }

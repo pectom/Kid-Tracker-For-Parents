@@ -17,6 +17,7 @@ export const FETCH_CURRENT_RULES = 'fetch_rules';
 export const CREATE_RULE = 'create_rule';
 export const DELETE_RULE = 'delete_rule';
 export const UPDATE_RULE = 'update_rule';
+export const TOOGLE_ACTIVITY_RULE = 'activity-rule';
 
 export const DELETE_ACCOUNT = 'delete-account';
 export const FETCH_CURRENT_LOCATION = 'location';

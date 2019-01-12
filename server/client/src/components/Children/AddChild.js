@@ -1,6 +1,7 @@
 import React from 'react';
-import { Modal, Dropdown } from 'semantic-ui-react';
+import { Modal } from 'semantic-ui-react';
 import { connect } from 'react-redux';
+import { CirclePicker } from 'react-color';
 
 import * as actions from '../../actions';
 
@@ -8,7 +9,7 @@ class AddChild extends React.Component {
     state = {
         open: false,
         name: '',
-        iconColor: 'red',
+        iconColor: '#f44336',
         code: ''
     }
 
@@ -49,34 +50,9 @@ class AddChild extends React.Component {
 
     handleIconColorChange = (data) => {
         this.setState({
-            iconColor: data.value
+            iconColor: data.hex
         })
     }
-
-    colorOptions = [
-        {
-            text: 'czerwony',
-            value: 'red',
-            icon: {
-                name:'',
-                circular: true,
-                color: 'red',
-                inverted: true,
-                size: 'tiny'
-            }
-        },
-        {
-            text: 'niebieski',
-            value: 'blue',
-            icon: {
-                name:'',
-                circular: true,
-                color: 'blue',
-                inverted: true,
-                size: 'tiny'
-            }
-        },
-    ]
 
     render() {
         return (
@@ -94,22 +70,16 @@ class AddChild extends React.Component {
                 <Modal.Content>
                     <form className="ui form">
                         <div className="field">
-                            <div className="two fields">
-                                <div className="field">
-                                    <label>Nazwa</label>
-                                    <input id="add-child-name" name="name" type="text" value={this.state.name} onChange={(e) => this.handleNameChange(e)} />
-                                </div>
-                                <div className="field">
-                                    <label>Kolor ikonki</label>
-                                    <Dropdown 
-                                        id="add-child-iconColor" 
-                                        value={this.state.iconColor} 
-                                        fluid selection 
-                                        options={this.colorOptions} 
-                                        onChange={(e,data) => this.handleIconColorChange(data)} 
-                                    />
-                                </div>
-                            </div>
+                            <label>Imię</label>
+                            <input id="add-child-name" name="name" type="text" value={this.state.name} onChange={(e) => this.handleNameChange(e)} />
+                        </div>
+                        <div className="field">
+                            <label>Kolor ikonki</label>
+                            <CirclePicker 
+                                color={this.state.iconColor}
+                                onChange={(event) => this.handleIconColorChange(event)}
+                                width='100%'
+                            />
                         </div>
                         <div className="field">
                             <label>Token z aplikacji dziecka</label>
