@@ -10,7 +10,8 @@ class AddChild extends React.Component {
         open: false,
         name: '',
         iconColor: '#f44336',
-        code: ''
+        code: '',
+        tokenError: false
     }
 
     close = () => {
@@ -26,14 +27,17 @@ class AddChild extends React.Component {
     }
 
     handleClick = async () => {
-        await this.props.createChild({
-            user: this.props.auth._id,
-            name: this.state.name,
-            iconColor: this.state.iconColor,
-            code: this.state.code
-        });
-        this.props.fetchChildren();
-        this.close();
+        this.checkToken(this.state.code);
+        if(!this.state.tokenError) {
+            await this.props.createChild({
+                user: this.props.auth._id,
+                name: this.state.name,
+                iconColor: this.state.iconColor,
+                code: this.state.code
+            });
+            this.props.fetchChildren();
+            this.close();
+        }
     }
 
     handleNameChange = (e) => {
@@ -53,6 +57,28 @@ class AddChild extends React.Component {
             iconColor: data.hex
         })
     }
+
+    checkToken = (token) => {
+        if(isNaN(token)) {
+            this.setState({
+                tokenError: true
+            });
+        }
+        else {
+            if(token.length !== 6) {
+                this.setState({
+                    tokenError: true
+                });
+            }
+            else {
+                this.setState({
+                    tokenError: false
+                });
+        
+            }
+        }
+    }
+        
 
     render() {
         return (
@@ -83,7 +109,10 @@ class AddChild extends React.Component {
                         </div>
                         <div className="field">
                             <label>Token z aplikacji dziecka</label>
-                            <input id="add-child-code" name="code" type="text" value={this.state.code} onChange={(e) => this.handleTokenChange(e)} />
+                            <input id="add-child-code" name="code" type="text" value={this.state.code} onBlur={(e) => this.checkToken(e.target.value)} onChange={(e) => this.handleTokenChange(e)} />
+                            <div id={`alert-addChild-token`} className="ui red message" style={{display: this.state.tokenError ? "block" : "none"}}>
+                                Token z aplikacji dziecka jest złożony z 6-ciu cyfr
+                            </div>
                         </div>
                         
                     </form>
