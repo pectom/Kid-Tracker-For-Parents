@@ -142,8 +142,8 @@ class AddRule extends React.Component {
     }
 
     checkDate = () => {
-        const start = Date.parse(this.state.startDate);
-        const end = Date.parse(this.state.endDate);
+        const start = Date.parse(this.state.startDate.replace(/-/g, ' '));
+        const end = Date.parse(this.state.endDate.replace(/-/g, ' '));
         if(start > end) {
             this.setState({
                 dateError: true
@@ -156,8 +156,10 @@ class AddRule extends React.Component {
     }
 
     checkTime = () => {
-        const start = Date.parse('01-01-2019 ' + this.state.startTime + ':10');
-        const end = Date.parse('01-01-2019 ' + this.state.endTime + ':10');
+        const start = Date.parse('01 01 2019 ' + this.state.startTime + ':10');
+        const end = Date.parse('01 01 2019 ' + this.state.endTime + ':10');
+        console.log(start);
+        console.log(end)
         if(start > end) {
             this.setState({
                 timeError: true
@@ -170,7 +172,6 @@ class AddRule extends React.Component {
     }
 
     render() {
-        
         return (
             <Modal
                 size="tiny"
