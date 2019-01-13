@@ -12,7 +12,9 @@ class EditRule extends React.Component {
         starttime: this.props.starttime,
         endtime: this.props.endtime,
         area: this.props.area,
-        repetition: this.props.repetition
+        repetition: this.props.repetition,
+        dateError: false,
+        timeError: false
     }
 
     async componentDidMount() {
@@ -32,18 +34,22 @@ class EditRule extends React.Component {
     }
 
     handleClick = async () => {
-        await this.props.updateRule({
-            id: this.props.id,
-            startDate: this.state.startdate,
-            endDate: this.state.enddate,
-            startTime: this.state.starttime,
-            endTime: this.state.endtime,
-            areaId: this.state.area,
-            childId: this.props.child,
-            repetition: this.state.repetition
-        });
-        await this.props.fetchRules(this.props.child._id);
-        this.close();
+        await this.checkDate();
+        await this.checkTime();
+        if(!this.state.dateError && !this.state.timeError){
+            await this.props.updateRule({
+                id: this.props.id,
+                startDate: this.state.startdate,
+                endDate: this.state.enddate,
+                startTime: this.state.starttime,
+                endTime: this.state.endtime,
+                areaId: this.state.area,
+                childId: this.props.child,
+                repetition: this.state.repetition
+            });
+            await this.props.fetchRules(this.props.child._id);
+            this.close();
+        }
     }
 
     handleStartdateChange = (e) => {
@@ -135,6 +141,34 @@ class EditRule extends React.Component {
         },
     ];
 
+    checkDate = () => {
+        const start = Date.parse(this.state.startdate);
+        const end = Date.parse(this.state.enddate);
+        if(start > end) {
+            this.setState({
+                dateError: true
+            });
+        } else {
+            this.setState({
+                dateError: false
+            });
+        }
+    }
+
+    checkTime = () => {
+        const start = Date.parse('01-01-2019 ' + this.state.starttime + ':10');
+        const end = Date.parse('01-01-2019 ' + this.state.endtime + ':10');
+        if(start > end) {
+            this.setState({
+                timeError: true
+            });
+        } else {
+            this.setState({
+                timeError: false
+            });
+        }
+    }
+
     render() {
         return (
             <Modal
@@ -172,6 +206,9 @@ class EditRule extends React.Component {
                                 />
                             </div>
                         </div>
+                        <div id={`alert-addrule-date`} className="ui red message" style={{display: this.state.dateError ? "block" : "none"}}>
+                            Data rozpoczęcia reguły musi być wcześniej niż data zakończenia reguły
+                        </div>
                         <div className="two fields">
                             <div className="field">
                                 <label>Czas rozpoczęcia</label>
@@ -193,6 +230,9 @@ class EditRule extends React.Component {
                                     onChange={(e) => this.handleEndtimeChange(e)}
                                 />
                             </div>
+                        </div>
+                        <div id={`alert-addrule-date`} className="ui red message" style={{display: this.state.timeError ? "block" : "none"}}>
+                            Czas rozpoczęcia reguły musi być wcześniej niż czas zakończenia reguły
                         </div>
                         <div className="field">
                             <label>Obszar</label>

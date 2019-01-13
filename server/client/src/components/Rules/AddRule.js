@@ -14,6 +14,8 @@ class AddRule extends React.Component {
         endTime: '',
         areaId: '',
         repetition: 'DAILY',
+        dateError: false,
+        timeError: false
     }
 
     async componentDidMount() {
@@ -33,16 +35,20 @@ class AddRule extends React.Component {
     }
 
     handleClick = async () => {
-        await this.props.createRule({
-            startDate: this.state.startDate, 
-            endDate: this.state.endDate, 
-            startTime: this.state.startTime, 
-            endTime: this.state.endTime, 
-            repetition: this.state.repetition, 
-            areaId: this.state.areaId, 
-            childId: this.props.child._id
-        });
-        this.close();
+        await this.checkDate();
+        await this.checkTime();
+        if(!this.state.dateError && !this.state.timeError){
+            await this.props.createRule({
+                startDate: this.state.startDate, 
+                endDate: this.state.endDate, 
+                startTime: this.state.startTime, 
+                endTime: this.state.endTime, 
+                repetition: this.state.repetition, 
+                areaId: this.state.areaId, 
+                childId: this.props.child._id
+            });
+            this.close();
+        }
     }
 
     handleStartDateChange = (e) => {
@@ -135,7 +141,36 @@ class AddRule extends React.Component {
         })
     }
 
+    checkDate = () => {
+        const start = Date.parse(this.state.startDate);
+        const end = Date.parse(this.state.endDate);
+        if(start > end) {
+            this.setState({
+                dateError: true
+            });
+        } else {
+            this.setState({
+                dateError: false
+            });
+        }
+    }
+
+    checkTime = () => {
+        const start = Date.parse('01-01-2019 ' + this.state.startTime + ':10');
+        const end = Date.parse('01-01-2019 ' + this.state.endTime + ':10');
+        if(start > end) {
+            this.setState({
+                timeError: true
+            });
+        } else {
+            this.setState({
+                timeError: false
+            });
+        }
+    }
+
     render() {
+        
         return (
             <Modal
                 size="tiny"
@@ -159,6 +194,10 @@ class AddRule extends React.Component {
                                 <label>Data zakończenia</label>
                                 <input name="enddate" type="date" value={this.state.endDate} onChange={(e) => this.handleEndDateChange(e)} />
                             </div>
+                            
+                        </div>
+                        <div id={`alert-addrule-date`} className="ui red message" style={{display: this.state.dateError ? "block" : "none"}}>
+                            Data rozpoczęcia reguły musi być wcześniej niż data zakończenia reguły
                         </div>
                         <div className="two fields">
                             <div className="field">
@@ -169,6 +208,10 @@ class AddRule extends React.Component {
                                 <label>Czas zakończenia</label>
                                 <input name="endtime" type="time" value={this.state.endTime} onChange={(e) => this.handleEndTimeChange(e)} />
                             </div>
+                            
+                        </div>
+                        <div id={`alert-addrule-date`} className="ui red message" style={{display: this.state.timeError ? "block" : "none"}}>
+                            Czas rozpoczęcia reguły musi być wcześniej niż czas zakończenia reguły
                         </div>
                         <div className="field">
                             <label>Obszar</label>
