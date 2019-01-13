@@ -142,8 +142,8 @@ class EditRule extends React.Component {
     ];
 
     checkDate = () => {
-        const start = Date.parse(this.state.startdate);
-        const end = Date.parse(this.state.enddate);
+        const start = Date.parse(this.state.startdate.replace(/-/g, ' '));
+        const end = Date.parse(this.state.enddate.replace(/-/g, ' '));
         if(start > end) {
             this.setState({
                 dateError: true
@@ -156,8 +156,8 @@ class EditRule extends React.Component {
     }
 
     checkTime = () => {
-        const start = Date.parse('01-01-2019 ' + this.state.starttime + ':10');
-        const end = Date.parse('01-01-2019 ' + this.state.endtime + ':10');
+        const start = Date.parse('01 01 2019 ' + this.state.starttime + ':10');
+        const end = Date.parse('01 01 2019 ' + this.state.endtime + ':10');
         if(start > end) {
             this.setState({
                 timeError: true
