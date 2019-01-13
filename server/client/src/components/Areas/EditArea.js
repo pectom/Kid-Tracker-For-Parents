@@ -13,7 +13,9 @@ class EditArea extends React.Component {
         name: this.props.name,
         icon: this.props.icon,
         area: this.props.area,
-        childrenIds: []
+        childrenIds: [],
+        childrenError: false,
+        nameError: false
     }
 
     async componentDidMount() {
@@ -63,10 +65,14 @@ class EditArea extends React.Component {
         this.close();
     }
 
-    handleNextClick = () => {
-        this.setState({
-            editingArea: true
-        })
+    handleNextClick = async () => {
+        await this.checkChildren();
+        await this.checkName();
+        if(!this.state.childrenError && !this.state.nameError){
+            this.setState({
+                editingArea: true
+            });
+        }
     }
 
     handleBackClick = () => {
@@ -116,6 +122,32 @@ class EditArea extends React.Component {
         },
     ]
 
+    checkChildren = () => {
+        if(this.state.childrenIds.length === 0) {
+            this.setState({
+                childrenError: true
+            });
+        }
+        else {
+            this.setState({
+                childrenError: false
+            });
+        }
+    }
+
+    checkName = () => {
+        if(this.state.name.length === 0) {
+            this.setState({
+                nameError: true
+            });
+        }
+        else {
+            this.setState({
+                nameError: false
+            });
+        }
+    }
+
     prepareChildrenOptions = () => {
         const children = this.props.children ? this.props.children : [];
         return children.map( child => {
@@ -155,6 +187,9 @@ class EditArea extends React.Component {
                                         value={this.state.name} 
                                         onChange={e => this.handleNameChange(e)} 
                                     />
+                                    <div id={`alert-addArea-badName`} className="ui red message" style={{display: this.state.nameError ? "block" : "none"}}>
+                                        Wpisz nazwę obszaru
+                                    </div>
                                 </div>
                                 <div className="field">
                                     <Dropdown
@@ -176,6 +211,9 @@ class EditArea extends React.Component {
                                 options={this.prepareChildrenOptions()} 
                                 onChange={(e, data) => { this.handleKidChange(data)} }
                             />
+                            <div id={`alert-addArea-withoutchildren`} className="ui red message" style={{display: this.state.childrenError ? "block" : "none"}}>
+                                Dodaj przynajmniej jedno dziecko
+                            </div>
                         </div>
                         
                     </form>

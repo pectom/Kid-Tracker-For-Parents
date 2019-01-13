@@ -16,7 +16,9 @@ class AddArea extends React.Component {
         name: '',
         iconId: 'home',
         area: {},
-        children: []
+        children: [],
+        childrenError: false,
+        nameError: false
     }
 
     close = () => {
@@ -32,10 +34,14 @@ class AddArea extends React.Component {
         })
     }
 
-    handleNextButton = () => {
-        this.setState({
-            choosingArea: true
-        })
+    handleNextButton = async () => {
+        await this.checkChildren();
+        await this.checkName();
+        if(!this.state.childrenError && !this.state.nameError){
+            this.setState({
+                choosingArea: true
+            });
+        }
     }
 
     handleBackButton = () => {
@@ -83,7 +89,6 @@ class AddArea extends React.Component {
     }
 
     handleChildrenChange = data => {
-        console.log(data)
         this.setState({
             children: data.value
         });
@@ -122,6 +127,32 @@ class AddArea extends React.Component {
         },
     ]
 
+    checkChildren = () => {
+        if(this.state.children.length === 0) {
+            this.setState({
+                childrenError: true
+            });
+        }
+        else {
+            this.setState({
+                childrenError: false
+            });
+        }
+    }
+
+    checkName = () => {
+        if(this.state.name.length === 0) {
+            this.setState({
+                nameError: true
+            });
+        }
+        else {
+            this.setState({
+                nameError: false
+            });
+        }
+    }
+
     renderModal = () => {
         if(this.state.choosingArea) {
             return (
@@ -144,6 +175,9 @@ class AddArea extends React.Component {
                                             value={this.state.name} 
                                             onChange={(e) => this.handleNameChange(e)} 
                                         />
+                                        <div id={`alert-addArea-badName`} className="ui red message" style={{display: this.state.nameError ? "block" : "none"}}>
+                                            Wpisz nazwę obszaru
+                                        </div>
                                     </div>
                                     <div className="field">
                                         <label>Ikona</label>
@@ -167,6 +201,9 @@ class AddArea extends React.Component {
                                     fluid multiple selection 
                                     options={this.prepareChildrenOptions()} 
                                 />
+                                <div id={`alert-addArea-withoutchildren`} className="ui red message" style={{display: this.state.childrenError ? "block" : "none"}}>
+                                    Dodaj przynajmniej jedno dziecko
+                                </div>
                             </div>
                             
                         </form>
