@@ -9,19 +9,22 @@ class Area extends React.Component {
 
     renderChildrenIcons() {
         return this.props.children ? this.props.children.map(child => {
-            return (
-                <i 
-                    key={child._id} 
-                    className={`circular icon inverted`}
-                    ref={(node) => { if (node) { node.style.setProperty("background-color", child.iconColor, "important"); }}}
-                >
-                    {child.name ? child.name[0] : ''}
-                </i>
-            );
+            if(child) {
+                return (
+                    <i 
+                        key={child._id} 
+                        className={`circular icon inverted`}
+                        ref={(node) => { if (node) { node.style.setProperty("background-color", child.iconColor, "important"); }}}
+                    >
+                        {child.name ? child.name[0] : ''}
+                    </i>
+                );
+            } else { return null }
         }) : [];
     }
 
     render() {
+        console.log(this.props)
         return (
             <div className="ui segment" key={this.props._id}>
                 <div className="ui segment" style={{textAlign: "center", fontSize: "20px"}}>

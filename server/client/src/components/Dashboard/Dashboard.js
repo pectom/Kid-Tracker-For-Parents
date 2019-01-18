@@ -17,32 +17,34 @@ class Dashboard extends React.Component {
 
     renderMarkers() {
         return this.props.children ? this.props.children.map( child => {
-            return (
-                <Marker
-                    key={child._id}
-                    label={{
-                        text: child.name[0],
-                        fontSize: '20px',
-                        color: 'white'
-                    }}
-                    icon={
-                        {
-                            path: 0,
-                            scale: 15,
-                            fillColor: child.iconColor,
-                            fillOpacity: 0.8,
-                            strokeOpacity: 0
+            if (child.location.coordinates) { 
+                return (
+                    <Marker
+                        key={child._id}
+                        label={{
+                            text: child.name[0],
+                            fontSize: '20px',
+                            color: 'white'
+                        }}
+                        icon={
+                            {
+                                path: 0,
+                                scale: 15,
+                                fillColor: child.iconColor,
+                                fillOpacity: 0.8,
+                                strokeOpacity: 0
+                            }
                         }
-                    }
-                    position={{lat: child.location.coordinates[0], lng: child.location.coordinates[1]}}
-                >
-                    {
-                        <InfoWindow>
-                            <div>{`Czas pomiaru: ${child.locationTime.substr(0,10)} ${child.locationTime.substr(11,5)}`}</div>
-                        </InfoWindow>
-                    }
-                </Marker>
-            )
+                        position={{lat: child.location.coordinates[0], lng: child.location.coordinates[1]}}
+                    >
+                        {
+                            <InfoWindow>
+                                <div>{`Czas pomiaru: ${child.locationTime.substr(0,10)} ${child.locationTime.substr(11,5)}`}</div>
+                            </InfoWindow>
+                        }
+                    </Marker>
+                )
+            } else { return null }
         }) : [];
     }
 

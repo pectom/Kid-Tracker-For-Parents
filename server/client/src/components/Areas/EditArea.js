@@ -21,7 +21,7 @@ class EditArea extends React.Component {
     async componentDidMount() {
         await this.props.fetchChildren();
         this.setState({
-            childrenIds: this.props.myChildren.map(child => { return child._id })
+            childrenIds: this.props.myChildren.map(child => child ? child._id : null )
         });
     }
 
