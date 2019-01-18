@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const ChildUser =  mongoose.model('child-users');
 const locationRouter = express.Router();
 const Rule = mongoose.model('rules');
+const AddHour = 3600000;
 
 locationRouter.post("/",async (req,res,next)=>{
     const {latitude, longitude} = req.body;
@@ -17,11 +18,11 @@ locationRouter.post("/",async (req,res,next)=>{
                         type: "Point",
                         coordinates: [longitude,latitude]
                     },
-                    locationTime: Date.now()
+                    locationTime: Date.now()+ AddHour
                 }
             );
 
-            await checkAllCurrentRulesForChild(req.user.id); //check if child broke some rule
+            await checkAllCurrentRulesForChild(req.user.id,req.user.name); //check if child broke some rule
 
             res.send(child).status(204);
         }catch (e) {
@@ -40,7 +41,7 @@ locationRouter.get("/",async (req,res,next)=>{
     });
 });
 
-async function checkAllCurrentRulesForChild(childId){
+async function checkAllCurrentRulesForChild(childId,name){
     try {
         const currentRules = await Rule.find({
             childId,
@@ -48,7 +49,7 @@ async function checkAllCurrentRulesForChild(childId){
             endDate: {$gte: Date.now()}
         });
         currentRules.forEach(async rule => {
-            await rule.checkRule();
+            await rule.checkRule(name);
             await rule.save();
             }
         );

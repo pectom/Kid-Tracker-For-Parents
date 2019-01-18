@@ -61,10 +61,9 @@ ruleRouter.get("/:childId",async (req,res,next) =>{
 ruleRouter.delete("/:ruleId",async (req,res,next) =>{
     const ruleId = req.params.ruleId;
     try{
-        const rules = await Rule.deleteOne({
-            _id: ruleId
-        });
-        res.status(204).send(rules);
+        const rule = await Rule.findOne({_id:ruleId});
+        rule.remove();
+        res.send({"message": "Rule successfully removed"}).status(204);
     }catch (e) {
         console.log(e);
         res.status(404).send(e);

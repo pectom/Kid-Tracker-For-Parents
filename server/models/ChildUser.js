@@ -1,5 +1,10 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+
+const User = mongoose.model('users');
+const Rule = mongoose.model('rules');
+
+
 const childUserSchema = new Schema({
     googleId: {
         type: String,
@@ -23,7 +28,7 @@ const childUserSchema = new Schema({
     childrenId: String,
 
     name: {
-        String
+        type: String
     },
     connected: {
         type: Boolean,
@@ -56,6 +61,34 @@ const childUserSchema = new Schema({
     type:{
         type: String,
         default: "CHILD"
+    }
+});
+
+childUserSchema.post('remove', { document: true},async function () {
+    try{
+        const parent = await User.findOne({_id: this.parentId});
+
+        const areas = parent.areas;
+        //delete areas with only this child
+        const areas2 = areas.filter(area =>{
+            return !(area.children.length === 1 && area.children.includes(this.id))
+        });
+        //delete child from area children array
+        areas2.forEach(area => {
+            let index = area.children.indexOf(this.id);
+            if(index !== -1){
+                area.children.splice(index,1);
+            }
+        });
+        await User.findOneAndUpdate({
+            _id: this.parentId
+        },{
+            areas: areas2
+        });
+        //delete all children rules
+        await Rule.remove({childrenId: this.id});
+    }catch (e) {
+        console.log(e)
     }
 });
 

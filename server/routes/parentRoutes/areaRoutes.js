@@ -119,6 +119,8 @@ areaRouter.delete('/:areaId', async(req, res, next) =>{
     try{
         const index = areas.findIndex(area => String(area._id) === areaId);
         if(index !== -1){
+            await Area.deleteAllRulesConnectedWithArea(areaId);
+
             areas.splice(index,1);
             const user = await User.updateOne({
                 _id: req.user._id
@@ -139,6 +141,7 @@ areaRouter.delete('/:areaId', async(req, res, next) =>{
             res.status(400).send("Wrong area id");
         }
     }catch (err) {
+        console.log(err);
         res.status(400).send(err);
     }
 });

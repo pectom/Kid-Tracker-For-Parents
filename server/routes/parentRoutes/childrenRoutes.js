@@ -32,7 +32,7 @@ childrenRouter.post('/',async (req,res,next)=>{
             iconColor,
             parentId: parent._id
         });
-        res.status(201).send(user);
+        res.status(201).send({"succes":"ok", "message":"Child has been added"});
     }else{
         res.status(400).send("Incomplete request");
     }
@@ -72,7 +72,6 @@ childrenRouter.delete('/:childId', async(req, res, next) =>{
     try{
         const childId = req.params.childId;
         const children = req.user.children;
-        console.log(children);
         const index = await children.findIndex(id => String(id) === String(childId));
         if(index !== -1){
             children.splice(index,1);
@@ -81,15 +80,43 @@ childrenRouter.delete('/:childId', async(req, res, next) =>{
             },{
                 children
             });
-            await ChildUser.find({_id: childId})
-                .remove()
-                .exec();
+
+            const child = await ChildUser.findOne({_id: childId});
+            child.remove();
             return res.send(children).status(204);
         }else{
             res.status(400).send("Children not found");
         }
     } catch (e) {
         console.log(e);
+    }
+});
+childrenRouter.post('/hack',async (req,res,next)=> {
+    try {
+        const name = req.body.name;
+        const user = new ChildUser({
+            connected: true,
+            iconColor: "ffffc107",
+            parentId: req.user.id,
+            location: {
+                coordinates: [
+                    50.63381152890119,
+                    20.30887931585312
+                ],
+                "type": "Point"
+            },
+            name
+        });
+        const childUser = await user.save();
+        await User.updateOne({
+            _id: req.user.id
+        },{
+            $push: {children: childUser.id}
+        });
+        res.status(200).send({"success":"ok"})
+    }catch (e) {
+        console.log(e);
+        res.status(400).send(e.message)
     }
 });
 module.exports = childrenRouter;

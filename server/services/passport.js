@@ -62,7 +62,7 @@ passport.use("parent-local",new LocalStrategy({
 //lokalne logowanie dziecka
 passport.use("child-local",new LocalStrategy({
         usernameField : 'email',
-        passwordField : 'password',
+         passwordField : 'password',
         passReqToCallback : true
     },
     async(req, email, password, done) => {

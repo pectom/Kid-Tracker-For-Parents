@@ -24,5 +24,8 @@ const areaSchema = new Schema({
     },
     children: [String]
 });
-
+areaSchema.statics.deleteAllRulesConnectedWithArea = async function(areaId){
+        const Rule = mongoose.model('rules');
+        await Rule.remove({areaId});
+};
 mongoose.model('areas',areaSchema);

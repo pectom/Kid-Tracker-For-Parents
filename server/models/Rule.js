@@ -1,9 +1,8 @@
 const mongoose = require('mongoose');
 const {Schema} = mongoose;
 
-const ChildUser =  mongoose.model("child-users");
 const User =  mongoose.model('users');
-const {sendNotification} = require("../services/firebase");
+const {sendBreakRuleNotification,sendBackToAreaNotification} = require("../services/firebase");
 
 
 const ruleSchema = new Schema({
@@ -38,21 +37,25 @@ const ruleSchema = new Schema({
         type: Boolean,
         default: true
     },
-    notification: {
+    isBreakRuleNotificationSent: {
         type: Boolean,
         default: false
-    }
+    },
 });
-ruleSchema.methods.checkRule = async function(){
+ruleSchema.pre('remove',{document:true}, function () {
+    console.log(this);
+});
+ruleSchema.methods.checkRule = async function(name){
+    const ChildUser =  mongoose.model("child-users");
     try {
         const user = await User.findOne({
             _id: this._user
         });
         const areas = user.areas;
         const index = areas.findIndex(area => String(area._id) === this.areaId);
-
         if(index !== -1) {
             const area = areas[index];
+            //return undefined if child broke rule
             const child = await ChildUser.findOne({
                     _id: this.childId,
                     location: {
@@ -63,13 +66,15 @@ ruleSchema.methods.checkRule = async function(){
                 }
             );
             //child broke the rule
-            this.notification = child ? false : true;
-
-            if(!child){
-                sendNotification(user,child,this,area)
+            if(!child && !this.isBreakRuleNotificationSent){
+                sendBreakRuleNotification(user,name,this,area);
+                this.isBreakRuleNotificationSent = true;
+            }
+            if(child && this.isBreakRuleNotificationSent){
+                sendBackToAreaNotification(user,name,this,area);
+                this.isBreakRuleNotificationSent = false;
             }
         }
-        return this.notification;
     }catch (e) {
         console.log(e);
         return null;

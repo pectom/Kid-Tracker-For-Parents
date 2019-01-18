@@ -2,7 +2,7 @@ const admin = require('firebase-admin');
 
 const keys = require('../config/keys');
 
-const defaultApp = admin.initializeApp({
+admin.initializeApp({
     credential: admin.credential.cert({
         projectId: keys.firebaseProjectId,
         clientEmail: keys.firebaseClientEmail,
@@ -11,25 +11,48 @@ const defaultApp = admin.initializeApp({
     databaseURL: keys.fireBaseDB
 });
 
-function sendNotification(user,child,rule,area) {
+function sendBreakRuleNotification(user,name,rule,area) {
     const registrationToken = user.firebaseToken;
-    console.log(user);
-    console.log(rule);
-    console.log(area);
-    const name = child.name[0].toUpperCase()+child.name.substr(1);
-    const message = {
+    if(registrationToken){
+
+        const childName = String(name).toUpperCase()[0]+String(name).substr(1);
+
+        const message = {
             notification: {
-                title: name + 'opuścił/a obszar: '+ area.name,
+                title: childName + ' opuścił/a obszar: '+ area.name,
                 color: '#f45342'
             }
-    };
-    admin.messaging().sendToDevice(registrationToken,message)
-        .then((response) => {
-            // Response is a message ID string.
-            console.log('Successfully sent message:', response);
-        })
-        .catch((error) => {
-            console.log('Error sending message:', error);
-        });
+        };
+        admin.messaging().sendToDevice(registrationToken,message)
+            .then((response) => {
+                // Response is a message ID string.
+                console.log('Successfully sent message:', response);
+            })
+            .catch((error) => {
+                console.log('Error sending message:', error);
+            });
+    }
 };
-module.exports = {sendNotification};
+function sendBackToAreaNotification(user,name,rule,area) {
+    const registrationToken = user.firebaseToken;
+    if(registrationToken){
+
+        const childName = String(name).toUpperCase()[0]+String(name).substr(1);
+
+        const message = {
+            notification: {
+                title: childName + ' powrócił/a do obszar: '+ area.name,
+                color: '#f45342'
+            }
+        };
+        admin.messaging().sendToDevice(registrationToken,message)
+            .then((response) => {
+                // Response is a message ID string.
+                console.log('Successfully sent message:', response);
+            })
+            .catch((error) => {
+                console.log('Error sending message:', error);
+            });
+    }
+};
+module.exports = {sendBreakRuleNotification,sendBackToAreaNotification};
