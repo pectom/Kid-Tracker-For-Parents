@@ -35,7 +35,7 @@ class Dashboard extends React.Component {
                                 strokeOpacity: 0
                             }
                         }
-                        position={{lat: child.location.coordinates[0], lng: child.location.coordinates[1]}}
+                        position={{lat: child.location.coordinates[1], lng: child.location.coordinates[0]}}
                     >
                         {
                             <InfoWindow>

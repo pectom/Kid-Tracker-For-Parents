@@ -34,7 +34,7 @@ class Children extends React.Component {
                             strokeOpacity: 0
                         }
                     }
-                    position={{lat: child.location ? child.location.coordinates[0] : 0, lng: child.location ? child.location.coordinates[1] : 0}}
+                    position={{lat: child.location ? child.location.coordinates[1] : 0, lng: child.location ? child.location.coordinates[0] : 0}}
                 >
                     {
                         <InfoWindow>
